@@ -64,7 +64,7 @@ class TestReadmeStructure(unittest.TestCase):
         related = README.split("## Related Projects", 1)[1].split("## Contributing", 1)[0]
         urls = re.findall(r"\((https://[^)]+)\)", related)
         self.assertEqual(tuple(urls), RELATED)
-        self.assertNotIn("Wilgat/VideoJoin", README)
+        self.assertNotIn("Wilgat/HtmlDownloader", README)
         self.assertNotIn("### `video.png`", README)
 
 

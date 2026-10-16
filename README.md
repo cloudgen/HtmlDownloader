@@ -27,7 +27,7 @@ On a terminal, starting it with no arguments opens a text menu. The menu does no
 ## Advantages
 
 1. **Two ways to download.** `html-downloader download --url URL --name PAGENAME` saves the page in the terminal and does not draw the menu. On the menu, row **1 download** lists saved pages by number, or accepts a URL. With no arguments on a terminal, the text menu opens and waits. With no terminal and no verb, the program prints help and returns 0. There is no `--json`.
-2. **Built-in languages.** Row **7** lists thirteen languages: English, Simplified Chinese, Traditional Chinese, Spanish, Arabic, French, Portuguese, Russian, German, Japanese, Korean, Dutch, and Greek. The choice is saved for the next run. The download verb stays English. The note on row 1 follows the menu language.
+2. **Built-in languages.** Row **7** lists thirteen languages: English, Simplified Chinese, Traditional Chinese, Spanish, Arabic, French, Portuguese, Russian, German, Japanese, Korean, Dutch, and Greek. The choice is saved in `~/.local/HtmlDownloader/language` for the next run. `HTMLDOWNLOADER_LANG` overrides that file for one process and does not write it. The download verb stays English. The note on row 1 follows the menu language.
 3. **Lifecycle and diagnostics.** `version-check`, `self-update`, `self-install`, and `self-uninstall` are menu rows **63**–**66** and typed verbs. `self-uninstall` on the command line needs `--force`. They call pip and do not use root. **System Log** (**4**) views a log, clears a log, and shows the log folder. **about** (**62**) stays in English.
 
 ## Quick Installation
@@ -310,7 +310,6 @@ Row **4** has opened System Log. **41 view-log** is highlighted: "list a log fil
 ## Examples
 
 ```bash
-cd /path/to/folder/with/clips
 html-downloader
 ```
 
@@ -361,4 +360,4 @@ MIT — see [`LICENSE.md`](./LICENSE.md). Also declared in `pyproject.toml`.
 
 ## Last Update
 
-2026-10-16 — **1.0.0**. Public source is https://github.com/cloudgen/HtmlDownloader. The console script is `html-downloader`. `download --url URL --name PAGENAME` saves the page under `~/.app/HtmlDownloader/output/`. Menu row 1 **download** lists saved pages or accepts a URL. Menu pictures show this board: language **71**–**83**, one main menu for each language, self-management **61**–**66**, about, and System Log **41**–**43**. Version badge matches `pyproject.toml` and `__version__`. `ChronicleLogger>=1.3.1` is required.
+2026-10-16 — **1.0.0**. Public source is https://github.com/cloudgen/HtmlDownloader. The console script is `html-downloader`. `download --url URL --name PAGENAME` saves the page under `~/.app/HtmlDownloader/output/`. Menu row 1 **download** lists saved pages or accepts a URL. Menu pictures show this board: language **71**–**83**, one main menu for each language, self-management **61**–**66**, about, and System Log **41**–**43**. Product law under `docs/requirements/` names this version and this menu. Version badge matches `pyproject.toml` and `__version__`. `ChronicleLogger>=1.3.1` is required.

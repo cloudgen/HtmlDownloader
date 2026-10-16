@@ -1,26 +1,26 @@
 **file**: docs/requirements/requirement-python-readme.md
-**Status**: Active (Version 1.0.1)
+**Status**: Active (Version 1.1.0)
 **Area**: python
 **Key**: `requirement-python-readme`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
 
 ## 1. Purpose
 
-This file owns the product user document at the repository root: which sections it has, which pictures it embeds, and the rule that a sentence in that document matches the requirement that owns the behavior. Project nature is a program a person builds and runs from a terminal. The menu picture stays on `requirement-python-tui`. The thirteen languages stay on `requirement-python-cli-language`. The verbs stay on `requirement-python-cli-interface`. The join stays on `requirement-domain-videojoin` and `requirement-video-ffmpeg-pipeline`. The prerequisite sentences stay on `requirement-runtime-prerequisites`. The package name and the console script stay on `requirement-python-packaging`. The version string is `__version__`. This file does not restate those bodies.
+This file owns the product user document at the repository root: which sections it has, which pictures it embeds, and the rule that a sentence in that document matches the requirement that owns the behavior. Project nature is a program a person builds and runs from a terminal. The menu picture stays on `requirement-python-tui`. The thirteen languages stay on `requirement-python-cli-language`. The verbs stay on `requirement-python-cli-interface`. Download, list, and serve stay on `requirement-domain-videojoin`. The encoder file is Retired. The prerequisite sentences stay on `requirement-runtime-prerequisites`. The package name and the console script stay on `requirement-python-packaging`. The version string is `__version__`. This file does not restate those bodies.
 
 ### 1.1 Human-facing
 
-**In one sentence:** You open the root user document to install the program, read how the menu joins two videos, and see pictures of the language list, a two-file join, self-management, about, and system-log.
+**In one sentence:** You open the root user document to install the program, read how to download and serve a page, and see pictures of the language list, the main menu, self-management, about, and System Log.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
 | You / this login | The person reading how to run the program | Open `README.md` at the checkout root |
-| The other role | The requirements that own the menu, the join, and the package | A sentence here matches those files |
-| Not this file | The concat itself, the language file, and the host check | Pipeline, language, and domain |
+| The other role | The requirements that own the menu, the download, and the package | A sentence here matches those files |
+| Not this file | The page folder, the language file, and the host check | Domain, language, and about |
 
 | Includes | Excludes |
 |----------|----------|
-| Section order, badges, the Advantages contrast, install sentences, and the picture catalog | A second menu, a second verb list, or a second encode order |
+| Section order, badges, the Advantages list, install sentences, and the picture catalog | A second menu, a second verb list, or an encoder recipe |
 | Absolute `https` image destinations for captures of the running text menu | A generated drawing that invents row text. A relative `screenshots/` image destination in this package description |
 | The eight related-project lines | A shell online install, root as the documented path, or a setup script that is not on disk |
 
@@ -28,13 +28,13 @@ This file owns the product user document at the repository root: which sections 
 |---------|---------------|----------|
 | `README.md` | Root user document | Install, usage, pictures |
 | `screenshots/` | Picture folder beside that document | The links in the Screenshots section |
-| `video-join` | The program on a terminal | What those pictures show |
+| `html-downloader` | The program on a terminal | What those pictures show |
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
-| Read the install | The public path is pip. The document does not ask for root. | `pip install VideoJoin` |
-| Check the pictures | Row 4 is the language list. The pictured job joins two files in the current directory. About stays in English. | `video-join`, then `4`, or `1` |
-| Check the version line | The badge matches the package string. | `video-join version` |
+| Read the install | The public path is pip. The document does not ask for root. | `pip install HtmlDownloader` |
+| Check the pictures | Row 7 is the language list. The pictured job downloads a page. About stays in English. | `html-downloader`, then `7`, or `1` |
+| Check the version line | The badge matches the package string. | `html-downloader version` |
 
 ## 2. Core Rules / Requirements (Mandatory)
 
@@ -54,18 +54,18 @@ Each behavioral sentence **MUST** match its owner and **MUST NOT** restate that 
 
 | Claim in the document | Owner |
 |-----------------------|--------|
-| Two-file join, formats, output name, no folder prompt | `requirement-domain-videojoin` |
-| Stream copy, then re-encode, publish with `shutil.move` | `requirement-video-ffmpeg-pipeline` and `requirement-python-coding-style` |
+| Download, list downloaded, and serve | `requirement-domain-videojoin` |
+| No encoder | `requirement-video-ffmpeg-pipeline` is Retired |
 | Menu picture, path row, clock, row numbers | `requirement-python-tui` |
 | Thirteen languages and what stays English | `requirement-python-cli-language` |
 | Product verbs and pip lifecycle commands | `requirement-python-cli-interface` |
-| Empty argv on a terminal opens the menu. Empty argv with no terminal prints help and returns 0. Direct `join` with no terminal exits non-zero | `requirement-python-cli-interface` |
+| Empty argv on a terminal opens the menu. Empty argv with no terminal prints help and returns 0. `download` and `serve` do not draw the menu | `requirement-python-cli-interface` |
 | Package name, console script, pip install | `requirement-python-packaging` |
-| Package string on the badge | `__version__` in `src/VideoJoin/__init__.py`, copied by `pyproject.toml` |
+| Package string on the badge | `__version__` in `src/HtmlDownloader/__init__.py`, copied by `pyproject.toml` |
 | `ChronicleLogger>=1.3.1` | `requirement-python-packaging` and `requirement-runtime-prerequisites` |
-| FFmpeg on `PATH`, no root auto-install | `requirement-runtime-prerequisites` |
+| `ChronicleLogger>=1.3.1` and no encoder | `requirement-runtime-prerequisites` |
 
-This product does not claim `--json`. `hello` is a product verb. The user document does not name `./setup.sh` or `./build.sh`.
+This product does not claim `--json`. `hello` is not a product verb. The user document does not name `./setup.sh` or `./build.sh`.
 
 The first-row sentence in the user document **MUST** name the current directory on the left and a local clock (`HH:MM:SS`) on the right when the row has room. It **MUST NOT** name `Current`, a login, `USER`, `USERNAME`, or `getpass` as that right-hand field. The picture of the row stays on `requirement-python-tui`.
 
@@ -84,7 +84,7 @@ The first-row sentence in the user document **MUST** name the current directory 
 2. **MUST NOT** name a checkout setup script that is not on disk. This tree has no `setup.sh`. The document **MUST NOT** name `setup.sh`.
 3. The document does not show a wheel or sdist example. **MUST NOT** add one unless the basename is the file the build writes and the version token matches the package version.
 4. The prerequisite sentences **MUST** stay aligned with `requirement-runtime-prerequisites`. This file **MUST NOT** copy that table as a second owner.
-5. **MUST NOT** add `./build.sh` verbs to the user document. Those verbs are not `video-join` verbs.
+5. **MUST NOT** add `./build.sh` verbs to the user document. Those verbs are not `html-downloader` verbs.
 
 ### 2.5 Implementation Notes (this project)
 
@@ -106,19 +106,19 @@ The first-row sentence in the user document **MUST** name the current directory 
 
 **Badges:** a Version badge whose token is the package string; License MIT; CIAO linked to `https://github.com/cloudgen/ciao`; stars for `cloudgen/HtmlDownloader`; Python 2.7+ (3.x recommended); PyPI `HtmlDownloader` linked to `https://pypi.org/project/HtmlDownloader/`.
 
-**Opening:** concatenate two videos in the current directory. Prefer stream copy. Re-encode when copy fails. Publish with `shutil.move`. On a terminal with no arguments, the text menu opens. The menu does not start the join by itself and does not call pip.
+**Opening:** download one HTML page and the stylesheets, scripts, and images that page links to. On a terminal with no arguments, the text menu opens. The menu does not download a page by itself and does not call pip. It does not join media or call an encoder.
 
 **Sections, in order.** Advantages is inserted after Features. Screenshots is inserted after Usage. The other headings keep the existing kit order.
 
 | Heading | What this document must keep | Owner of the behavior |
 |---------|------------------------------|------------------------|
-| Features | Text menu: join, system-log, language, self-management, Exit. Path and a local clock on the first row. system-log is **3**. language is **4**. self-management is **8**. Two files in the current directory. Stream copy, then re-encode. `shutil.move`. FFmpeg on `PATH`. Verbs `help`, `version`, `about`, `hello`, `join`, `list-videos`, `self-install`, `version-check`, `self-update`, `self-uninstall` | Peers in §2.2. The path-row sentence is the clock rule in §2.2 |
-| Advantages | The four parts and the comparison table below | This file for the contrast. Peers in §2.2 for the behavior |
-| Quick Installation | FFmpeg on `PATH`. `ChronicleLogger>=1.3.1`. `pip install VideoJoin`. Checkout uses a venv and `pip install -e .`. The fenced text menu (front, system-log, language, self-management) stays in this section | `requirement-runtime-prerequisites`, `requirement-python-packaging`, `requirement-python-tui` |
-| Usage | Menu versus typed verbs. Join asks for two indexes and an output name. No folder prompt. Esc returns. No terminal: empty argv prints help and returns 0. Direct `join` with no terminal exits non-zero. `self-uninstall` needs `--force`. No sudo | `requirement-python-cli-interface`, `requirement-domain-videojoin`, `requirement-python-tui` |
+| Features | Text menu: download, list downloaded, serve, System Log, self-management, language, Exit. Path and a local clock on the first row. System Log is **4**. language is **7**. self-management is **6**. Page folder under `~/.app/HtmlDownloader/output/`. Verbs `help`, `version`, `about`, `download`, `serve`, `self-install`, `version-check`, `self-update`, `self-uninstall` | Peers in §2.2. The path-row sentence is the clock rule in §2.2 |
+| Advantages | The three parts below. No comparison table | This file. Peers in §2.2 for the behavior |
+| Quick Installation | `ChronicleLogger>=1.3.1`. No external media tool. `pip install HtmlDownloader`. Checkout uses a venv and `pip install -e .`. The fenced text menu stays in this section | `requirement-runtime-prerequisites`, `requirement-python-packaging`, `requirement-python-tui` |
+| Usage | Menu versus typed verbs. `download` needs `--url` and `--name`. `serve` needs `--page-name` and defaults `--port` to 5000. No terminal: empty argv prints help and returns 0. `self-uninstall` needs `--force`. No sudo | `requirement-python-cli-interface`, `requirement-domain-videojoin`, `requirement-python-tui` |
 | Screenshots | Lead: each heading is the file name, and the paragraph is what that picture shows. Package **1.0.0**. The paragraph and the image alt are the catalog below | This file |
-| Examples | `cd` to a folder of clips, then `video-join`, then `video-join version`, then `video-join join` | `requirement-domain-videojoin` |
-| Platform Compatibility | Linux primary. macOS and Windows when Python and FFmpeg are present. The text menu needs a terminal | `requirement-runtime-prerequisites` |
+| Examples | `html-downloader`, then `html-downloader version`, then `html-downloader download --url URL --name PAGENAME` | `requirement-domain-videojoin` |
+| Platform Compatibility | Linux primary. macOS and Windows when CPython is on PATH. The text menu needs a terminal | `requirement-runtime-prerequisites` |
 | Related Projects | The eight lines below, in that order, each with one sentence | This file |
 | Contributing | Keep product law in sync. Do not strip `shutil.move`. Version strings stay together | `requirement-python-coding-style`, `requirement-python-packaging` |
 | License | MIT, link `LICENSE.md`, and that file exists | `requirement-python-packaging` |
@@ -137,23 +137,13 @@ The first-row sentence in the user document **MUST** name the current directory 
 | 7 | `https://github.com/cloudgen/ciao-lite` | Short agent contract |
 | 8 | `https://github.com/cloudgen/safe-rm` | Guarded `rm` |
 
-**Advantages, after Features and before Quick Installation.** Four parts, then the comparison. The path row in this section names the local clock.
+**Advantages, after Features and before Quick Installation.** Three parts. No comparison table.
 
-1. **Dual-mode interface.** The menu asks for two indexes and an output name. A typed `join` asks the same questions. The person does not write an FFmpeg concat graph. The program tries stream copy, then re-encodes if copy fails. There is no length percent, no boomerang, and no `--json`. With no arguments on a terminal, the text menu opens. With no terminal and no verb, the program prints help and returns 0. Direct `join` with no terminal exits non-zero.
-2. **Built-in languages.** Row **4** lists thirteen languages: English, Simplified Chinese, Traditional Chinese, Spanish, Arabic, French, Portuguese, Russian, German, Japanese, Korean, Dutch, and Greek. The choice is saved for the next run.
-3. **USB-safe staging.** Intermediate files are written beside the output when that folder can be written, including on a removable drive. The finished file is published with `shutil.move`. When that folder cannot be written, the stage uses the system temporary directory. The section **MUST NOT** say the stage never uses that directory.
-4. **Lifecycle and diagnostics.** `version-check`, `self-update`, `self-install`, and `self-uninstall` are menu rows **84**–**87** and typed verbs. `self-uninstall` on the command line needs `--force`. They call pip and do not use root. **system-log** (**3**) views a log, clears a log, and shows the log folder. **about** (**83**) stays in English.
+1. **Two ways to download.** `html-downloader download --url URL --name PAGENAME` saves the page and does not draw the menu. On the menu, row **1 download** lists saved pages or accepts a URL. With no arguments on a terminal, the text menu opens. With no terminal and no verb, the program prints help and returns 0. There is no `--json`.
+2. **Built-in languages.** Row **7** lists thirteen languages: English, Simplified Chinese, Traditional Chinese, Spanish, Arabic, French, Portuguese, Russian, German, Japanese, Korean, Dutch, and Greek. The choice is saved in `~/.local/HtmlDownloader/language`. `HTMLDOWNLOADER_LANG` overrides that file for one process and does not write it. The download verb stays English.
+3. **Lifecycle and diagnostics.** `version-check`, `self-update`, `self-install`, and `self-uninstall` are menu rows **63**–**66** and typed verbs. `self-uninstall` on the command line needs `--force`. They call pip and do not use root. **System Log** (**4**) views a log, clears a log, and shows the log folder. **about** (**62**) stays in English.
 
-**Comparison table.** Columns: Feature, Raw FFmpeg CLI, Typical Python wrappers (moviepy), VideoJoin.
-
-| Feature | Raw FFmpeg CLI | Typical Python wrappers (moviepy) | VideoJoin |
-|---------|----------------|-----------------------------------|-----------|
-| Learning curve | A concat graph the person writes | A Python script | Text menu, or two file numbers and an output name |
-| Non-interactive | Native command line | A custom script | Typed verbs. No terminal and no verb: help, return 0. Direct `join` with no terminal: non-zero. No `--json` |
-| Menu languages | None | None | Thirteen, kept for the next run |
-| Temporary files | You choose the paths | Often the system temporary directory | Beside the output when that folder can be written. Otherwise the system temporary directory. Publish with `shutil.move` |
-| Self-management | The system package manager | pip from outside the tool | Built-in version-check, self-update, self-install, and self-uninstall |
-| Diagnostics and logs | The encode stream | A logging setup in the script | system-log (row 3) and about (83), in English |
+**No comparison table.** The user document does not compare HtmlDownloader with FFmpeg or with moviepy.
 
 **Screenshot catalog, in this order.** Each image destination is the absolute `https` URL in Implementation Notes, with that file’s basename. The paragraph and the alt are the words `README.md` prints for that file.
 
@@ -176,14 +166,14 @@ The first-row sentence in the user document **MUST** name the current directory 
 | 15 | `self-management.png` | Row **6** has opened self-management. **61 version** is highlighted: "show the installed version." Then **62 about** "version and this computer", **63 version-check** "compare this install with pip", **64 self-update** "upgrade this package with pip", **65 self-uninstall** "remove this package with pip", **66 self-install** "install this package with pip", and **0 Back** "return to the main menu." The path label is `Path`. The path is `/tmp/clips`. The clock is `19:48:44` on the right of that row. The status line says `HtmlDownloader 1.0.0` and `self-management`. | Self-management, 61 version highlighted |
 | 16 | `tui-about.png` | **about** (62) on the result page. The title is `HtmlDownloader (1.0.0) — result`. The page prints `HtmlDownloader 1.0.0`, `Domain: Download a page and its stylesheets, scripts, and images`, `Runtime tools: none`, and `Entry points: html-downloader, python -m HtmlDownloader`. The host check is stamped `2026-10-16 19:48:50.012150` and headed `[CHECK SYSTEM]:`. Visible lines include Python 3.12.11, C Library GCC 13.3.0, Ubuntu 24.04.5 LTS, amd64, the current user, the shell `/bin/bash`, Python Executable `python3`, python2 location, python3 location, a blank conda location, pyenv location, `Inside docker container: False`, and `Cython String: cpython-312-x86_64-linux-gnu`. The footer says `Up/Down scrolls this page.` and `Press a key to return to the main menu.` There is no input box and no clock. The page stays in English. | About host check, English |
 | 17 | `system-log.png` | Row **4** has opened System Log. **41 view-log** is highlighted: "list a log file and show it." Then **42 clear-log** "empty one log file", **43 log-folder** "show the log folder", and **0 Back** "return to the main menu." The path label is `Path`. The path is `/tmp/clips`. The clock is `19:48:47` on the right of that row. The status line says `HtmlDownloader 1.0.0` and `System Log`. | System Log, 41 view-log highlighted |
-`TP-DOC-01` asserts the Version badge token, that every PNG is linked with the absolute `https` URL above, that no markdown image uses a relative `screenshots/` destination, that the section headings are present, that the document does not name `setup.sh`, that the eight related-project URLs are in order, that the path row names the local clock, and that the user document does not name `Wilgat/VideoJoin` or `video.png`. `TP-DOC-03` asserts that each screenshot paragraph and alt equals the catalog cell, and it does not claim a pixel-by-pixel proof. `TP-DOC-03` stays **todo**. Map: `docs/reviews/test-plan.md`.
+`TP-DOC-01` asserts the Version badge token, that every PNG is linked with the absolute `https` URL above, that no markdown image uses a relative `screenshots/` destination, that the section headings are present, that the document does not name `setup.sh`, that the eight related-project URLs are in order, that the path row names the local clock, and that the user document does not name `Wilgat/HtmlDownloader` or `video.png`. `TP-DOC-03` asserts that each screenshot paragraph and alt equals the catalog cell, and it does not claim a pixel-by-pixel proof. `TP-DOC-03` stays **todo**. Map: `docs/reviews/test-plan.md`.
 
 ### 2.6 Why This Requirement Exists (Direct CIAO Alignment)
 
 - **CIAO Principle 2 – Intentional** (https://github.com/cloudgen/ciao): The sections and every PNG in `screenshots/` are a named catalog. A later edit cannot drop the language list, leave a PNG unlinked, or swap in a drawing for a menu row.
 - **CIAO Principle 5 – SSOT** (https://github.com/cloudgen/ciao): This file owns the document. Behavior stays on the peer that already owns it.
 - **CIAO Principle 16 – Interactive** (https://github.com/cloudgen/ciao): The pictures show the text menu a person actually drives, including row **4**, the two-file join, self-management, about, and system-log.
-- **CIAO Principle 21 – Dual policies** (https://github.com/cloudgen/ciao): The portable rule is “the document matches its owner.” The VideoJoin headings and file names live in §2.5.
+- **CIAO Principle 21 – Dual policies** (https://github.com/cloudgen/ciao): The portable rule is “the document matches its owner.” The HtmlDownloader headings and file names live in §2.5.
 - **CIAO Principle 4 – Over-protect** (https://github.com/cloudgen/ciao): Do not publish a setup script that is not on disk, or a success line the program did not print.
 
 ## Under command line for normal user only
@@ -202,7 +192,7 @@ The documented install is for this login. **This requirement:** the user documen
 **Future AI assistants or maintainers MUST NOT**:
 
 - Restate encode order, verb lists, menu numbers, language codes, or the prerequisite table in this file as a second procedure.
-- Turn the Advantages section into an FFmpeg filter recipe. The concat graph may be named only as something the person does not write.
+- Turn the Advantages section into an encoder recipe. The document does not describe a concat graph.
 - Claim that intermediate files never use the system temporary directory.
 - Replace a capture with a drawing that invents row text.
 - Leave any PNG in `screenshots/` out of `README.md`.
@@ -215,7 +205,7 @@ The documented install is for this login. **This requirement:** the user documen
 - Add `--json`, a length percent, a boomerang, or a folder prompt.
 - Freeze a session login or a `/home/<login>/` path in this file.
 - Mark `TP-DOC-03` have before the suite asserts that each catalog paragraph and alt equals the cell in §2.5.
-- Treat `./build.sh` verbs as `video-join` verbs.
+- Treat `./build.sh` verbs as `html-downloader` verbs.
 
 ## 5. Definition of done
 
@@ -231,7 +221,7 @@ The documented install is for this login. **This requirement:** the user documen
 
 | TP family / ID | Suite | Status |
 |----------------|-------|--------|
-| **TP-DOC-01** Version badge matches the package string. Every PNG uses the absolute `https` URL. No relative `screenshots/` image. Section headings. No `setup.sh`. Eight related-project URLs in order. The path row names the local clock. The user document does not name `Wilgat/VideoJoin` or `video.png` | `tests/test_docs.py` | have |
+| **TP-DOC-01** Version badge matches the package string. Every PNG uses the absolute `https` URL. No relative `screenshots/` image. Section headings. No `setup.sh`. Eight related-project URLs in order. The path row names the local clock. The user document does not name `Wilgat/HtmlDownloader` or `video.png` | `tests/test_docs.py` | have |
 | **TP-DOC-03** Each screenshot paragraph and alt equals the catalog cell in §2.5 | `tests/test_docs.py` | todo |
 
 ## 6. Related requirements (peer keys only)
@@ -241,13 +231,13 @@ The documented install is for this login. **This requirement:** the user documen
 | `docs/requirements/index.md` | Registry |
 | `requirement-python-project-structure` | Root `README.md` exists. Sections and pictures are this file |
 | `requirement-domain-videojoin` | Domain rows inside the user document |
-| `requirement-video-ffmpeg-pipeline` | Stream copy, then re-encode. This file does not restate that procedure |
-| `requirement-runtime-prerequisites` | FFmpeg on `PATH`. No root auto-install |
+| `requirement-video-ffmpeg-pipeline` | Retired. The user document does not require an encoder |
+| `requirement-runtime-prerequisites` | ChronicleLogger. No encoder. No root auto-install |
 | `requirement-python-packaging` | Package name, console script, pip install, `ChronicleLogger>=1.3.1` |
 | `requirement-python-tui` | Menu picture and the clock |
 | `requirement-python-about` | The about picture. This file does not own the page |
-| `requirement-python-cli-language` | Row **4** and the thirteen codes. About stays English |
-| `requirement-python-cli-interface` | Product verbs the document lists. `hello` is one of them |
+| `requirement-python-cli-language` | Row **7**, codes **71**–**83**. About stays English |
+| `requirement-python-cli-interface` | Product verbs the document lists. `download` and `serve` are two of them. `hello` is not |
 | `requirement-python-coding-style` | `shutil.move` for the published file |
 | `requirement-class-software-dev` | Class residual |
 | `README.md` | The user document |
@@ -260,9 +250,10 @@ The documented install is for this login. **This requirement:** the user documen
 |------|--------|------|
 | 2026-10-04 | Active 1.0.0 | User-document sections, Advantages, eight related projects, and twenty-two pictures. Image destinations are absolute `https`. `TP-DOC-01` have. `TP-DOC-03` todo |
 | 2026-10-04 | Active 1.0.1 | About and self-management pictures match the new page. Other menu pictures still show **1.0.4**. Package string is **1.0.5** |
+| 2026-10-16 | Active 1.1.0 | The user document is the download, list, and serve board. Version **1.0.0**. Seventeen menu pictures. No comparison table |
 
 ---
 
-**Last Updated**: 2026-10-04
+**Last Updated**: 2026-10-16
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

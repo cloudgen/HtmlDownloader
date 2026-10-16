@@ -1,5 +1,5 @@
 # =============================================================================
-# .gitignore — VideoJoin (Python package CLI)
+# .gitignore — HtmlDownloader (Python package CLI)
 # Detected: Python (pyproject.toml, src/**/*.py)
 # Docs: track docs/requirements/** ; ignore harness/skills/terms/policies/templates
 # Artifacts: compiled, caches, temp, secrets, local H2 backups

@@ -96,9 +96,9 @@ class TestDownload(unittest.TestCase):
     def test_cli_download_saves_page_assets_and_map(self):
         home = tempfile.mkdtemp(prefix="htmldl_", dir="/tmp")
         previous_home = os.environ.get("HOME")
-        previous_lang = os.environ.get("VIDEOJOIN_LANG")
+        previous_lang = os.environ.get("HTMLDOWNLOADER_LANG")
         os.environ["HOME"] = home
-        os.environ.pop("VIDEOJOIN_LANG", None)
+        os.environ.pop("HTMLDOWNLOADER_LANG", None)
         server = start_server()
         port = server.server_address[1]
         url = "http://127.0.0.1:{0}/page".format(port)
@@ -180,9 +180,9 @@ class TestDownload(unittest.TestCase):
             else:
                 os.environ["HOME"] = previous_home
             if previous_lang is None:
-                os.environ.pop("VIDEOJOIN_LANG", None)
+                os.environ.pop("HTMLDOWNLOADER_LANG", None)
             else:
-                os.environ["VIDEOJOIN_LANG"] = previous_lang
+                os.environ["HTMLDOWNLOADER_LANG"] = previous_lang
 
     def test_download_rejects_a_bad_url_a_bad_name_and_hello(self):
         home = tempfile.mkdtemp(prefix="htmldl_", dir="/tmp")
@@ -500,16 +500,16 @@ class TestDownload(unittest.TestCase):
 
     def test_menu_row_1_is_download(self):
         home = tempfile.mkdtemp(prefix="htmldl_", dir="/tmp")
-        saved = os.environ.get("VIDEOJOIN_LANG")
-        os.environ.pop("VIDEOJOIN_LANG", None)
+        saved = os.environ.get("HTMLDOWNLOADER_LANG")
+        os.environ.pop("HTMLDOWNLOADER_LANG", None)
         painter = MenuPainter(home=home)
         try:
             rows = painter.display_rows("front")
         finally:
             if saved is None:
-                os.environ.pop("VIDEOJOIN_LANG", None)
+                os.environ.pop("HTMLDOWNLOADER_LANG", None)
             else:
-                os.environ["VIDEOJOIN_LANG"] = saved
+                os.environ["HTMLDOWNLOADER_LANG"] = saved
         self.assertEqual(
             rows[0],
             (1, "download", "download a page and its stylesheets, scripts, and images", "download"),
@@ -535,10 +535,10 @@ class TestDownload(unittest.TestCase):
         home = tempfile.mkdtemp(prefix="htmlwait_", dir="/tmp")
         saved = {
             name: os.environ.get(name)
-            for name in ("HOME", "VIDEOJOIN_LANG")
+            for name in ("HOME", "HTMLDOWNLOADER_LANG")
         }
         os.environ["HOME"] = home
-        os.environ.pop("VIDEOJOIN_LANG", None)
+        os.environ.pop("HTMLDOWNLOADER_LANG", None)
         painter = MenuPainter(home=home)
         model = MenuModel(painter=painter)
         tui = Tui()
@@ -600,10 +600,10 @@ class TestDownload(unittest.TestCase):
                 os.environ.pop("HOME", None)
             else:
                 os.environ["HOME"] = saved["HOME"]
-            if saved["VIDEOJOIN_LANG"] is None:
-                os.environ.pop("VIDEOJOIN_LANG", None)
+            if saved["HTMLDOWNLOADER_LANG"] is None:
+                os.environ.pop("HTMLDOWNLOADER_LANG", None)
             else:
-                os.environ["VIDEOJOIN_LANG"] = saved["VIDEOJOIN_LANG"]
+                os.environ["HTMLDOWNLOADER_LANG"] = saved["HTMLDOWNLOADER_LANG"]
             shutil.rmtree(home, ignore_errors=True)
         self.assertEqual(text, "Saved fiori")
         self.assertEqual(captured["url"], "https://example.com/")
@@ -622,10 +622,10 @@ class TestListDownloaded(unittest.TestCase):
         self.home = tempfile.mkdtemp(prefix="htmllist_", dir="/tmp")
         self.saved = {
             name: os.environ.get(name)
-            for name in ("HOME", "VIDEOJOIN_LANG", "BROWSER")
+            for name in ("HOME", "HTMLDOWNLOADER_LANG", "BROWSER")
         }
         os.environ["HOME"] = self.home
-        os.environ.pop("VIDEOJOIN_LANG", None)
+        os.environ.pop("HTMLDOWNLOADER_LANG", None)
         os.environ.pop("BROWSER", None)
         self.painter = MenuPainter(home=self.home)
         self.model = MenuModel(painter=self.painter)

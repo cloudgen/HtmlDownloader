@@ -3,42 +3,36 @@
 Executable proof for product law. **Design map:** `docs/reviews/test-plan.md`.  
 **RTM:** `docs/reviews/requirement-test-matrix.md`.
 
-## Status (2026-10-05, product 1.0.0)
+## Status (2026-10-16, product 1.0.0)
 
 | Item | State |
 |------|--------|
 | Design TP map | **present** under `docs/reviews/test-plan.md` |
-| Automated suites | `tests/test_about.py` covers **TP-ABOUT-01** through **TP-ABOUT-14** and **TP-ABOUT-16** (have). There is no **TP-ABOUT-15**. `tests/test_tui.py` covers **TP-TUI-09** and **TP-TUI-10** (have). `tests/test_language.py` covers **TP-LANG-01** (have). `tests/test_docs.py` covers **TP-DOC-01** (have). **TP-DOC-03** stays `todo`. **TP-LOG-*** and **TP-OOP-*** stay `todo` |
-| Runner | `tests/run.sh` (`python3 -m unittest discover`) |
-| Last run | 2026-10-04 `./tests/run.sh` — 23 tests, OK |
+| Automated suites | `tests/test_about.py` covers **TP-ABOUT-01** through **TP-ABOUT-14** and **TP-ABOUT-16** (have). There is no **TP-ABOUT-15**. `tests/test_tui.py` covers **TP-TUI-09** and **TP-TUI-10** (have). `tests/test_language.py` covers **TP-LANG-01** (have). `tests/test_docs.py` covers **TP-DOC-01** (have). `tests/test_download.py` covers download, resume, list, and edit/view. `tests/test_serve.py` covers serve. **TP-DOC-03** stays `todo`. **TP-LOG-*** and **TP-OOP-*** stay `todo` |
+| Runner | `PYTHONPATH=src python3 -m unittest discover -s tests -q` (also `tests/run.sh`) |
+| Last run | 2026-10-16 — 43 tests, OK |
 
-## Planned layout
+## Suites on disk
 
-| File | TP families |
-|------|-------------|
+| File | What it covers |
+|------|----------------|
 | `test_about.py` | TP-ABOUT-01..14 and TP-ABOUT-16 (have). No TP-ABOUT-15 |
-| `test_tui.py` | TP-TUI-09 and TP-TUI-10 (have). TP-TUI-01..08 still todo |
-| `test_language.py` | TP-LANG-01 (have) |
+| `test_tui.py` | TP-TUI-09 and TP-TUI-10 (have). The front board is download, list downloaded, serve, System Log, self-management, language, and Exit |
+| `test_language.py` | TP-LANG-01 (have). Row 7, codes 71–83, `HTMLDOWNLOADER_LANG` |
 | `test_docs.py` | TP-DOC-01 (have). TP-DOC-03 stays todo |
-| `test_structure.py` | TP-STRUCT |
-| `test_packaging.py` | TP-PKG |
-| `test_prerequisites.py` | TP-PRE |
-| `test_cli.py` | TP-CLI |
-| `test_domain_join.py` | TP-VIDEOJOIN |
-| `test_ffmpeg_pipeline.py` | TP-FFMPEG |
-| `test_errors.py` | TP-ERR |
-| `test_fs_publish.py` | TP-FS |
+| `test_download.py` | Save, resume, flat assets, menu row 1, edit and view |
+| `test_serve.py` | `127.0.0.1`, default port 5000, menu port prompt |
 
 ## Rules
 
-1. Assert messages / test names **MUST** include the **TP-ID**.  
-2. Run media cases only with **generated fixtures** in temp dirs — never user media.  
+1. Assert messages / test names **MUST** include the **TP-ID** when the case is one of the named TP families.  
+2. Run page cases only with **generated fixtures** in temp dirs — never a live site the operator did not name.  
 3. Core cases **MUST NOT** require public network.  
 4. Flip `todo` → `have` in `docs/reviews/test-plan.md` and requirement DTV only after green runs.  
 5. Do not place executable tests under `docs/templates/`.
 
-## Run (when suites exist)
+## Run
 
 ```bash
-./tests/run.sh
+PYTHONPATH=src python3 -m unittest discover -s tests -q
 ```

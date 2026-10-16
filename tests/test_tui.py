@@ -23,7 +23,7 @@ class TestPathLabel(unittest.TestCase):
         saved = {
             name: os.environ.get(name)
             for name in (
-                "LANG", "LANGUAGE", "LC_ALL", "LC_MESSAGES", "HOME", "VIDEOJOIN_LANG",
+                "LANG", "LANGUAGE", "LC_ALL", "LC_MESSAGES", "HOME", "HTMLDOWNLOADER_LANG",
             )
         }
         os.environ["LANG"] = "zh_TW.UTF-8"
@@ -31,7 +31,7 @@ class TestPathLabel(unittest.TestCase):
         os.environ["LC_ALL"] = "zh_TW.UTF-8"
         os.environ["LC_MESSAGES"] = "zh_TW.UTF-8"
         os.environ["HOME"] = home
-        os.environ.pop("VIDEOJOIN_LANG", None)
+        os.environ.pop("HTMLDOWNLOADER_LANG", None)
         os.chdir(folder)
         try:
             painter = MenuPainter(home=home)
@@ -141,10 +141,10 @@ class TestWideColumns(unittest.TestCase):
         previous = os.getcwd()
         saved = {
             name: os.environ.get(name)
-            for name in ("HOME", "VIDEOJOIN_LANG", "LANG", "LC_ALL")
+            for name in ("HOME", "HTMLDOWNLOADER_LANG", "LANG", "LC_ALL")
         }
         os.environ["HOME"] = home
-        os.environ.pop("VIDEOJOIN_LANG", None)
+        os.environ.pop("HTMLDOWNLOADER_LANG", None)
         os.chdir(folder)
         clock = "14:05:09"
         try:
@@ -168,7 +168,7 @@ class TestWideColumns(unittest.TestCase):
                 ("パス", "パ"),
                 ("경로", "경"),
             ):
-                os.environ["VIDEOJOIN_LANG"] = {
+                os.environ["HTMLDOWNLOADER_LANG"] = {
                     "路径": "zh-Hans",
                     "路徑": "zh-Hant",
                     "パス": "ja",
@@ -232,7 +232,7 @@ class TestWideColumns(unittest.TestCase):
                 "ja": ("言語", "システムログ", "自己管理", "終了"),
             }
             for code, words in shorts.items():
-                os.environ["VIDEOJOIN_LANG"] = code
+                os.environ["HTMLDOWNLOADER_LANG"] = code
                 board_painter = MenuPainter(home=home)
                 board_painter.clock_text = lambda: clock
                 self.assertEqual(board_painter.language.code(), code)
@@ -267,7 +267,7 @@ class TestWideColumns(unittest.TestCase):
                     self.assertEqual(colon, [(y, colon_x, "{0}: ".format(verb_pad))], short)
                     self.assertNotEqual(colon_x, x + len(short), short)
 
-            os.environ.pop("VIDEOJOIN_LANG", None)
+            os.environ.pop("HTMLDOWNLOADER_LANG", None)
             english_painter = MenuPainter(home=home)
             english_painter.clock_text = lambda: clock
             self.assertEqual(english_painter.language.code(), "en")

@@ -12,7 +12,7 @@ class MenuLanguage:
     """The thirteen menu languages, the saved code, and the words the menu prints.
 
     English is the default when the leaf is missing, empty, or not one of the
-    codes. LANG is not read. VIDEOJOIN_LANG wins at startup and does not write
+    codes. LANG is not read. HTMLDOWNLOADER_LANG wins at startup and does not write
     the leaf. A menu pick writes the leaf and updates this process.
     """
 
@@ -80,11 +80,11 @@ class MenuLanguage:
     def load(self) -> None:
         """Pick the code for this process. Does not write the leaf.
 
-        VIDEOJOIN_LANG wins when it is one of the thirteen codes. Otherwise the
+        HTMLDOWNLOADER_LANG wins when it is one of the thirteen codes. Otherwise the
         first line of the leaf is used. A missing, empty, or other line is English.
         An other line is not rewritten.
         """
-        forced = os.environ.get("VIDEOJOIN_LANG", "")
+        forced = os.environ.get("HTMLDOWNLOADER_LANG", "")
         if forced in self.codes():
             self._code = forced
             return

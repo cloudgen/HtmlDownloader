@@ -27,10 +27,10 @@ class TestServe(unittest.TestCase):
         self.home = tempfile.mkdtemp(prefix="htmlserve_", dir="/tmp")
         self.saved = {
             name: os.environ.get(name)
-            for name in ("HOME", "VIDEOJOIN_LANG")
+            for name in ("HOME", "HTMLDOWNLOADER_LANG")
         }
         os.environ["HOME"] = self.home
-        os.environ.pop("VIDEOJOIN_LANG", None)
+        os.environ.pop("HTMLDOWNLOADER_LANG", None)
         self.painter = MenuPainter(home=self.home)
         self.model = MenuModel(painter=self.painter)
         self.tui = Tui()

@@ -139,10 +139,10 @@ class TestAbout(unittest.TestCase):
     def test_about_box_is_a_rectangle(self):
         """TP-ABOUT-03: the star box is one rectangle."""
         box = self._page().about_box_lines(
-            usage="video-join hello",
-            location="/tmp/video-join",
+            usage="html-downloader hello",
+            location="/tmp/html-downloader",
             kind="global",
-            homepage="https://example.test/VideoJoin",
+            homepage="https://example.test/HtmlDownloader",
             download_url="",
         )
         width = len(box[0])
@@ -153,8 +153,8 @@ class TestAbout(unittest.TestCase):
             self.assertTrue(line.endswith("*"), line)
         flat = "\n".join(box)
         self.assertIn("GLOBAL INSTALLED", flat)
-        self.assertIn("/tmp/video-join", flat)
-        self.assertIn('    "https://example.test/VideoJoin"', flat)
+        self.assertIn("/tmp/html-downloader", flat)
+        self.assertIn('    "https://example.test/HtmlDownloader"', flat)
         self.assertNotIn("curl", flat)
 
     def test_about_box_can_show_an_install_line_when_a_url_is_given(self):
@@ -162,7 +162,7 @@ class TestAbout(unittest.TestCase):
         cli = self._cli()
         box = "\n".join(
             self._page().about_box_lines(
-                location="/tmp/video-join",
+                location="/tmp/html-downloader",
                 kind="local",
                 download_url="https://example.test/install",
             )
@@ -215,12 +215,12 @@ class TestAbout(unittest.TestCase):
         self.assertEqual(page.install_kind(local_script), "local")
         local_pkg = os.path.join(
             home, ".pyenv", "versions", "3.14.7", "lib", "python3.14",
-            "site-packages", "VideoJoin", "cli.py",
+            "site-packages", "HtmlDownloader", "cli.py",
         )
         self.assertEqual(page.install_kind(local_pkg), "local")
-        self.assertEqual(page.install_kind("/usr/local/bin/video-join"), "global")
+        self.assertEqual(page.install_kind("/usr/local/bin/html-downloader"), "global")
         self.assertEqual(
-            page.install_kind("/usr/lib/python3/dist-packages/VideoJoin/cli.py"),
+            page.install_kind("/usr/lib/python3/dist-packages/HtmlDownloader/cli.py"),
             "global",
         )
         self.assertIn("GLOBAL INSTALLED", page.install_sentence("global"))
@@ -735,7 +735,7 @@ class TestAbout(unittest.TestCase):
 
         with tempfile.TemporaryDirectory() as tmp:
             real = ChronicleLogger(
-                logname="VideoJoin",
+                logname="HtmlDownloader",
                 basedir=tmp,
                 logdir=os.path.join(tmp, "log"),
                 is_quiet=True,
@@ -993,9 +993,9 @@ class TestAbout(unittest.TestCase):
         home = tempfile.mkdtemp(prefix="vj-about-scroll-")
         self.addCleanup(shutil.rmtree, home, ignore_errors=True)
         saved_home = os.environ.get("HOME")
-        saved_lang = os.environ.get("VIDEOJOIN_LANG")
+        saved_lang = os.environ.get("HTMLDOWNLOADER_LANG")
         os.environ["HOME"] = home
-        os.environ.pop("VIDEOJOIN_LANG", None)
+        os.environ.pop("HTMLDOWNLOADER_LANG", None)
         try:
             painter = MenuPainter(home=home)
             model = MenuModel(painter=painter)
@@ -1029,9 +1029,9 @@ class TestAbout(unittest.TestCase):
             else:
                 os.environ["HOME"] = saved_home
             if saved_lang is None:
-                os.environ.pop("VIDEOJOIN_LANG", None)
+                os.environ.pop("HTMLDOWNLOADER_LANG", None)
             else:
-                os.environ["VIDEOJOIN_LANG"] = saved_lang
+                os.environ["HTMLDOWNLOADER_LANG"] = saved_lang
 
 
 

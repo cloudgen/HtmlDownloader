@@ -6,9 +6,9 @@
 
 ## 1. Purpose
 
-This requirement is retired. VideoJoin does not call FFmpeg, does not concatenate media, and does not publish a media file.
+This requirement is retired. HtmlDownloader does not call FFmpeg, does not concatenate media, and does not publish a media file.
 
-The welcome line is `requirement-domain-videojoin`. Do not treat the historical concat procedure as law.
+Download, list, and serve are `requirement-domain-videojoin`. Do not treat the historical concat procedure as law.
 
 ### 1.1 Human-facing
 
@@ -23,8 +23,8 @@ The welcome line is `requirement-domain-videojoin`. Do not treat the historical 
 
 1. **MUST NOT** invoke `ffmpeg` or any other encoder from this product.
 2. **MUST NOT** write a concat list, a media intermediate, or a joined output file.
-3. **MUST NOT** restore `src/VideoJoin/join.py` without an explicit user order and a new Active revision of `requirement-domain-videojoin`.
-4. A missing `ffmpeg` binary is not an error. The front board and `hello` do not check for it.
+3. **MUST NOT** restore `src/HtmlDownloader/join.py` without an explicit user order and a new Active revision of `requirement-domain-videojoin`.
+4. A missing `ffmpeg` binary is not an error. The front board, download, list, and serve do not check for it.
 
 ## 4. Protection Rule (Sacred)
 
@@ -36,7 +36,7 @@ The welcome line is `requirement-domain-videojoin`. Do not treat the historical 
 |----|-----------|
 | AC-1 | Status is Retired |
 | AC-2 | No product module imports or runs `ffmpeg` |
-| AC-3 | `hello` and menu row 1 do not check for an encoder |
+| AC-3 | Download, list, serve, and menu row 1 do not check for an encoder |
 
 ## 7. Status history
 
@@ -45,9 +45,10 @@ The welcome line is `requirement-domain-videojoin`. Do not treat the historical 
 | 2026-08-09 | Active 1.0.0 | Stream-copy concat, then re-encode, then `shutil.move` |
 | 2026-10-04 | Active 1.2.0 | Fail-closed re-encode stayed |
 | 2026-10-05 | Retired 1.3.0 | Encoder support removed with the join |
+| 2026-10-16 | Retired 1.3.1 | Current product is download, list, and serve. `hello` is not a verb |
 
 ---
 
-**Last Updated**: 2026-10-05
+**Last Updated**: 2026-10-16
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`.

@@ -1,22 +1,22 @@
 **file**: docs/requirements/requirement-python-coding-style.md
-**Status**: Active (Version 1.1.1)
+**Status**: Active (Version 1.2.0)
 **Area**: python
 **Key**: `requirement-python-coding-style`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
 
 ## 1. Purpose
 
-Define Python coding style and defensive file I/O conventions for VideoJoin: how agents and maintainers write Python so path, temp, and publish behavior stays safe across mounts, including USB, without duplicating domain or FFmpeg pipeline tables.
+Define Python coding style and defensive file I/O conventions for HtmlDownloader: how agents and maintainers write Python so path, temp, and publish behavior stays safe across mounts, including USB, without duplicating the domain tables. The encoder file is Retired.
 
-Pipeline-specific application of these rules is owned by `requirement-video-ffmpeg-pipeline`. The class map is owned by `requirement-python-oop`. The logger construct is owned by `requirement-python-cli-logging`.
+Publish with `shutil.move` stays here. The encoder file is Retired. The class map is owned by `requirement-python-oop`. The logger construct is owned by `requirement-python-cli-logging`.
 
 ### 1.1 Human-facing
 
-**In one sentence:** A finished join is moved into place with `shutil.move`, and the classes that do the work live in the files the class map names.
+**In one sentence:** A finished file is moved into place with `shutil.move`, and the classes that do the work live in the files the class map names.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
-| You / this login | Maintainer changing the join or the menu | Keep the publish call as `shutil.move`. Put new behavior on the class that owns that job |
+| You / this login | Maintainer changing a download or the menu | Keep the publish call as `shutil.move`. Put new behavior on the class that owns that job |
 | The other role | The class map and the status logger | `requirement-python-oop`, `requirement-python-cli-logging` |
 | Not this file | The menu picture and the concat filter graph | TUI and pipeline requirements |
 
@@ -28,7 +28,7 @@ Pipeline-specific application of these rules is owned by `requirement-video-ffmp
 
 | Surface | What you open | What for |
 |---------|---------------|----------|
-| `src/VideoJoin/cli.py` | Running session today. `Cli` and `def main` in the end state | Entry |
+| `src/HtmlDownloader/cli.py` | Running session today. `Cli` and `def main` in the end state | Entry |
 | Class files named by `requirement-python-oop` | One class each, when an implement order lands them | The jobs that `cli.py` still holds |
 | Publish helper | `shutil.move` | Move the finished temp to the output name |
 
@@ -36,18 +36,18 @@ Pipeline-specific application of these rules is owned by `requirement-video-ffmp
 |---------|---------------|---------------|
 | Publish the finished file | Call `shutil.move`. Log that publish before the call, once the logger exists. | The join output name |
 | Add a behavior | Put it on the class in the map. Do not add a module-level function beside that class. | Edit that class file |
-| Import VideoJoin | The import succeeds even when you only need `__version__`. It does not construct the logger. | `python -c "import VideoJoin"` |
+| Import HtmlDownloader | The import succeeds even when you only need `__version__`. It does not construct the logger. | `python -c "import HtmlDownloader"` |
 
 ## 2. Core Rules (Mandatory)
 
 ### 2.1 General style (this product)
 
-1. **MUST** keep the installable package under `src/VideoJoin/` with the module entry (`__main__` / console script → `cli.main`).
+1. **MUST** keep the installable package under `src/HtmlDownloader/` with the module entry (`__main__` / console script → `cli.main`).
 2. **MUST** cite only live `docs/requirements/requirement-*.md` keys in product-source law comments.
 3. **SHOULD** use a clear General Purpose docstring on each public method.
-4. **MUST** fail closed with a user-visible message on expected errors (missing FFmpeg, fewer than two videos, failed join).
-5. Importing the VideoJoin package **MUST NOT** construct ChronicleLogger. The construct stays inside `def main` (`requirement-python-cli-logging`). **MUST NOT** re-export `ChronicleLogger`.
-6. The allowed end state is the class map in `requirement-python-oop`. The running tree is still the procedural session in `cli.py`, and that tree stays legal until an implement order lands the map. **MUST NOT** treat the procedural pile as the allowed end state. **MUST NOT** order a StateLogic + `Attr` rewrite. This file does not move the code.
+4. **MUST** fail closed with a user-visible message on expected errors (a bad URL, a missing saved page, a failed download).
+5. Importing the HtmlDownloader package **MUST NOT** construct ChronicleLogger. The construct stays inside `def main` (`requirement-python-cli-logging`). **MUST NOT** re-export `ChronicleLogger`.
+6. The class map in `requirement-python-oop` is the layout on disk. **MUST NOT** collapse those classes back into one procedural module. **MUST NOT** order a StateLogic + `Attr` rewrite. This file does not move the code.
 6a. The site that needs an object **MUST** write `ClassName(...)`. A function or a method whose job is to instantiate a class in that map is forbidden.
 
 ### 2.2 Temporary files
@@ -55,7 +55,7 @@ Pipeline-specific application of these rules is owned by `requirement-video-ffmp
 7. When the final destination path is known, **MUST** prefer creating intermediate files on the same filesystem or mount as that destination (a writable parent of the final path).
 8. **MUST NOT** assume system `TMPDIR` or `/tmp` is the same mount as the user’s media (USB, network, secondary disks).
 9. **MUST** clean intermediate temps on success and on failure (best-effort).
-10. **MUST NOT** use a fixed predictable cwd name (for example a bare `filelist.txt`) as the sole concat-list path when a unique temp can be created.
+10. **MUST NOT** use a fixed predictable cwd name as the sole temp path when a unique temp can be created.
 
 ### 2.3 Publishing / moving completed files (sacred)
 
@@ -63,7 +63,7 @@ Pipeline-specific application of these rules is owned by `requirement-video-ffmp
 12. **MUST NOT** use bare `os.replace`, `os.rename`, `pathlib.Path.replace`, or `pathlib.Path.rename` alone as the sole publish mechanism when source and destination may be on different mounts.
 13. **MAY** still use same-filesystem rename semantics inside what `shutil.move` performs. Do not reimplement a fragile bare rename as product publish.
 14. `shutil.copy2`, `copy`, and `copyfile` copy only. If one is used, **MUST** define whether the source is kept or deleted. A copy is not a complete move by itself.
-15. FFmpeg **MAY** write the final path directly when no intermediate publish step exists. When an intermediate is used, publish **MUST** go through `shutil.move` (or the thin wrapper).
+15. When an intermediate file is used, publish **MUST** go through `shutil.move` (or the thin wrapper).
 
 Log the temp write, the publish, and the discard of an unfinished temp before the operation (`requirement-python-cli-logging`). Those lines do not replace rules 7–15.
 
@@ -80,16 +80,16 @@ Log the temp write, the publish, and the discard of an unfinished temp before th
 
 | Item | Value |
 |------|--------|
-| **Package** | `VideoJoin` |
-| **Running modules** | `src/VideoJoin/cli.py`, `__main__.py`, `__init__.py` |
-| **End-state modules** | Named by `requirement-python-oop`. Not on disk yet |
-| **Staging helpers** | `staging_dir_for`, `make_temp_path` (methods of `Join` in the end state) |
+| **Package** | `HtmlDownloader` |
+| **Running modules** | The modules named by `requirement-python-project-structure` |
+| **Class modules** | Named by `requirement-python-oop`. They are on disk |
+| **Page classes** | `PageDownload`, `PageServe`, and `PageOpen` |
 | **Publish helper** | `shutil.move` |
-| **Ops apply** | `requirement-video-ffmpeg-pipeline` |
+| **Encoder file** | Retired. This file still owns `shutil.move` |
 | **Gate checklist (cite ID)** | `CL-PYTHON-SHUTIL-MOVE-PUBLISH` — run when auditing promote and staging publish paths |
-| **Architecture** | Running tree is procedural. Allowed end state is the class map. StateLogic + `Attr` stays unordered |
+| **Architecture** | One class per file. StateLogic + `Attr` stays unordered |
 | **Logger** | Package import does not construct ChronicleLogger |
-| **Version** | `1.0.5` |
+| **Version** | `1.0.0` |
 | **User docs** | Root `README.md` Features must not claim a Cython-required runtime or a fixed `filelist.txt`-only strategy |
 
 ### 2.6 Why This Requirement Exists (CIAO)
@@ -101,7 +101,7 @@ Log the temp write, the publish, and the discard of an unfinished temp before th
 
 ## Under command line for normal user only
 
-On Termux, Git Bash, Windows cmd, or the same class, temps and the published file stay in the normal user’s folders. **This requirement:** do not use administrator privilege, `sudo`, `apt`, or a dedicated system user to publish a join or to construct a class. Do not pipe a downloaded script into a shell. Type 1 and Type 2 are unused on Termux, Git Bash, and Windows cmd. Git Bash and Windows cmd do not call Termux `pkg`.
+On Termux, Git Bash, Windows cmd, or the same class, temps and the published file stay in the normal user’s folders. **This requirement:** do not use administrator privilege, `sudo`, `apt`, or a dedicated system user to publish a file or to construct a class. Do not pipe a downloaded script into a shell. Type 1 and Type 2 are unused on Termux, Git Bash, and Windows cmd. Git Bash and Windows cmd do not call Termux `pkg`.
 
 ## 3. Design Principles (CIAO / CIAO-Lite)
 
@@ -143,7 +143,7 @@ On Termux, Git Bash, Windows cmd, or the same class, temps and the published fil
 |-----|----------------|
 | `requirement-python-oop` | Allowed class map |
 | `requirement-python-cli-logging` | Log temp, publish, and discard. Construct stays in `main` |
-| `requirement-video-ffmpeg-pipeline` | Applies move and temp rules to concat |
+| `requirement-video-ffmpeg-pipeline` | Retired |
 | `requirement-python-project-structure` | Running layout versus the map |
 | `requirement-python-error-handling` | Failure messages |
 | `requirement-python-cli-interface` | Entry |
@@ -157,7 +157,7 @@ On Termux, Git Bash, Windows cmd, or the same class, temps and the published fil
 |----------------|-------|--------|------|
 | **TP-FS-01** | `tests/test_fs_publish.py` | todo | Publish uses `shutil.move` |
 | **TP-FS-02** | `tests/test_fs_publish.py` | todo | Staging prefers the destination parent when it is writable |
-| **TP-PKG-01** | `tests/test_packaging.py` | todo | `import VideoJoin` succeeds and does not construct ChronicleLogger |
+| **TP-PKG-01** | `tests/test_packaging.py` | todo | `import HtmlDownloader` succeeds and does not construct ChronicleLogger |
 | **TP-OOP-01** | `tests/test_oop.py` | todo | Peer: class map. Not landed |
 
 **Matrix:** `docs/reviews/requirement-test-matrix.md`
@@ -167,12 +167,13 @@ On Termux, Git Bash, Windows cmd, or the same class, temps and the published fil
 
 | Date | Status | Note |
 |------|--------|------|
-| 2026-08-09 | Active 1.0.0 | Coding style, `shutil.move`, and multi-mount file I/O for VideoJoin |
+| 2026-08-09 | Active 1.0.0 | Coding style, `shutil.move`, and multi-mount file I/O for HtmlDownloader |
 | 2026-10-04 | Active 1.1.0 | Procedural `cli.py` is the running tree, not the allowed end state. The end state is `requirement-python-oop`. StateLogic stays unordered. Rules 7–15 are unchanged |
 | 2026-10-04 | Active 1.1.1 | Current version string is **1.0.5** |
+| 2026-10-16 | Active 1.2.0 | Version **1.0.0**. No encoder in the style rules. The class map is on disk |
 
 ---
 
-**Last Updated**: 2026-10-04
+**Last Updated**: 2026-10-16
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

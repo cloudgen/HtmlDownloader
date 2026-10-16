@@ -1,26 +1,27 @@
 # Requirements
 
-Authoritative specialized product law for **VideoJoin** lives here.
+Authoritative specialized product law for **HtmlDownloader** lives here.
 
-**Current state (2026-10-04):** Specialized **software-development** product. Left genesis. Registry is populated — see `index.md`. Fifteen Active requirements. Product version is **1.0.5**.
+**Current state (2026-10-16):** Specialized **software-development** product. Left genesis. Registry is populated — see `index.md`. Product version is **1.0.0**.
 
 ## Product identity (summary)
 
 | Field | Value |
 |-------|--------|
-| Product / package | `VideoJoin` |
-| Version SSOT | **`1.0.5`** (`pyproject.toml` + `src/VideoJoin/__init__.py`) |
-| Product README SSOT | Root `README.md` (app-name, short description, target version **1.0.5**). Sections and pictures: `requirement-python-readme` |
-| Ship surface | Python package; console script **`video-join`**; module `python -m VideoJoin` |
-| Install mode | **pip / local package** (`pip install VideoJoin`; this tree **1.0.5**; checkout `pip install -e .`) — not shell Type O |
-| Domain surface | `requirement-domain-videojoin` — four pillars (`join`, `list-videos`, help, about) |
-| Text menu | `requirement-python-tui` — front rows join, system-log, language, self-management, Exit. Default path word is `Path` |
-| Menu language | `requirement-python-cli-language` — row 4, thirteen codes, leaf `~/.local/VideoJoin/language`. `language` is not an argv verb |
+| Product / package | `HtmlDownloader` |
+| Version SSOT | **`1.0.0`** (`pyproject.toml` + `src/HtmlDownloader/__init__.py`) |
+| Product README SSOT | Root `README.md`. Sections and pictures: `requirement-python-readme` |
+| Ship surface | Python package; console script **`html-downloader`**; module `python -m HtmlDownloader` |
+| Install mode | **pip / local package** (`pip install HtmlDownloader`; this tree **1.0.0**; checkout `pip install -e .`) — not shell Type O |
+| Public source | `https://github.com/cloudgen/HtmlDownloader` |
+| Domain surface | `requirement-domain-videojoin` — download one page, list saved pages, serve a saved page |
+| Text menu | `requirement-python-tui` — front rows **1** download, **2** list downloaded, **3** serve, **4** System Log, **6** self-management, **7** language, **9** Exit. Default path word is `Path` |
+| Menu language | `requirement-python-cli-language` — row **7**, codes **71**–**83**, leaf `~/.local/HtmlDownloader/language`. `HTMLDOWNLOADER_LANG` overrides that file for one process. `language` is not an argv verb |
 | Status logger | `requirement-python-cli-logging` — `ChronicleLogger(...)` inside `def main`. Required |
-| Class map | `requirement-python-oop` — allowed end state. Running tree is still three modules |
-| Encode ops | `requirement-video-ffmpeg-pipeline` — stream-copy then re-encode; unique temps; **`shutil.move`** publish |
+| Class map | `requirement-python-oop` — the classes under `src/HtmlDownloader/` |
+| Encode ops | `requirement-video-ffmpeg-pipeline` — **Retired**. This program does not call an encoder |
 | Coding style | `requirement-python-coding-style` — temps + `shutil.move`; gate **`CL-PYTHON-SHUTIL-MOVE-PUBLISH`** |
-| Runtime tools | **FFmpeg** on PATH for a join. **ChronicleLogger>=1.3.1** required. Live `pyproject.toml` declares that floor |
+| Runtime tools | **ChronicleLogger>=1.3.1** required. No external media tool |
 
 ## Class requirement gate
 
@@ -54,5 +55,5 @@ Typical: `draft` · `Active` · `approved` · `in-progress` · `done` · `deprec
 3. Never dump harness inventories into this versioned surface.  
 4. Online shell install and Type 1 elevation stay **absent** unless product mode is explicitly changed.  
 5. Sole domain SSOT: `requirement-domain-videojoin.md`.  
-6. When changing join/publish behavior: update pipeline + coding-style REQs **and** root `README.md` in the same change.  
+6. When changing download, list, or serve behavior: update the domain requirement **and** root `README.md` in the same change.  
 7. Version dual SSOT + README Version badge must match when a release is claimed.
