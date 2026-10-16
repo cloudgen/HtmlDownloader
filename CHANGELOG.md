@@ -3,7 +3,7 @@
 All notable changes to **HtmlDownloader** are documented here.  
 Version SSOT: `pyproject.toml` + `src/HtmlDownloader/__init__.__version__`.
 
-## [Unreleased]
+## [1.0.0] - 2026-10-16
 
 ### Removed
 
