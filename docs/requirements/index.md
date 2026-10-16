@@ -1,19 +1,19 @@
 # Requirements index
 
-**Product:** VideoJoin (Python CLI — text menu on a terminal; join two local videos with FFmpeg)
+**Product:** VideoJoin (Python CLI — text menu on a terminal; `hello` prints a welcome line, menu row 1 shows it)
 **Workspace state:** Specialized product law (left genesis); **software-development** class; **pip/local package** install (not shell online Type O).
 **Product version:** **1.0.5** (align `pyproject.toml`, `__init__.__version__`, root `README.md` Version badge)
-**Updated:** 2026-10-04
+**Updated:** 2026-10-05
 
 | ID / key | Title | Area | Status | Path | Updated |
 |----------|-------|------|--------|------|---------|
 | requirement-class-software-dev | Software-development class law + residual stack (Python, setuptools) | class | Active | `requirement-class-software-dev.md` | 2026-10-04 |
-| requirement-domain-videojoin | Domain surface SSOT (four pillars: join verb, list-videos, help, about) | domain | Active | `requirement-domain-videojoin.md` | 2026-10-04 |
+| requirement-domain-videojoin | Domain surface SSOT (welcome line: typed `hello`, menu row 1, help, about) | domain | Active | `requirement-domain-videojoin.md` | 2026-10-05 |
 | requirement-python-about | About page: identity, host check, star box. No `--json` | python | Active | `requirement-python-about.md` | 2026-10-04 |
-| requirement-video-ffmpeg-pipeline | FFmpeg ops SSOT (stream-copy → re-encode; unique temps; shutil.move publish) | video | Active | `requirement-video-ffmpeg-pipeline.md` | 2026-10-04 |
+| requirement-video-ffmpeg-pipeline | Retired. No encoder, no concat, no media publish | video | Retired | `requirement-video-ffmpeg-pipeline.md` | 2026-10-05 |
 | requirement-python-cli-interface | CLI entry, typed verbs, empty-argv menu on a terminal and help off a terminal | python | Active | `requirement-python-cli-interface.md` | 2026-10-04 |
 | requirement-python-cli-logging | ChronicleLogger construct in `def main`; required floor points at packaging | python | Active | `requirement-python-cli-logging.md` | 2026-10-04 |
-| requirement-python-tui | Text menu: join, system-log, language, self-management, Exit. Path word is selected by the language requirement. Default is `Path`. Menu columns are display columns | python | Active | `requirement-python-tui.md` | 2026-10-04 |
+| requirement-python-tui | Text menu: hello, system-log, language, self-management, Exit. Path word is selected by the language requirement. Default is `Path`. Menu columns are display columns | python | Active | `requirement-python-tui.md` | 2026-10-05 |
 | requirement-python-cli-language | Menu language: front row 4, codes 41–53, leaf `~/.local/VideoJoin/language`. `language` is not an argv verb | python | Active | `requirement-python-cli-language.md` | 2026-10-04 |
 | requirement-python-oop | L2 class map. Running tree stays three modules until an implement order | python | Active | `requirement-python-oop.md` | 2026-10-04 |
 | requirement-python-coding-style | Python style; temps; **shutil.move** publish; end state is the class map | python | Active | `requirement-python-coding-style.md` | 2026-10-04 |
@@ -33,7 +33,7 @@
 | Automatic companion `.sha256` channel integrity law | **Absent** |
 | OpenCV / duration probe dependency | **Absent** |
 | Second Active `requirement-domain-*` | **Forbidden** while domain-videojoin is Active |
-| Front row 2, cut / speed / boomerang, `list-mp4` | **Absent**. Front row 1 is `join`. Typed list is `list-videos` |
+| Front row 2, cut / speed / boomerang, `list-mp4`, `join`, `list-videos`, FFmpeg | **Absent**. Front row 1 is `hello` |
 | `requirement-python-dependency-management` | **Absent**. ChronicleLogger floor is packaging + runtime. Law and the live manifest are `ChronicleLogger>=1.3.1` |
 | `requirement-python-version` | **Absent**. Version SSOT is the `__version__` string |
 | `requirement-python-json-output` | **Absent**. This product does not claim `--json`. The about page does not grow a JSON stream |

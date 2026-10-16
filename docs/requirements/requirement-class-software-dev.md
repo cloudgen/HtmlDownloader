@@ -108,7 +108,7 @@ This file is class law plus the residual SSOT. It is not a second copy of domain
 | **Linter/formatter** | none as project law |
 | **Primary runtime / OS family** | multi-OS where Python and FFmpeg run (documented focus: Linux; macOS and Windows when the dependencies exist) |
 | **Architectures supported** | any architecture with CPython and an FFmpeg binary |
-| **Git surface** | used — remote `https://github.com/Wilgat/VideoJoin` |
+| **Git surface** | used — remote `https://github.com/cloudgen/HtmlDownloader` |
 | **Ship surface** | installable Python package `VideoJoin`; console script `video-join`; module form `python -m VideoJoin` |
 | **Product version SSOT** | `src/VideoJoin/__init__.py` → `__version__` and `pyproject.toml` `[project].version` stay equal when either is bumped (current: **1.0.5**) |
 | **Install mode** | pip / local package. Not a shell online-install product |

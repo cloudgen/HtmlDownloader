@@ -33,14 +33,14 @@ The target is an ordinary multi-class split. A StateLogic + `Attr` rewrite stays
 |---------|---------------|----------|
 | `src/VideoJoin/cli.py` | `def main` and class `Cli` | Entry. Builds the other objects and runs one job |
 | `src/VideoJoin/tui.py` | class `Tui` | Text-menu session |
-| `src/VideoJoin/join.py` | class `Join` | Discover, pick two, name the output, run the concat |
+| `src/VideoJoin/tui.py` | `Tui.hello_text` | The welcome line for the terminal and for menu row 1 |
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
 | Add a menu prompt | It is a method on `Tui`. The frame is `MenuPainter`. | Edit the class file this requirement names |
-| Add a join step | It is a method on `Join`. The concat order stays on the pipeline requirement. | Edit `src/VideoJoin/join.py` |
+| Change the welcome line | It is `Tui.hello_text`. The terminal and menu row 1 both use it. | Edit `src/VideoJoin/tui.py` |
 | Start the program | The console script calls `VideoJoin.cli:main`. | `video-join` |
-| Name a constant the program uses | It is an attribute of the class that owns it. `Cli` owns identity, the verb lists, and the suffix sets. | `Cli.APP_NAME` |
+| Name a constant the program uses | It is an attribute of the class that owns it. `Cli` owns identity and the verb lists. | `Cli.APP_NAME` |
 
 ## 2. Core Rules (Mandatory)
 
@@ -77,15 +77,15 @@ The target is an ordinary multi-class split. A StateLogic + `Attr` rewrite stays
 12. `src/VideoJoin/tui.py` **MUST** define class `Tui` and the exception `MenuScreenError`. No other class. `Tui` owns `open_text_menu`, `front_lines`, `self_lines`, `log_lines`, `language_lines`, `join_on_screen`, `list_on_screen`, `about_on_screen`, `help_on_screen`, `read_key`, and `notice`.
 13. Class `MenuPainter` in `src/VideoJoin/menu_painter.py` owns `paint`, `paint_prompt`, `path_label`, `path_line`, `clock_text`, `format_rows`, `display_rows`, `screen_can_hold`, `display_width`, `clip_columns`, and `clip_columns_right`. The frame glyphs, `MENU_ROWS`, `SELF_ROWS`, `LOG_ROWS`, `PATH_LABEL_EN`, and `PATH_LABEL_ZH_HANT` live on that class. `display_width`, `clip_columns`, and `clip_columns_right` are methods of that class. The module does not define them beside the class. Wide and Fullwidth count as two. Ambiguous stays one. The column rule stays on `requirement-python-tui`. `FRAME_TOP_LEFT` **MUST NOT** appear in `cli.py`. `path_label`, `clock_text`, and `path_line` draw the first row of the front board, of the self-management board, of the system-log board, and of the language board. The clock shape, shortening the path from the left, and when the clock is omitted stay on `requirement-python-tui` rule 13. The selected word stays on `requirement-python-cli-language`. `path_label` returns that word. It does not read `LANG` or `LC_ALL`, and it does not invent a second line. `MenuPainter.__init__` writes `MenuLanguage(...)`.
 14. Class `MenuModel` in `src/VideoJoin/menu_model.py` owns `apply_key`, `edge_keys`, `highlighted_row`, and `buffer_text`.
-15. Class `MenuSession` in `src/VideoJoin/menu_session.py` owns `run`, `take_action`, `wait_key`, and `leave_to_front`. `wait_key` is the one-second clock wait from `requirement-python-tui` rule 13, including the language board. It does not start a thread. `run` loops until row 9 Exit. A leaf action returns to the front board. A language pick saves through the shared `MenuLanguage` and returns to the front board. `MenuSession` dispatches join, system-log, language, self-management, and exit. It does not paint the frame.
+15. Class `MenuSession` in `src/VideoJoin/menu_session.py` owns `run`, `take_action`, `wait_key`, and `leave_to_front`. `wait_key` is the one-second clock wait from `requirement-python-tui` rule 13, including the language board. It does not start a thread. `run` loops until row 9 Exit. A leaf action returns to the front board. A language pick saves through the shared `MenuLanguage` and returns to the front board. `MenuSession` dispatches hello, system-log, language, self-management, and exit. It does not paint the frame.
 15a. Class `MenuLanguage` in `src/VideoJoin/menu_language.py` owns the thirteen codes, the language leaf, and the menu words. One class. No second class in that file. The logger arrives through `__init__`. The codes and the leaf stay on `requirement-python-cli-language`.
 16. The menu picture stays on `requirement-python-tui`. These classes implement that picture. They do not invent a second layout.
 17. Until an implement order lands this split, `cli.py` still holds the prompt session. After the split, `cli.py` **MUST NOT** hold `Tui`, `MenuPainter`, `MenuModel`, or `MenuSession` methods.
 
-### 2.4 About page and join
+### 2.4 About page
 
 18. Class `AboutPage` in `src/VideoJoin/about_page.py` owns `framework_about`, `about_box_lines`, `install_kind`, `install_sentence`, and `_is_source_checkout`. `framework_about` composes the page in `requirement-python-about`. The domain sentence stays on `requirement-domain-videojoin`. `install_sentence` names GLOBAL, LOCAL, or UNINSTALLED. It **MUST NOT** name `python -m pip install VideoJoin` and **MUST NOT** name a downloaded-script installer. Class `CheckSystem` in `src/VideoJoin/check_system.py` owns the host-check reads, including the pyenv and conda paths. `Cli` writes `CheckSystem(...)` and then `AboutPage(...)`. `AboutPage` calls that object. It **MUST NOT** construct `CheckSystem`. Row 83 and the `about` verb call `framework_about`.
-19. Class `Join` in `src/VideoJoin/join.py` owns `discover`, `remaining_after`, `resolve_output_name`, and `run`. `discover` scans the current working directory. `remaining_after` drops the first path. `resolve_output_name` applies the default name and the extension rule. `run` calls the concat pipeline (copy, then fail-closed re-encode, then `shutil.move`). **MUST NOT** add a separate encoder class or a separate file-stage class for this product. Concat order stays on `requirement-video-ffmpeg-pipeline`. Publish stays `shutil.move`.
+19. This product has no class `Join` and no `src/VideoJoin/join.py`. **MUST NOT** add an encoder class, a file-listing class, or a media-scan class. The welcome line stays on `Tui.hello_text`.
 
 ### 2.5 The other jobs
 
@@ -97,7 +97,7 @@ The target is an ordinary multi-class split. A StateLogic + `Attr` rewrite stays
 
 | Class | File | Owns |
 |-------|------|------|
-| `Cli` | `src/VideoJoin/cli.py` | Parser, dispatch, verbs, tty checks. Identity constants, verb lists, suffix sets (rule 11f). `def main` stays in this file |
+| `Cli` | `src/VideoJoin/cli.py` | Parser, dispatch, verbs, tty checks. Identity constants and verb lists. `def main` stays in this file |
 | `Tui` | `src/VideoJoin/tui.py` | Text-menu session (rule 12). Shares the file with `MenuScreenError` |
 | `MenuPainter` | `src/VideoJoin/menu_painter.py` | Frame, glyphs, `MENU_ROWS`, `SELF_ROWS`, `LOG_ROWS`, `PATH_LABEL_EN`, `PATH_LABEL_ZH_HANT`, `paint`, `path_label`, `path_line`, `clock_text`, `display_width`, `clip_columns`, `clip_columns_right`. Writes `MenuLanguage(...)` |
 | `MenuLanguage` | `src/VideoJoin/menu_language.py` | Thirteen codes, the language leaf, and the menu words |
@@ -107,7 +107,6 @@ The target is an ordinary multi-class split. A StateLogic + `Attr` rewrite stays
 | `SelfManage` | `src/VideoJoin/self_management.py` | Local version and the pip commands for rows 84–87 |
 | `CheckSystem` | `src/VideoJoin/check_system.py` | Host-check reads for the about page. Does not draw the star box |
 | `AboutPage` | `src/VideoJoin/about_page.py` | `framework_about`, the star box, and the install kind. Calls `CheckSystem` |
-| `Join` | `src/VideoJoin/join.py` | Discover, pick, output name, concat call |
 
 | Item | Value |
 |------|--------|

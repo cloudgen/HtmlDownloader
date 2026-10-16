@@ -1,7 +1,7 @@
 # =============================================================================
 # Text-menu frame.
 # requirement-python-tui — menu region and the bottom input box.
-# requirement-python-cli-language — row 4 and the path word.
+# requirement-python-cli-language — row 7 and the path word.
 # requirement-python-oop — class MenuPainter owns the frame and MENU_ROWS.
 # =============================================================================
 from __future__ import annotations
@@ -95,40 +95,45 @@ class MenuPainter:
     MIN_HEIGHT = MIN_MENU_ABOVE + CHROME_ROWS
     MIN_PLACEABLE = 2 + len(" " + INPUT_MARK) + 1
     MENU_ROWS = (
-        (1, "join", "pick two videos in this folder and concatenate", "join"),
-        (3, "system-log", "view, clear, and the log folder", "system-log"),
-        (4, "language", "display language for this menu", "language"),
-        (8, "self-management", "version, about, and pip lifecycle", "self-management"),
+        (1, "download", "download a page and its stylesheets, scripts, and images", "download"),
+        (2, "list downloaded", "show saved page names", "list-downloaded"),
+        (3, "serve", "serve a saved page on this computer", "serve"),
+        (4, "System Log", "view, clear, and the log folder", "system-log"),
+        (6, "self-management", "version, about, and pip lifecycle", "self-management"),
+        (7, "language", "display language for this menu", "language"),
         (9, "Exit", "leave", "exit"),
     )
+    # Printed rows use 61–66. 67–70 stay unprinted.
     SELF_ROWS = (
-        (82, "version", "show the installed version", "version"),
-        (83, "about", "version, FFmpeg, and this computer", "about"),
-        (84, "version-check", "compare this install with pip", "version-check"),
-        (85, "self-update", "upgrade this package with pip", "self-update"),
-        (86, "self-uninstall", "remove this package with pip", "self-uninstall"),
-        (87, "self-install", "install this package with pip", "self-install"),
+        (61, "version", "show the installed version", "version"),
+        (62, "about", "version and this computer", "about"),
+        (63, "version-check", "compare this install with pip", "version-check"),
+        (64, "self-update", "upgrade this package with pip", "self-update"),
+        (65, "self-uninstall", "remove this package with pip", "self-uninstall"),
+        (66, "self-install", "install this package with pip", "self-install"),
         (0, "Back", "return to the main menu", "back"),
     )
+    # Printed rows use 41–43. 44–49 stay unprinted.
     LOG_ROWS = (
-        (31, "view-log", "list a log file and show it", "view-log"),
-        (32, "clear-log", "empty one log file", "clear-log"),
-        (33, "log-folder", "show the log folder", "log-folder"),
+        (41, "view-log", "list a log file and show it", "view-log"),
+        (42, "clear-log", "empty one log file", "clear-log"),
+        (43, "log-folder", "show the log folder", "log-folder"),
         (0, "Back", "return to the main menu", "back"),
     )
     ANY_BOARD = {
         "help": "help",
         "version": "version",
         "about": "about",
-        "hello": "hello",
-        "join": "join",
-        "list-videos": "list-videos",
+        "download": "download",
+        "list downloaded": "list-downloaded",
+        "serve": "serve",
         "self-install": "self-install",
         "version-check": "version-check",
         "self-update": "self-update",
         "self-uninstall": "self-uninstall",
         "self-management": "self-management",
         "system-log": "system-log",
+        "System Log": "system-log",
         "view-log": "view-log",
         "clear-log": "clear-log",
         "log-folder": "log-folder",
@@ -214,6 +219,15 @@ class MenuPainter:
             return language.text("title_log")
         if layer == "lang":
             return language.text("title_language")
+        if layer == "pages":
+            return language.text("title_pages")
+        if layer == "serve-pages":
+            return language.text("title_serve")
+        if layer == "page-action":
+            name = getattr(model, "page_title", "") or ""
+            if name:
+                return name
+            return language.text("title_page")
         return language.text("title_main")
 
     def row_parts(self, rows: tuple) -> list[tuple[str, str, str, str]]:

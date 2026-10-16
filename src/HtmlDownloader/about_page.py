@@ -47,7 +47,7 @@ class AboutPage:
 
     def _is_source_checkout(self, path):
         """True when path is this package inside a source tree that has pyproject.toml."""
-        marker = "{}src{}VideoJoin{}".format(os.sep, os.sep, os.sep)
+        marker = "{}src{}HtmlDownloader{}".format(os.sep, os.sep, os.sep)
         if marker not in path:
             return False
         cursor = os.path.dirname(path)
@@ -189,8 +189,8 @@ class AboutPage:
         """
         lines = [
             "{} {}".format(self.app_name, self.version),
-            "Domain: Concatenate two local videos with FFmpeg (copy, then fallback)",
-            "Runtime tools: FFmpeg (copy, then re-encode)",
+            "Domain: Download a page and its stylesheets, scripts, and images",
+            "Runtime tools: none",
             "Entry points: {}, python -m {}".format(self.console_name, self.app_name),
             "",
         ]

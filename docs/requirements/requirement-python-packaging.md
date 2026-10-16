@@ -84,7 +84,7 @@ This file owns the ChronicleLogger floor together with `requirement-runtime-prer
 | **Dependencies (live manifest)** | `ChronicleLogger>=1.3.1`. Matches the law floor |
 | **Build backend** | `setuptools.build_meta` |
 | **Console script** | `video-join = VideoJoin.cli:main` |
-| **Homepage / repo** | `https://github.com/Wilgat/VideoJoin` |
+| **Homepage / repo** | `https://github.com/cloudgen/HtmlDownloader` |
 | **Maintainer build helper** | `build.sh` |
 | **License** | MIT |
 | **Public package exports** | `__version__`, `main` only. **MUST NOT** re-export `ChronicleLogger` |

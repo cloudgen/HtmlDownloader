@@ -1,9 +1,34 @@
 # CHANGELOG
 
-All notable changes to **VideoJoin** are documented here.  
-Version SSOT: `pyproject.toml` + `src/VideoJoin/__init__.__version__`.
+All notable changes to **HtmlDownloader** are documented here.  
+Version SSOT: `pyproject.toml` + `src/HtmlDownloader/__init__.__version__`.
 
 ## [Unreleased]
+
+### Removed
+
+- Join, file listing, and FFmpeg. `join` and `list-videos` are not verbs. The program does not scan the folder for media and does not call an encoder.
+- The `hello` verb and the welcome line. Menu row 1 is no longer a welcome.
+
+### Added
+
+- Typed verb `download`. It needs `--url` and `--name`. It saves the HTML page to `~/.app/HtmlDownloader/output/<pagename>/index.html`. Linked stylesheets go in `output/<pagename>/assets/css/`, linked scripts in `output/<pagename>/assets/js/`, and linked images in `output/<pagename>/assets/img/`. Those three folders are flat. Font files sit in `assets/css/`.
+- When `output/<pagename>/index.html` already exists, the page URL is not fetched again. Stylesheets, scripts, and images named by that file are downloaded only when the file is missing. An older save that stored the page as a single file is moved to `index.html` and continued.
+- `output/url-map.json` remembers each URL and page name. Menu row **1 download** lists `page name: URL` by number, or accepts a URL.
+- Menu row **2 list downloaded** lists saved page names. After a page is chosen, **21 edit** opens it in Visual Studio Code when `code` is installed, and **22 view** opens it in the default browser when one is set. A tool that is not installed is left off that menu.
+- Typed verb `serve`. It needs `--page-name`. `--port` defaults to **5000**. It serves `~/.app/HtmlDownloader/output/<pagename>/` on `127.0.0.1` until Ctrl+C. `index.html` is `/`.
+- Menu row **3 serve** lists saved page names. After a page is chosen, the menu asks for a port. An empty port uses **5000**.
+- After stylesheet and script links are rewritten to local paths, the saved HTML drops `<base>`, `xml:base`, `<link rel="canonical">`, and HTML comments.
+
+### Changed
+
+- Package name is **HtmlDownloader**. Console script is `html-downloader`. Version is reset to **1.0.0**.
+- Front row **1** is **download**.
+- Front row **6** is **self-management**. Its list is **61**–**66**. Numbers **67**–**70** are not printed.
+- Front row **7** is **language**. Its list is **71**–**83**. Numbers **84**–**98** are not printed.
+- Front row **4** is **System Log**. Its list is **41**–**43**. Numbers **44**–**49** are not printed.
+- The about page domain line is `Download a page and its stylesheets, scripts, and images`. Self-management row 62 reads "version and this computer."
+- Public source is https://github.com/cloudgen/HtmlDownloader. README screenshots are captures of this menu: language **71**–**83**, one main menu for each language, self-management **61**–**66**, about, and System Log **41**–**43**.
 
 ## [1.0.5] - 2026-10-04
 

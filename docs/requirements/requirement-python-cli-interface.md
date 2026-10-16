@@ -61,11 +61,11 @@ The text-menu picture is `requirement-python-tui`. Join steps and formats are `r
 ### 2.3 Typed verbs
 
 8. `ArgumentParser.parse_args` **MUST** run after `ChronicleLogger(...)` and after the debug block.
-9. The typed verbs are `help`, `version`, `about`, `hello`, `join`, `list-videos`, `self-install`, `version-check`, `self-update`, and `self-uninstall`. Each one is operational. **MUST NOT** add a verb whose only purpose is a test. `language` is not a typed verb. Menu row 4 owns it (`requirement-python-cli-language`). **MUST NOT** add `language` to `PRODUCT_VERBS`.
-10. **MUST NOT** invent file-operand flags for `join`. Direct `join` with no terminal exits non-zero and tells the operator to use a terminal.
-11. On a terminal, `join` **MUST** start the join questions on the text screen (rules 16–23). `list-videos` **MUST** list eligible videos and **MUST NOT** join. `about` **MUST** open the about page.
-12. With no terminal, `list-videos` **MUST** print the eligible names and return 0. `about` **MUST** print the about page and return 0. Neither draws the text screen.
-13. `help` and `hello` **MUST NOT** draw the text screen. `help` returns 0. `hello` prints `Hello from VideoJoin <version>.` using `__version__`, then the next step `video-join help`, and returns 0.
+9. The typed verbs are `help`, `version`, `about`, `hello`, `self-install`, `version-check`, `self-update`, and `self-uninstall`. Each one is operational. **MUST NOT** add a verb whose only purpose is a test. **MUST NOT** add `join` or `list-videos`. `language` is not a typed verb. Menu row 4 owns it (`requirement-python-cli-language`). **MUST NOT** add `language` to `PRODUCT_VERBS`.
+10. **MUST NOT** invent file-operand flags. **MUST NOT** scan the working directory for media files.
+11. On a terminal, `hello` **MUST NOT** draw the text screen. `about` **MUST** open the about page.
+12. With no terminal, `about` **MUST** print the about page and return 0. It does not draw the text screen. `hello` **MUST** print the welcome line and return 0.
+13. `help` and `hello` **MUST NOT** draw the text screen. `help` returns 0. `hello` prints `Welcome to VideoJoin <version>.` using `__version__` and returns 0. It does not print a next-step line. Menu row 1 shows that same line.
 14. `version` **MUST** print `__version__` and **MUST NOT** call pip and **MUST NOT** draw the text screen.
 15. `version-check`, `self-update`, `self-install`, and `self-uninstall` **MUST NOT** open the text screen. The commands are:
 

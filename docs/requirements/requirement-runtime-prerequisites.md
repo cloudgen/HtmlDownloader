@@ -10,7 +10,7 @@ Declare the host and Python runtime prerequisites required to run VideoJoin. Thi
 
 ### 1.1 Human-facing
 
-**In one sentence:** You need Python, the ChronicleLogger package, and FFmpeg on your PATH before a join can finish.
+**In one sentence:** You need Python and the ChronicleLogger package. No encoder is required.
 
 | Box | Meaning | Example |
 |-----|---------|---------|

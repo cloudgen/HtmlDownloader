@@ -6,8 +6,8 @@ import os
 import tempfile
 import unittest
 
-from VideoJoin.menu_painter import MenuPainter
-from VideoJoin.tui import Tui
+from HtmlDownloader.menu_painter import MenuPainter
+from HtmlDownloader.tui import Tui
 
 
 class TestPathLabel(unittest.TestCase):
@@ -67,7 +67,7 @@ class TestPathLabel(unittest.TestCase):
                 ):
                     self.assertEqual(line, "Path: " + current + "  " + clock)
                     self.assertFalse(line.startswith("路徑"))
-                    self.assertNotIn("VideoJoin", line.split("  ")[0])
+                    self.assertNotIn("HtmlDownloader", line.split("  ")[0])
             finally:
                 session.painter.clock_text = original
         finally:
@@ -86,9 +86,9 @@ class TestWideColumns(unittest.TestCase):
         """TP-TUI-10: the colon starts after the display width of a wide short."""
         import unicodedata
 
-        from VideoJoin.cli import Cli
-        from VideoJoin.menu_model import MenuModel
-        from VideoJoin.menu_painter import MenuPainter
+        from HtmlDownloader.cli import Cli
+        from HtmlDownloader.menu_model import MenuModel
+        from HtmlDownloader.menu_painter import MenuPainter
 
         class ColumnScreen:
             """Records each addstr with its column."""
@@ -189,32 +189,40 @@ class TestWideColumns(unittest.TestCase):
 
             expected = {
                 "zh-Hans": [
-                    "1. join    : 在此文件夹挑选两段视频并连接",
-                    "3. 系统日志: 查看、清空，以及日志文件夹",
-                    "4. 语言    : 此菜单的显示语言",
-                    "8. 自我管理: 版本、关于，以及 pip 生命周期",
-                    "9. 离开    : 离开",
+                    "1. download       : 下载页面、样式表和脚本",
+                    "2. list downloaded: 显示已下载的页面名称",
+                    "3. serve          : 在本机提供已保存的页面",
+                    "4. 系统日志       : 查看、清空，以及日志文件夹",
+                    "6. 自我管理       : 版本、关于，以及 pip 生命周期",
+                    "7. 语言           : 此菜单的显示语言",
+                    "9. 离开           : 离开",
                 ],
                 "zh-Hant": [
-                    "1. join    : 在此資料夾挑選兩段影片並連接",
-                    "3. 系統日誌: 查看、清空，以及日誌資料夾",
-                    "4. 語言    : 這個選單的顯示語言",
-                    "8. 自我管理: 版本、關於，以及 pip 生命週期",
-                    "9. 離開    : 離開",
+                    "1. download       : 下載頁面、樣式表和指令碼",
+                    "2. list downloaded: 顯示已下載的頁面名稱",
+                    "3. serve          : 在這台電腦提供已儲存的頁面",
+                    "4. 系統日誌       : 查看、清空，以及日誌資料夾",
+                    "6. 自我管理       : 版本、關於，以及 pip 生命週期",
+                    "7. 語言           : 這個選單的顯示語言",
+                    "9. 離開           : 離開",
                 ],
                 "ko": [
-                    "1. join       : 이 폴더에서 동영상 두 개를 골라 이어 붙입니다",
-                    "3. 시스템 로그: 보기, 비우기, 로그 폴더",
-                    "4. 언어       : 이 메뉴의 표시 언어",
-                    "8. 자기관리   : 버전, 정보, pip 수명 주기",
-                    "9. 종료       : 종료",
+                    "1. download       : 페이지와 스타일시트와 스크립트를 받습니다",
+                    "2. list downloaded: 저장한 페이지 이름을 표시합니다",
+                    "3. serve          : 저장한 페이지를 이 컴퓨터에서 제공합니다",
+                    "4. 시스템 로그    : 보기, 비우기, 로그 폴더",
+                    "6. 자기관리       : 버전, 정보, pip 수명 주기",
+                    "7. 언어           : 이 메뉴의 표시 언어",
+                    "9. 종료           : 종료",
                 ],
                 "ja": [
-                    "1. join        : このフォルダの動画を2本選んで連結する",
-                    "3. システムログ: 表示、消去、ログフォルダ",
-                    "4. 言語        : このメニューの表示言語",
-                    "8. 自己管理    : バージョン、概要、pip のライフサイクル",
-                    "9. 終了        : 終了",
+                    "1. download       : ページとスタイルシートとスクリプトを取得する",
+                    "2. list downloaded: 保存したページ名を表示する",
+                    "3. serve          : 保存したページをこのコンピュータで配信する",
+                    "4. システムログ   : 表示、消去、ログフォルダ",
+                    "6. 自己管理       : バージョン、概要、pip のライフサイクル",
+                    "7. 言語           : このメニューの表示言語",
+                    "9. 終了           : 終了",
                 ],
             }
             shorts = {

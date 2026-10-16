@@ -60,7 +60,9 @@ class MenuSession:
         arm = getattr(screen, "timeout", None)
         show_clock = (
             self.model.phase != "result"
-            and self.model.layer in ("front", "self", "log", "lang")
+            and self.model.layer in (
+                "front", "self", "log", "lang", "pages", "page-action", "serve-pages",
+            )
         )
         if arm is not None:
             if show_clock:

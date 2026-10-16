@@ -42,7 +42,7 @@ Define the repository layout and the package structure for VideoJoin: where sour
 
 1. **MUST** keep the installable package under `src/VideoJoin/`.
 2. The running package **MUST** include `__init__.py` (version export), `__main__.py` (module entry), and `cli.py` (the running CLI and join session).
-3. The allowed end state adds the modules named by `requirement-python-oop` (`tui.py`, `menu_painter.py`, `menu_model.py`, `menu_session.py`, `menu_language.py`, `system_log.py`, `self_management.py`, `check_system.py`, `about_page.py`, `join.py`). Those files are not required on disk until an implement order lands them. After that order, `cli.py` holds class `Cli` and `def main`, and it does not hold the other classes’ methods.
+3. The allowed end state adds the modules named by `requirement-python-oop` (`tui.py`, `menu_painter.py`, `menu_model.py`, `menu_session.py`, `menu_language.py`, `system_log.py`, `self_management.py`, `check_system.py`, `about_page.py`). `join.py` is not part of that set. After that order, `cli.py` holds class `Cli` and `def main`, and it does not hold the other classes’ methods.
 4. **MUST NOT** scatter a second installable package name that contradicts the packaging SSOT.
 
 ### 2.2 Project root layout

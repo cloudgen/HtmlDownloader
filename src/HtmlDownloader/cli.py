@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # =============================================================================
-# VideoJoin CLI — text menu and typed verbs.
+# HtmlDownloader CLI — text menu and typed verbs.
 # Law keys: requirement-python-cli-interface, requirement-python-cli-logging,
 #           requirement-python-tui, requirement-python-oop,
 #           requirement-python-about, requirement-domain-videojoin,
 #           requirement-python-error-handling, requirement-python-coding-style,
 #           requirement-runtime-prerequisites
+# Video join, FFmpeg, and file listing are not part of this program.
 # CIAO-Lite: Caution • Intentional • Anti-fragile • Over-protect
 # def main writes ChronicleLogger(...). This module does not construct it
 # at import time and does not re-export it.
@@ -17,7 +18,8 @@ import sys
 
 from .about_page import AboutPage
 from .check_system import CheckSystem
-from .join import Join
+from .page_download import PageDownload, PageDownloadError
+from .page_serve import PageServe, PageServeError
 from .self_management import SelfManage
 from .tui import Tui
 
@@ -31,15 +33,14 @@ class Cli:
 
     from . import __version__ as VERSION
 
-    APP_NAME = "VideoJoin"
-    CONSOLE_NAME = "video-join"
+    APP_NAME = "HtmlDownloader"
+    CONSOLE_NAME = "html-downloader"
     PRODUCT_VERBS = (
         "help",
         "version",
         "about",
-        "hello",
-        "join",
-        "list-videos",
+        "download",
+        "serve",
         "self-install",
         "version-check",
         "self-update",
@@ -52,14 +53,12 @@ class Cli:
         "self-update",
         "self-uninstall",
     )
-    VIDEO_SUFFIXES = {".mp4", ".mov", ".mkv", ".avi", ".m4v"}
-    OUTPUT_SUFFIXES = (".mp4", ".mkv", ".mov")
     AUTHOR_NAME = "Wilgat Wong"
     AUTHOR_EMAIL = "wilgat.wong@gmail.com"
-    HOMEPAGE = "https://github.com/Wilgat/VideoJoin"
+    HOMEPAGE = "https://github.com/cloudgen/HtmlDownloader"
     LAST_UPDATE = "2026-10-04"
     DOWNLOAD_URL = ""
-    BASIC_USAGE = "video-join join"
+    BASIC_USAGE = "html-downloader download --url URL --name PAGENAME"
 
     def __init__(self, logger=None):
         self.logger = logger
@@ -67,11 +66,6 @@ class Cli:
             logger.log_message("instantiated", component="Cli")
         self.app_name = Cli.APP_NAME
         self.version = Cli.VERSION
-        self.join = Join(
-            logger=logger,
-            video_suffixes=Cli.VIDEO_SUFFIXES,
-            output_suffixes=Cli.OUTPUT_SUFFIXES,
-        )
         self.about = AboutPage(
             CheckSystem(
                 logger=logger,
@@ -106,8 +100,10 @@ class Cli:
         General Purpose: Whether this argv draws the text screen.
 
         The real parser has not run yet. This walk only decides is_quiet.
-        Help, version, hello, and the pip verbs do not draw the screen.
-        Empty argv, join, list-videos, and about do, when stdout is a terminal.
+        Help, version, download, serve, and the pip verbs do not draw the screen.
+        Empty argv and about do, when stdout is a terminal.
+        download saves a page and does not draw the screen.
+        serve serves a saved page and does not draw the screen.
         """
         if argv is None:
             argv = sys.argv[1:]
@@ -130,7 +126,7 @@ class Cli:
             return False
         if saw_force and verb != "self-uninstall":
             return False
-        if verb in ("join", "list-videos", "about"):
+        if verb == "about":
             return True
         return verb is None
 
@@ -148,29 +144,40 @@ class Cli:
 
     def build_parser(self):
         """
-        General Purpose: One optional product verb. No file-operand flags.
+        General Purpose: One optional product verb.
         help is also --help. --force belongs only to self-uninstall.
+        --url and --name belong only to download.
+        --page-name and --port belong only to serve.
         """
         parser = argparse.ArgumentParser(
             prog=Cli.CONSOLE_NAME,
             formatter_class=argparse.RawDescriptionHelpFormatter,
             description=(
-                "{0} — concatenate two videos in this folder.\n"
+                "{0} — download one HTML page and its stylesheets, scripts, and images.\n"
                 "With no arguments on a terminal, opens the text menu.\n"
                 "With no arguments and no terminal, prints this help and stops.\n"
-                "Product verbs: help, version, about, hello, join, list-videos,\n"
-                "self-install, version-check, self-update, self-uninstall.\n"
+                "Product verbs: help, version, about, download, serve, self-install,\n"
+                "version-check, self-update, self-uninstall.\n"
                 "help prints this usage. version prints the installed version.\n"
-                "about and hello print a page. hello does not draw the menu.\n"
-                "join asks for two videos in this folder and an output name.\n"
-                "list-videos lists eligible videos and does not join.\n"
-                "version-check runs: python -m pip index versions VideoJoin\n"
-                "self-update runs: python -m pip install --upgrade VideoJoin\n"
-                "self-install runs: python -m pip install VideoJoin\n"
-                "self-uninstall runs: python -m pip uninstall -y VideoJoin\n"
-                "and needs --force. Empty arguments do not install or update.\n"
-                "Formats: .mp4 .mov .mkv .avi .m4v."
-                .format(Cli.APP_NAME)
+                "about prints a page. download saves the page and does not\n"
+                "draw the menu. It needs --url and --name.\n"
+                "serve serves one saved page on 127.0.0.1 and does not draw the\n"
+                "menu. It needs --page-name. --port defaults to {1}.\n"
+                "Menu row 1 download lists saved pages or accepts a URL.\n"
+                "Menu row 2 list downloaded lists saved page names. After a page\n"
+                "is chosen, 21 edit opens it in Visual Studio Code when code is\n"
+                "installed, and 22 view opens it in the default browser when one\n"
+                "is set. A tool that is not installed is left off that menu.\n"
+                "Menu row 3 serve lists saved page names, then asks for a port.\n"
+                "An empty port uses {1}. Menu row 4 System Log opens the log list.\n"
+                "Each page is ~/.app/{0}/output/<name>/index.html.\n"
+                "This program does not join media or list files in this folder.\n"
+                "version-check runs: python -m pip index versions {0}\n"
+                "self-update runs: python -m pip install --upgrade {0}\n"
+                "self-install runs: python -m pip install {0}\n"
+                "self-uninstall runs: python -m pip uninstall -y {0}\n"
+                "and needs --force. Empty arguments do not install or update."
+                .format(Cli.APP_NAME, PageServe.DEFAULT_PORT)
             ),
         )
         parser.add_argument(
@@ -179,7 +186,7 @@ class Cli:
             default=None,
             metavar="verb",
             help=(
-                "Product verb: help, version, about, hello, join, list-videos, "
+                "Product verb: help, version, about, download, serve, "
                 "self-install, version-check, self-update, or self-uninstall"
             ),
         )
@@ -193,16 +200,68 @@ class Cli:
             action="store_true",
             help="Confirm self-uninstall. Required on the command line.",
         )
+        parser.add_argument(
+            "--url",
+            default="",
+            help="Page URL for download. Used only with the download verb.",
+        )
+        parser.add_argument(
+            "--name",
+            default="",
+            help="Page name for download. The HTML file is output/<name>/index.html.",
+        )
+        parser.add_argument(
+            "--page-name",
+            default="",
+            help="Saved page name for serve. Used only with the serve verb.",
+        )
+        parser.add_argument(
+            "--port",
+            default=None,
+            help="Port for serve. Default {0}. Used only with the serve verb.".format(
+                PageServe.DEFAULT_PORT
+            ),
+        )
         return parser
 
     def _page(self, text):
         print(text)
         return 0
 
-    def _verb_hello(self):
-        """Hello from this package, then the help next step. Does not draw the menu."""
-        print(self.tui.hello_text())
-        print("Next: {0} help".format(Cli.CONSOLE_NAME))
+    def _verb_download(self, url, name):
+        """Save one page. Does not draw the menu. Needs --url and --name."""
+        if not (url or "").strip() or not (name or "").strip():
+            return self.report_error(
+                "download needs --url and --name.",
+                "{0} download --url URL --name PAGENAME".format(Cli.CONSOLE_NAME),
+            )
+        worker = PageDownload(Cli.APP_NAME, logger=self.logger)
+        try:
+            text = worker.download(url, name)
+        except PageDownloadError as exc:
+            return self.report_error(
+                str(exc),
+                "{0} download --url URL --name PAGENAME".format(Cli.CONSOLE_NAME),
+            )
+        print(text)
+        return 0
+
+    def _verb_serve(self, name, port):
+        """Serve one saved page. Does not draw the menu. Needs --page-name."""
+        if not (name or "").strip():
+            return self.report_error(
+                "serve needs --page-name.",
+                "{0} serve --page-name PAGENAME".format(Cli.CONSOLE_NAME),
+            )
+        worker = PageServe(Cli.APP_NAME, logger=self.logger)
+        try:
+            text = worker.serve(name, port)
+        except PageServeError as exc:
+            return self.report_error(
+                str(exc),
+                "{0} serve --page-name PAGENAME".format(Cli.CONSOLE_NAME),
+            )
+        print(text)
         return 0
 
     def _unknown_verb(self, token):
@@ -212,11 +271,6 @@ class Cli:
             "{0} help — verbs: {1}".format(Cli.CONSOLE_NAME, names),
         )
 
-    def _print_video_list(self):
-        """Eligible names on the console. Does not join and does not draw the screen."""
-        print(self.tui._video_listing())
-        return 0
-
     def _dispatch(self, args):
         """One product verb, the front board, or a fail-closed stop."""
         verb = args.verb
@@ -225,13 +279,25 @@ class Cli:
                 "--force is only for self-uninstall.",
                 "{0} self-uninstall --force".format(Cli.CONSOLE_NAME),
             )
+        if (args.url or args.name) and verb != "download":
+            return self.report_error(
+                "--url and --name are only for download.",
+                "{0} download --url URL --name PAGENAME".format(Cli.CONSOLE_NAME),
+            )
+        if (args.page_name or args.port is not None) and verb != "serve":
+            return self.report_error(
+                "--page-name and --port are only for serve.",
+                "{0} serve --page-name PAGENAME".format(Cli.CONSOLE_NAME),
+            )
         if verb == "about":
             result = self.tui.about_on_screen()
             if isinstance(result, int):
                 return result
             return self._page(result)
-        if verb == "hello":
-            return self._verb_hello()
+        if verb == "download":
+            return self._verb_download(args.url, args.name)
+        if verb == "serve":
+            return self._verb_serve(args.page_name, args.port)
         if verb == "version":
             return self._page(self.self_manage.local_version())
         if verb == "self-uninstall":
@@ -243,18 +309,6 @@ class Cli:
             return self.self_manage.emit(verb)
         if verb in ("version-check", "self-update", "self-install"):
             return self.self_manage.emit(verb)
-        if verb == "join":
-            if not self.stdout_is_tty():
-                return self.report_error(
-                    "No terminal for join. Use a terminal.",
-                    "{0} join".format(Cli.CONSOLE_NAME),
-                )
-            return self.tui.open_direct("join")
-        if verb == "list-videos":
-            result = self.tui.list_on_screen()
-            if isinstance(result, int):
-                return result
-            return self._page(result)
         if verb is not None:
             return self._unknown_verb(verb)
         if not self.stdout_is_tty():
@@ -297,11 +351,11 @@ def main(argv=None, basedir="", logdir=""):
         )
         return 1
 
-    from VideoJoin import __version__
+    from HtmlDownloader import __version__
 
     screen = Cli.opens_text_screen(argv)
     logger = ChronicleLogger(
-        logname="VideoJoin",
+        logname=Cli.APP_NAME,
         is_quiet=screen,
         basedir=basedir,
         logdir=logdir,

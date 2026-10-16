@@ -48,7 +48,7 @@ Pyenv and conda path reads for this page stay in this file. This product does no
 ## 2. Core Rules (Mandatory)
 
 1. **One page.** Menu action **about** and the verb `video-join about` **MUST** show one result page whose body is this file. The verb **MUST NOT** ask for a folder or a file. The page **MUST** be three blocks in this order: identity, host check, star box. A blank line **MUST** separate the blocks. The page **MUST NOT** be `--version`. Without a terminal, that page **MUST** be the whole of standard output. This product does not claim `--json`. The page **MUST NOT** gain a JSON stream.
-2. **Identity block.** The first four lines **MUST** be, in order: `{APP_NAME} {version}`, `Domain: Concatenate two local videos with FFmpeg (copy, then fallback)`, `Runtime tools: FFmpeg (copy, then re-encode)`, `Entry points: video-join, python -m VideoJoin`. `{version}` **MUST** be the package version string `__version__`. The domain sentence **MUST** stay the sentence on `requirement-domain-videojoin`. The runtime-tools line is static. It **MUST NOT** be a live `ffmpeg` probe. The page **MUST NOT** name `py-tui`. It **MUST NOT** print `python -m pip install` or an author email.
+2. **Identity block.** The first four lines **MUST** be, in order: `{APP_NAME} {version}`, `Domain: Show a welcome message`, `Runtime tools: none`, `Entry points: video-join, python -m VideoJoin`. `{version}` **MUST** be the package version string `__version__`. The domain sentence **MUST** stay the sentence on `requirement-domain-videojoin`. The runtime-tools line is static. It **MUST NOT** name FFmpeg. The page **MUST NOT** name `py-tui`. It **MUST NOT** print `python -m pip install` or an author email.
 3. **Host-check header.** The check **MUST** start with `{local stamp} {APP_NAME}(v{version})  [CHECK SYSTEM]:` and the next line **MUST** be two spaces then `Now checking your operation system!`. The stamp **MUST** be local time `YYYY-MM-DD HH:MM:SS.ffffff` from `datetime.datetime.now()`. There are two spaces before `[CHECK SYSTEM]:`.
 4. **Host-check fields.** After the header, the page **MUST** print these labels in this order, each starting with four spaces, then the label, a colon, a space, and the value. A missing value **MUST** leave the line in place. The check **MUST NOT** spawn `python2`, `python3`, `conda`, `pyenv`, or `id`.
 
@@ -153,7 +153,7 @@ Entry points: video-join, python -m VideoJoin
 *     video-join join                             *
 *                                                 *
 * Please visit our homepage:                      *
-*     "https://github.com/Wilgat/VideoJoin"       *
+*     "https://github.com/cloudgen/HtmlDownloader"       *
 *                                                 *
 *                                                 *
 *                                                 *
@@ -177,7 +177,7 @@ Invocation: `video-join` on a terminal, then `8`, then `83`. The same page is `v
 | **APP_NAME** | `VideoJoin` |
 | **Console script** | `video-join` |
 | **Author** | `Wilgat Wong` |
-| **Homepage** | `https://github.com/Wilgat/VideoJoin` |
+| **Homepage** | `https://github.com/cloudgen/HtmlDownloader` |
 | **About date** | `2026-10-04` (`Cli.LAST_UPDATE`). This is the box date, not the host-check stamp |
 | **Usage line** | `video-join join` (`Cli.BASIC_USAGE`) |
 | **Download URL** | empty (`Cli.DOWNLOAD_URL`) |

@@ -15,8 +15,11 @@ class MenuModel:
 
     boards, when set, replaces the rows for this session. Omit boards and
     the painter supplies the live rows, so a language save repaints them.
-    Front rows are join, system-log, language, self-management, and Exit.
-    System-log is under 3. Language is under 4.
+    Front rows are download, list downloaded, serve, System Log,
+    self-management, language, and Exit. List downloaded is under 2.
+    Serve is under 3. System Log is under 4. The log list is 41–43.
+    Self-management is under 6 and its list is 61–66. Language is under 7
+    and its list is 71–83. Edit is 21 and view is 22.
     """
 
     def __init__(self, boards: dict | None = None, logger=None, painter=None) -> None:
@@ -238,8 +241,14 @@ class MenuModel:
         if kind == "exit":
             return "exit"
         if kind == "back":
-            self.layer = "front"
+            if self.layer == "page-action":
+                self.layer = "pages"
+            else:
+                self.layer = "front"
             self.index = 0
+            self.focus = "list"
+            self.buffer = ""
+            self.cursor = 0
             return None
         if kind == "self-management":
             self.layer = "self"
