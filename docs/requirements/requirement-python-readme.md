@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-readme.md
-**Status**: Active (Version 1.1.2)
+**Status**: Active (Version 1.1.4)
 **Area**: python
 **Key**: `requirement-python-readme`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -94,7 +94,7 @@ The first-row sentence in the user document **MUST** name the current directory 
 | **Pictures** | `screenshots/` |
 | **Package** | `HtmlDownloader` |
 | **Console script** | `html-downloader` |
-| **Version** | `1.1.0` from `src/HtmlDownloader/__init__.py` (`__version__`). `pyproject.toml` copies that string |
+| **Version** | `1.1.1` from `src/HtmlDownloader/__init__.py` (`__version__`). `pyproject.toml` copies that string |
 | **Python** | `>=2.7`, excluding 3.0 through 3.4. The badge says 2.7+ (3.x recommended) |
 | **License file** | `LICENSE.md` (MIT). The file is present. The document link stays relative |
 | **Homes** | `https://github.com/cloudgen/HtmlDownloader` and `https://pypi.org/project/HtmlDownloader/` |
@@ -116,13 +116,13 @@ The first-row sentence in the user document **MUST** name the current directory 
 | Advantages | The three parts below. No comparison table | This file. Peers in §2.2 for the behavior |
 | Quick Installation | `ChronicleLogger>=1.3.1`. No external media tool. `pip install HtmlDownloader`. Checkout uses a venv and `pip install -e .`. The fenced text menu stays in this section | `requirement-runtime-prerequisites`, `requirement-python-packaging`, `requirement-python-tui` |
 | Usage | Menu versus typed verbs. `download` needs `--url`. `--name` may be omitted when the URL recommends the folder. `--html` is optional. `serve` needs `--page-name` and defaults `--port` to 5000. No terminal: empty argv prints help and returns 0. `self-uninstall` needs `--force`. No sudo | `requirement-python-cli-interface`, `requirement-domain-htmldownloader`, `requirement-python-tui` |
-| Screenshots | Lead: each heading is the file name, and the paragraph is what that picture shows. Package **1.0.0**. The paragraph and the image alt are the catalog below | This file |
+| Screenshots | Lead: each heading is the file name, and the paragraph is what that picture shows. Package **1.1.1**. The paragraph and the image alt are the catalog below | This file |
 | Examples | `html-downloader`, then `html-downloader version`, then `html-downloader download --url URL --name PAGENAME` | `requirement-domain-htmldownloader` |
 | Platform Compatibility | Linux primary. macOS and Windows when CPython is on PATH. The text menu needs a terminal | `requirement-runtime-prerequisites` |
 | Related Projects | The eight lines below, in that order, each with one sentence | This file |
 | Contributing | Keep product law in sync. Do not strip `shutil.move`. Version strings stay together | `requirement-python-coding-style`, `requirement-python-packaging` |
 | License | MIT, link `LICENSE.md`, and that file exists | `requirement-python-packaging` |
-| Last Update | Names package **1.1.0**, the public source, and the picture catalog. The pictures still show **1.0.0**. A version bump is not required for pictures that did not change | This file for the line. `__version__` for the string |
+| Last Update | Names package **1.1.1**, the public source, and the picture catalog. The pictures show **1.1.1** | This file for the line. `__version__` for the string |
 
 **Related projects, in this order.** The first two are this program. Each line is one sentence. Do not add an install recipe.
 
@@ -243,6 +243,16 @@ The documented install is for this login. **This requirement:** the user documen
 | `screenshots/` | The captures |
 | `docs/reviews/test-plan.md` | `TP-DOC-01` and `TP-DOC-03` |
 
+## Terminologies
+
+**Project requirements.** Product law is the finished must/should rules for this product. They are complete for this product. They are not blank forms, not agent procedures, and not a glossary.
+
+**Daily-life example:** “This household must lock the door by 10” is law for this house. A blank curfew form in a stationery shop is not.
+
+**PyPI-compatible README format.** The shape of the user document that a package index can reprint: markdown the index accepts, picture destinations that are absolute `https` addresses, a badge row that is already absolute `https`, an install name that matches the package name, and a version badge that matches the package version. A relative picture path is not that shape. A link to the next page in the same document may stay short.
+
+**Daily-life example:** The leaflet’s install name matches the catalog card, the edition sticker matches the edition you confirmed, and each photo is an `https` address. A photo written as a path inside the shop still opens at home and shows a blank frame in the warehouse window.
+
 ## 7. Status history
 
 | Date | Status | Note |
@@ -252,6 +262,8 @@ The documented install is for this login. **This requirement:** the user documen
 | 2026-10-16 | Active 1.1.0 | The user document is the download, list, and serve board. Version **1.0.0**. Seventeen menu pictures. No comparison table |
 | 2026-10-28 | Active 1.1.1 | The picture count in the design line is seventeen. No join picture |
 | 2026-10-28 | Active 1.1.2 | Usage matches optional `--name` and `--html`. The package string is **1.1.0**. The pictures stay **1.0.0** |
+| 2026-10-28 | Active 1.1.3 | Terminologies for project requirements and the package-description shape |
+| 2026-10-28 | Active 1.1.4 | Package string and the menu pictures are **1.1.1**. The about stamp is `2026-10-28 16:58:41.549413`. Python on that page is 3.12.3 |
 
 ---
 

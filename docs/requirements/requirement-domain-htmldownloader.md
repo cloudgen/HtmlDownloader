@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-domain-htmldownloader.md
-**Status**: Active (Version 1.5.3)
+**Status**: Active (Version 1.5.4)
 **Area**: domain
 **Key**: `requirement-domain-htmldownloader`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -99,7 +99,7 @@ The domain sentence on the about page is `Download a page and its stylesheets, s
 | Field | Content |
 |-------|---------|
 | Product name | HtmlDownloader |
-| Version | `__version__`, the same string as `pyproject.toml` (current `1.1.0`) |
+| Version | `__version__`, the same string as `pyproject.toml` (current `1.1.1`) |
 | Domain summary | Download a page and its stylesheets, scripts, and images |
 
 The page **MUST** use that domain sentence. The runtime-tools line **MUST** be `none`. It **MUST NOT** name FFmpeg.
@@ -116,7 +116,7 @@ The page **MUST** use that domain sentence. The runtime-tools line **MUST** be `
 | **Menu rows** | Front row 1 kind `download`. Front row 2 kind `list-downloaded`. Front row 3 kind `serve` |
 | **Page folder** | `requirement-html-page-download` — `~/.app/HtmlDownloader/output/<pagename>/<html file>`, default `index.html` |
 | **Map** | `requirement-html-page-download` — `output/url-map.json` |
-| **VERSION** | `1.1.0` (`__init__.py` and `pyproject.toml`) |
+| **VERSION** | `1.1.1` (`__init__.py` and `pyproject.toml`) |
 | **Absent** | `src/HtmlDownloader/join.py`, verbs `hello`, `join`, and `list-videos`, FFmpeg |
 | **CLI SSOT** | `requirement-python-cli-interface` |
 | **Screen** | `requirement-python-tui` |
@@ -216,6 +216,7 @@ On Termux, Git Bash, Windows cmd, or the same class, download, list, and serve r
 | 2026-10-28 | Active 1.5.1 | A Retired predecessor is a suggestion for removal. Ask the user to confirm before deleting it |
 | 2026-10-28 | Active 1.5.2 | The user confirmed. `requirement-domain-videojoin` is removed. Do not recreate that key |
 | 2026-10-28 | Active 1.5.3 | The human box matches the omit-name sentence in this file. Product version **1.1.0** |
+| 2026-10-28 | Active 1.5.4 | Product version **1.1.1** |
 
 ---
 

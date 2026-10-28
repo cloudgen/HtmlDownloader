@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-cli-interface.md
-**Status**: Active (Version 1.2.5)
+**Status**: Active (Version 1.2.7)
 **Area**: python
 **Key**: `requirement-python-cli-interface`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -8,7 +8,7 @@
 
 Define the official command-line entry points, empty-argv behavior, and typed verbs for the HtmlDownloader Python package.
 
-The text-menu picture is `requirement-python-tui`. Download, list, and serve are `requirement-domain-htmldownloader`. The page folder, resume, and caps are `requirement-html-page-download`. The about page is `requirement-python-about`. The domain sentence stays on the domain file. The logger construct is `requirement-python-cli-logging`. Class homes are `requirement-python-oop`. This program does not call an encoder.
+The text-menu picture is `requirement-python-tui`. Download, list, and serve are `requirement-domain-htmldownloader`. The page folder, resume, and caps are `requirement-html-page-download`. The about page is `requirement-python-about`. The domain sentence stays on the domain file. The logger construct is `requirement-python-cli-logging`. Debug values are `requirement-python-cli-debug`. Class homes are `requirement-python-oop`. This program does not call an encoder.
 
 `def main` writes `ChronicleLogger(...)` and then constructs `Cli`. The argument parser runs after that construct and after the debug block. The running `src/HtmlDownloader/cli.py` still starts the prompt session. The allowed end state is this file. This pass does not change `src/`.
 
@@ -124,7 +124,7 @@ Esc on a menu question returns to the previous board and does not download.
 
 24. The parser accepts the verbs in rule 9. `help` is also available as `--help`.
 25. This product does not claim `--json`. **MUST NOT** add it in this file.
-26. **MUST NOT** add `--debug`. Debug status is the environment gate on `requirement-python-cli-logging`.
+26. **MUST NOT** add `--debug`. Debug status is the environment gate on `requirement-python-cli-debug`. How to ask ChronicleLogger stays on `requirement-python-cli-logging`.
 27. **MUST NOT** add flags that name two local media files.
 
 ### 2.6 Output behavior
@@ -152,7 +152,7 @@ Esc on a menu question returns to the previous board and does not download.
 | **Quiet / JSON** | Text screen sets `is_quiet=True` on the logger construct. No `--json` |
 | **Privilege** | user-level only |
 | **Running tree** | `cli.py` dispatches `download` and `serve`. It does not call `ffmpeg` |
-| **Product version** | `1.1.0` |
+| **Product version** | `1.1.1` |
 | **User docs** | Root `README.md` matches this contract |
 
 ### 2.9 Why This Requirement Exists (CIAO)
@@ -212,7 +212,8 @@ On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-downl
 | `requirement-domain-htmldownloader` | Download, list, serve, and the about domain sentence |
 | `requirement-html-page-download` | Page folder, assets, resume, and caps for `download` |
 | `requirement-python-about` | The about page |
-| `requirement-python-cli-logging` | Construct before the parser |
+| `requirement-python-cli-logging` | Construct before the parser. How to ask ChronicleLogger |
+| `requirement-python-cli-debug` | Environment gate and the printed values. No `--debug` flag |
 | `requirement-python-oop` | `Cli` and `def main` |
 | `requirement-python-packaging` | Console script name |
 | `requirement-python-error-handling` | Fail messaging |
@@ -256,6 +257,8 @@ On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-downl
 | 2026-10-28 | Active 1.2.3 | `--name` may be omitted. The URL recommends the folder and the HTML file |
 | 2026-10-28 | Active 1.2.4 | Rule 16 and AC-5 match rule 10. A Retired requirement is a suggestion for removal. Ask the user to confirm before deleting it |
 | 2026-10-28 | Active 1.2.5 | Product version **1.1.0** |
+| 2026-10-28 | Active 1.2.6 | Rule 26 points the environment gate at `requirement-python-cli-debug`. Logging still shows how to ask ChronicleLogger. Product version stays **1.1.0** |
+| 2026-10-28 | Active 1.2.7 | Product version **1.1.1** |
 
 ---
 

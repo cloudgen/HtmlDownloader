@@ -2,25 +2,28 @@
 
 Authoritative specialized product law for **HtmlDownloader** lives here.
 
-**Current state (2026-10-28):** Specialized **software-development** product. Left genesis. Registry is populated — see `index.md`. Product version is **1.1.0**.
+**Current state (2026-10-28):** Specialized **software-development** product. Left genesis. Registry is populated — see `index.md`. Product version is **1.1.1**.
 
 ## Product identity (summary)
 
 | Field | Value |
 |-------|--------|
 | Product / package | `HtmlDownloader` |
-| Version SSOT | **`1.1.0`** (`pyproject.toml` + `src/HtmlDownloader/__init__.py`) |
+| Version SSOT | **`1.1.1`** (`pyproject.toml` + `src/HtmlDownloader/__init__.py`) |
 | Product README SSOT | Root `README.md`. Sections and pictures: `requirement-python-readme` |
 | Ship surface | Python package; console script **`html-downloader`**; module `python -m HtmlDownloader` |
-| Install mode | **pip / local package** (`pip install HtmlDownloader`; this tree **1.1.0**; checkout `pip install -e .`) — not shell Type O |
+| Install mode | **pip / local package** (`pip install HtmlDownloader`; this tree **1.1.1**; checkout `pip install -e .`) — not shell Type O |
 | Public source | `https://github.com/cloudgen/HtmlDownloader` |
 | Domain surface | `requirement-domain-htmldownloader` — download one page, list saved pages, serve a saved page. Save folders, resume, and caps: `requirement-html-page-download` |
 | Text menu | `requirement-python-tui` — front rows **1** download, **2** list downloaded, **3** serve, **4** System Log, **6** self-management, **7** language, **9** Exit. Default path word is `Path` |
 | Menu language | `requirement-python-cli-language` — row **7**, codes **71**–**83**, leaf `~/.local/HtmlDownloader/language`. `HTMLDOWNLOADER_LANG` overrides that file for one process. `language` is not an argv verb |
-| Status logger | `requirement-python-cli-logging` — `ChronicleLogger(...)` inside `def main`. Required |
+| Status logger | `requirement-python-cli-logging` — `ChronicleLogger(...)` inside `def main`. Required. Debug mode asks `isDebug()` then `log_message` |
+| Debug values | `requirement-python-cli-debug` — the four lines printed when debug status is on. No `--debug` |
 | Class map | `requirement-python-oop` — the classes under `src/HtmlDownloader/` |
 | Coding style | `requirement-python-coding-style` — temps + `shutil.move`; gate **`CL-PYTHON-SHUTIL-MOVE-PUBLISH`** |
 | Runtime tools | **ChronicleLogger>=1.3.1** required. No external media tool |
+| Side-product | `requirement-agent-use-skill` — `agent/SKILL.md` instructs an LLM agent to use `html-downloader`. Not a second domain file |
+| Who runs it | `requirement-actor-role-subject` — the invoking login. Columns are Actor, Role, and Subject. No dest approver |
 
 ## Class requirement gate
 

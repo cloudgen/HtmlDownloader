@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-html-page-download.md
-**Status**: Active (Version 1.1.1)
+**Status**: Active (Version 1.1.2)
 **Area**: download
 **Key**: `requirement-html-page-download`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -92,6 +92,20 @@ The page is `~/.app/HtmlDownloader/output/<pagename>/<html file>`. The HTML file
 | **Flag owner** | `requirement-python-cli-interface` (`--url`, `--name`, and optional `--html`) |
 | **Crawl** | Absent on this product |
 
+The map body is one JSON object. A field list is not that body. This sample is `~/.app/HtmlDownloader/output/url-map.json` for the worked `guide.html` save. The page folder is `guide`. A row with no `html` means `index.html`.
+
+```json
+{
+  "pages": [
+    {
+      "url": "https://example.com/guide.html",
+      "name": "guide",
+      "html": "guide.html"
+    }
+  ]
+}
+```
+
 ### 2.6 Why This Requirement Exists (CIAO)
 
 - **Principle 2 – Intentional**: The save has one owner, separate from the menu and the verb list.
@@ -178,6 +192,7 @@ On Termux, Git Bash, Windows cmd, or the same class, the save runs as the normal
 | 2026-10-28 | Active 1.0.0 | Save law moved out of the domain file. One page, flat assets, resume, caps. No crawl. |
 | 2026-10-28 | Active 1.1.0 | The HTML file defaults to `index.html`. `--html` and menu row 1 can choose another name. A later name moves the file. The map stores `html` |
 | 2026-10-28 | Active 1.1.1 | An omitted page name and HTML file come from the URL. `.html` and `.htm` keep that file name. A segment with no extension saves `<name>/index.html` |
+| 2026-10-28 | Active 1.1.2 | Complete `url-map.json` sample. The object is a `pages` list of `url`, `name`, and `html` |
 
 ---
 

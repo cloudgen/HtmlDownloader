@@ -2,6 +2,7 @@
 # Download one HTML page and the stylesheets, scripts, and images it links to.
 # requirement-python-oop — class PageDownload.
 # requirement-python-coding-style — publish with shutil.move.
+# requirement-python-cli-logging — log the temp write, the publish, and the discard first.
 # requirement-python-error-handling — a failed fetch names the URL and stops.
 # Each page is ~/.app/<app name>/output/<page name>/<html file>.
 # The HTML file name defaults to index.html.
@@ -526,10 +527,22 @@ class PageDownload:
         self._mkdir(root)
         descriptor, tmp = tempfile.mkstemp(prefix=".page-", dir=root)
         os.close(descriptor)
+        if self.logger is not None and os.path.exists(tmp):
+            self.logger.log_message(
+                "discard path={0}".format(tmp),
+                level="INFO",
+                component="PageDownload",
+            )
         try:
             os.unlink(tmp)
         except OSError:
             pass
+        if self.logger is not None:
+            self.logger.log_message(
+                "write temp path={0}".format(tmp),
+                level="INFO",
+                component="PageDownload",
+            )
         shutil.move(legacy, tmp)
         try:
             self._mkdir(self._page_dir(name))
@@ -1426,16 +1439,32 @@ class PageDownload:
             raise PageDownloadError("Refusing to save outside the page folder.")
         descriptor, tmp = tempfile.mkstemp(prefix=".part-", dir=folder)
         try:
+            if self.logger is not None:
+                self.logger.log_message(
+                    "write temp path={0}".format(tmp),
+                    level="INFO",
+                    component="PageDownload",
+                )
             with os.fdopen(descriptor, "wb") as handle:
                 handle.write(data)
                 handle.flush()
                 os.fsync(handle.fileno())
             if self.logger is not None:
-                self.logger.log_message("publish {0}".format(dest), component="PageDownload")
+                self.logger.log_message(
+                    "publish {0}".format(dest),
+                    level="INFO",
+                    component="PageDownload",
+                )
             shutil.move(tmp, dest)
             os.chmod(dest, 0o600)
         except PageDownloadError:
             if os.path.exists(tmp):
+                if self.logger is not None:
+                    self.logger.log_message(
+                        "discard path={0}".format(tmp),
+                        level="INFO",
+                        component="PageDownload",
+                    )
                 try:
                     os.unlink(tmp)
                 except OSError:
@@ -1443,6 +1472,12 @@ class PageDownload:
             raise
         except Exception as exc:
             if os.path.exists(tmp):
+                if self.logger is not None:
+                    self.logger.log_message(
+                        "discard path={0}".format(tmp),
+                        level="INFO",
+                        component="PageDownload",
+                    )
                 try:
                     os.unlink(tmp)
                 except OSError:

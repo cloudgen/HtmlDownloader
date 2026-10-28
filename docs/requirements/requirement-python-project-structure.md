@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-project-structure.md
-**Status**: Active (Version 1.2.1)
+**Status**: Active (Version 1.2.4)
 **Area**: python
 **Key**: `requirement-python-project-structure`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -70,14 +70,15 @@ Define the repository layout and the package structure for HtmlDownloader: where
 | Path | Role |
 |------|------|
 | `src/HtmlDownloader/` | Installable package |
-| `src/HtmlDownloader/__init__.py` | `__version__` (`1.1.0`) |
+| `src/HtmlDownloader/__init__.py` | `__version__` (`1.1.1`) |
 | `src/HtmlDownloader/__main__.py` | Module entry. Imports `main` from `cli` |
 | `src/HtmlDownloader/cli.py` | Class `Cli` and `def main` |
 | `pyproject.toml` | Packaging SSOT |
 | `build.sh` | Maintainer build helper |
 | `docs/requirements/` | Product law |
 | `CHANGELOG.md` | Product changelog at the repository root |
-| `tests/` | Proof. Suites include `test_about.py`, `test_tui.py`, `test_language.py`, `test_docs.py`, `test_download.py`, and `test_serve.py` |
+| `tests/` | Proof. Suites include `test_about.py`, `test_tui.py`, `test_language.py`, `test_docs.py`, `test_download.py`, `test_serve.py`, and `test_agent_skill.py` |
+| `agent/SKILL.md` | Side-product skill. Law is `requirement-agent-use-skill` |
 | `README.md` | User documentation |
 
 The class modules named in rule 3 are on disk.
@@ -133,6 +134,7 @@ On Termux, Git Bash, Windows cmd, or the same class, the package is the normal u
 | `requirement-python-cli-interface` | Entry module |
 | `requirement-class-software-dev` | Class residual |
 | `requirement-python-readme` | Sections, badges, and pictures in root `README.md` |
+| `requirement-agent-use-skill` | Side-product path `agent/SKILL.md` |
 | `docs/requirements/index.md` | Registry |
 
 ## Design-time verification
@@ -145,6 +147,12 @@ On Termux, Git Bash, Windows cmd, or the same class, the package is the normal u
 **Matrix:** `docs/reviews/requirement-test-matrix.md`
 **Map:** `docs/reviews/test-plan.md`
 
+## Terminologies
+
+**Project requirements.** Product law is the finished must/should rules for this product. They are complete for this product. They are not blank forms, not agent procedures, and not a glossary.
+
+**Daily-life example:** “This household must lock the door by 10” is law for this house. A blank curfew form in a stationery shop is not.
+
 ## 7. Status history
 
 | Date | Status | Note |
@@ -155,6 +163,9 @@ On Termux, Git Bash, Windows cmd, or the same class, the package is the normal u
 | 2026-10-04 | Active 1.1.2 | Allowed end state names `check_system.py`. `__version__` is **1.0.5** |
 | 2026-10-16 | Active 1.2.0 | The class modules are on disk, including page download, open, and serve. Version **1.0.0** |
 | 2026-10-28 | Active 1.2.1 | Product version **1.1.0** |
+| 2026-10-28 | Active 1.2.2 | Terminologies for project requirements |
+| 2026-10-28 | Active 1.2.3 | Root `agent/SKILL.md` is the side-product. Product version stays **1.1.0** |
+| 2026-10-28 | Active 1.2.4 | Product version **1.1.1** |
 
 ---
 

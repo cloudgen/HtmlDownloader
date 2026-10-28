@@ -3,14 +3,14 @@
 Executable proof for product law. **Design map:** `docs/reviews/test-plan.md`.  
 **RTM:** `docs/reviews/requirement-test-matrix.md`.
 
-## Status (2026-10-28, product 1.1.0)
+## Status (2026-10-28, product 1.1.1)
 
 | Item | State |
 |------|--------|
 | Design TP map | **present** under `docs/reviews/test-plan.md` |
-| Automated suites | `tests/test_about.py` covers **TP-ABOUT-01** through **TP-ABOUT-14** and **TP-ABOUT-16** (have). There is no **TP-ABOUT-15**. `tests/test_tui.py` covers **TP-TUI-09** and **TP-TUI-10** (have). `tests/test_language.py` covers **TP-LANG-01** (have). `tests/test_docs.py` covers **TP-DOC-01** (have). `tests/test_download.py` covers **TP-HTMLDOWNLOADER-01..03** and **TP-PAGE-01**, **02**, **03**, **05**, and **06** (have). **TP-PAGE-04** stays `todo`. `tests/test_serve.py` covers **TP-CLI-03** and **TP-ERR-02** (have). **TP-DOC-03** stays `todo`. **TP-LOG-*** and **TP-OOP-*** stay `todo` |
+| Automated suites | `tests/test_about.py` covers **TP-ABOUT-01** through **TP-ABOUT-14** and **TP-ABOUT-16** (have). There is no **TP-ABOUT-15**. `tests/test_tui.py` covers **TP-TUI-09** and **TP-TUI-10** (have). `tests/test_language.py` covers **TP-LANG-01** (have). `tests/test_docs.py` covers **TP-DOC-01** (have). `tests/test_download.py` covers **TP-HTMLDOWNLOADER-01..03** and **TP-PAGE-01**, **02**, **03**, **05**, and **06** (have). **TP-PAGE-04** stays `todo`. `tests/test_serve.py` covers **TP-CLI-03** and **TP-ERR-02** (have). `tests/test_agent_skill.py` covers **TP-AGENT-01** (have). `tests/test_logging.py` covers **TP-LOG-01**, **TP-LOG-03**, **TP-LOG-04**, and **TP-LOG-05** (have). **TP-LOG-02** stays on `tests/test_debug.py`. **TP-DOC-03** stays `todo`. **TP-OOP-*** stays `todo` |
 | Runner | `PYTHONPATH=src python3 -m unittest discover -s tests -q` (also `tests/run.sh`) |
-| Last run | 2026-10-28 — 51 tests, OK |
+| Last run | 2026-10-28 — 60 tests OK (`PYTHONPATH=src python3 -m unittest discover -s tests -q`) |
 
 ## Suites on disk
 
@@ -22,6 +22,9 @@ Executable proof for product law. **Design map:** `docs/reviews/test-plan.md`.
 | `test_docs.py` | TP-DOC-01 (have). TP-DOC-03 stays todo |
 | `test_download.py` | TP-HTMLDOWNLOADER-01..03, TP-PAGE-01, 02, 03, 05, 06. Save, resume, flat assets, menu row 1, edit and view |
 | `test_serve.py` | TP-CLI-03, TP-ERR-02. `127.0.0.1`, default port 5000, stored HTML file as `/` |
+| `test_agent_skill.py` | TP-AGENT-01 (have). `agent/SKILL.md` names download, serve, the URL rule, and the bans |
+| `test_debug.py` | TP-DBG-01, TP-DBG-02, TP-DBG-03 (have). TP-LOG-02 stays on this suite |
+| `test_logging.py` | TP-LOG-01, TP-LOG-03, TP-LOG-04, TP-LOG-05 (have). TP-LOG-02 stays on `test_debug.py` |
 
 ## Rules
 

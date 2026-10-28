@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-runtime-prerequisites.md
-**Status**: Active (Version 1.2.1)
+**Status**: Active (Version 1.2.3)
 **Area**: runtime
 **Key**: `requirement-runtime-prerequisites`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -76,7 +76,7 @@ No encoder, no FFmpeg binary, and no media library are required. A missing `ffmp
 | **System binary** | none. `ffmpeg` is not required |
 | **Auto install command** | none. The product does not run a root install |
 | **Platform notes** | Linux primary. macOS and Windows when CPython is available |
-| **Product version** | 1.1.0 |
+| **Product version** | 1.1.1 |
 | **Startup check** | ChronicleLogger import. No encoder check |
 | **User docs** | Root `README.md` states no external media tool is required |
 
@@ -140,6 +140,16 @@ On Termux, Git Bash, Windows cmd, or the same class, the normal user installs th
 **Matrix:** `docs/reviews/requirement-test-matrix.md`
 **Map:** `docs/reviews/test-plan.md`
 
+## Terminologies
+
+**Project requirements.** Product law is the finished must/should rules for this product. They are complete for this product. They are not blank forms, not agent procedures, and not a glossary.
+
+**Daily-life example:** “This household must lock the door by 10” is law for this house. A blank curfew form in a stationery shop is not.
+
+**Chronicle logger.** The one process status logger. `def main` writes `ChronicleLogger(...)` in that function before any product object. Each class stores that same object. It is not `print`, not a second logger, and not a thread pool. The log folder is the one `logDir()` returns. Product code does not copy that ladder and does not type the path.
+
+**Daily-life example:** You buy a kettle and write “kettle arrived” in the household book. Later you write “moved kettle, box to shelf.” Guests in the dining room do not hear that line. The book still has it.
+
 ## 7. Status history
 
 | Date | Status | Note |
@@ -150,6 +160,8 @@ On Termux, Git Bash, Windows cmd, or the same class, the normal user installs th
 | 2026-10-04 | Active 1.1.2 | The about page names FFmpeg and does not probe PATH. Product version **1.0.5** |
 | 2026-10-16 | Active 1.2.0 | No encoder is required. Product version **1.0.0**. The about page says `Runtime tools: none` |
 | 2026-10-28 | Active 1.2.1 | Product version **1.1.0**. No encoder is required |
+| 2026-10-28 | Active 1.2.2 | Terminologies for project requirements and ChronicleLogger |
+| 2026-10-28 | Active 1.2.3 | Product version **1.1.1**. No encoder is required |
 
 ---
 

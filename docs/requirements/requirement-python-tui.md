@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-tui.md
-**Status**: Active (Version 1.3.3)
+**Status**: Active (Version 1.3.5)
 **Area**: python
 **Key**: `requirement-python-tui`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -76,7 +76,7 @@ While the front board, the self-management board, the system-log board, or the l
 
 14. **Control-C is not row 9.** This file does not own Control-C. Row **9** Exit leaves with no confirm question and returns 0. A clock redraw **MUST NOT** leave the program.
 
-Picture of this board. The box in the picture is 16 columns wide so the corners stay visible. On a real screen those 16 columns become the full width, and the menu stays above the frame. The block in the picture is the focused caret. `14:05:09` is a sample local time. `1.1.0` is the current package version and moves with `__version__`.
+Picture of this board. The box in the picture is 16 columns wide so the corners stay visible. On a real screen those 16 columns become the full width, and the menu stays above the frame. The block in the picture is the focused caret. `14:05:09` is a sample local time. `1.1.1` is the current package version and moves with `__version__`.
 
 ```text
 Path: /tmp/clips                                              14:05:09
@@ -91,7 +91,7 @@ Path: /tmp/clips                                              14:05:09
 ╭──────────────╮
 │ > █          │
 ╰──────────────╯
-  HtmlDownloader 1.1.0  │  main menu  │  Up/Down  •  Enter
+  HtmlDownloader 1.1.1  │  main menu  │  Up/Down  •  Enter
 ```
 
 The same first row when `requirement-python-cli-language` has selected Traditional Chinese:
@@ -101,6 +101,58 @@ The same first row when `requirement-python-cli-language` has selected Tradition
 ```
 
 The spaces in those pictures stand for the gap that grows on a wider screen. The clock ends on the last column the writer can place. When the row cannot hold both fields, the picture of that row is the path field alone.
+
+### Screen parts
+
+This screen has seven parts. The three artifacts below name them. Caption cells and the image address stay on `requirement-python-readme`. This product does not download an AI model and does not convert images.
+
+#### Components list
+
+| Part | What it is |
+|------|------------|
+| Navigation | The numbered rows on the current board. The front board prints **1** download, **2** list downloaded, **3** serve, **4** System Log, **6** self-management, **7** language, and **9** Exit. System Log prints **41**–**43** and **0** Back. Self-management prints **61**–**66** and **0** Back. Language prints **71**–**83** and **0** Back. Rows **5** and **8** are omitted |
+| Status | The line under the frame: product name, the version from `__version__`, the board title, and the hint `Up/Down  •  Enter` |
+| Major input | The only inner line of the three-row box, where the person types |
+| Major output | The menu region above the box: the path row, the numbered rows, an error line, and a result page when a result replaces those rows |
+| Path display | The first row of the menu region: the path label, a colon, and the absolute current working directory |
+| System-time display | The local clock on the right of that same path row when the row has room |
+| Time-consuming process messages | The job lines drawn while row **1** download or serve stays on this screen. They are not a waiting sentence for an AI-model download or an image conversion |
+
+#### Style guide
+
+| Part | Where it sits | Display style |
+|------|---------------|---------------|
+| Navigation | Menu region, under the path row, never inside the box | Number, verb, and explain. The number is padded on the left to the longest number on that board. The verb is padded with spaces before the colon. One space, then the explain. Widths are display columns. East Asian Wide and Fullwidth count as two. Ambiguous stays one |
+| Status | The row after the three-row box. That row is the last row of the screen | Plain text separated by `│`. It does not replace one of the three frame rows. Sample shape: `HtmlDownloader <version> │ main menu │ Up/Down  •  Enter` |
+| Major input | The only inner row, between the two `│` characters | A space, then `> `, then the typed characters. When the box is focused, the caret is the block `█`. The frame is `╭` `─` `╮` / `│` / `╰` `─` `╯`. It is not a `Choice:` line |
+| Major output | Menu region above the box. A result page may omit the rows, the box, and the status line until the next key | Drawn by class `Tui` calling class `MenuPainter`. Not `print` and not `input()` |
+| Path display | First row of the menu region on the front board, self-management, System Log, and the language board | `<label>: <path>` with one space after the colon. The default label is `Path`. Traditional Chinese is `路徑`. The path is not translated. A path wider than the screen is shortened from the left. The product name and the version stay off this row |
+| System-time display | Right end of that same path row | `HH:MM:SS`, 24-hour, zero-padded, eight characters, no date and no timezone name. At least two spaces separate it from the path. It is omitted when both fields do not fit. On those four boards it is drawn again each second. A result page, a download question, a page list, a port question, and a notice that waits for a key do not draw it |
+| Time-consuming process messages | Menu region, while row **1** download or serve is working on this screen | Job lines from rule 10, drawn by class `Tui` through class `MenuPainter`. The screen stays open. A finished download then uses the result page in rule 8. This product does not show a waiting sentence for an AI-model download or an image conversion |
+
+#### Storyboard
+
+Each row names the action that opens a capture already in `screenshots/`. Download in progress, the saved-page list, and serve have no capture on disk, so they are not rows.
+
+| Order | Action that opens the capture | Capture |
+|------:|--------------------------------|---------|
+| 1 | Empty argv on a terminal opens the English main menu | `main-menu-en.png` |
+| 2 | Row **7** opens the language list | `language-menu.png` |
+| 3 | Choosing **72** opens the Simplified Chinese main menu | `main-menu-zh-hans.png` |
+| 4 | Choosing **73** opens the Traditional Chinese main menu | `main-menu-zh-hant.png` |
+| 5 | Choosing **74** opens the Spanish main menu | `main-menu-es.png` |
+| 6 | Choosing **75** opens the Arabic main menu | `main-menu-ar.png` |
+| 7 | Choosing **76** opens the French main menu | `main-menu-fr.png` |
+| 8 | Choosing **77** opens the Portuguese main menu | `main-menu-pt.png` |
+| 9 | Choosing **78** opens the Russian main menu | `main-menu-ru.png` |
+| 10 | Choosing **79** opens the German main menu | `main-menu-de.png` |
+| 11 | Choosing **80** opens the Japanese main menu | `main-menu-ja.png` |
+| 12 | Choosing **81** opens the Korean main menu | `main-menu-ko.png` |
+| 13 | Choosing **82** opens the Dutch main menu | `main-menu-nl.png` |
+| 14 | Choosing **83** opens the Greek main menu | `main-menu-el.png` |
+| 15 | Row **6** opens self-management | `self-management.png` |
+| 16 | Row **62** about opens the about page | `tui-about.png` |
+| 17 | Row **4** opens System Log | `system-log.png` |
 
 ### Sample code
 
@@ -265,6 +317,28 @@ On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-downl
 **Matrix:** `docs/reviews/requirement-test-matrix.md`
 **Map:** `docs/reviews/test-plan.md`
 
+## Terminologies
+
+**Project requirements.** Product law is the finished must/should rules for this product. They are complete for this product. They are not blank forms, not agent procedures, and not a glossary.
+
+**Daily-life example:** “This household must lock the door by 10” is law for this house. A blank curfew form in a stationery shop is not.
+
+**Major TUI entry point.** The major entry of a claimed text screen is interactive mode with no positional command word. A flag that is not a command stays on that entry. A verb opens the screen only when this requirement names that verb for the screen.
+
+**Daily-life example:** You walk in and name no dish. That board is the major entry. You name a dish. That order stays at the board only when the card already names that dish for the board.
+
+**Default TUI style.** The full-screen look of this text menu. One writer draws a menu region and a bottom input box. The first menu row is the path line, with a local clock on the right when the row has room. The box is a rounded frame exactly three terminal rows high. The product name and the version sit on the status line under the box.
+
+**Daily-life example:** On the lunch board the top line names the folder you are standing in, and the clock `14:05:09` ends at the right edge. A second later the clock shows the new local time and the dishes have not moved.
+
+**Well-known menu.** The shared numbered membership of a text menu: reserved row numbers, a front Exit, and a self-management board. Which rows this product prints are the rows in this file. Rows 5 and 8 are omitted and are not renumbered.
+
+**Daily-life example:** Similar kitchens agree on room numbers. Help is a word you say, not a numbered dish. This shop prints the rooms named in this file.
+
+**Python CLI verb default route.** For a Python command, each routed verb’s default route is the terminal: standard output, standard error, and a scriptable run, with no text screen. A verb uses the text screen only when this requirement names that verb for the screen. The major entry with no command word stays the text screen.
+
+**Daily-life example:** You write one dish name on a slip. The default route is the plain counter, so a checker can read the slip without the board. A dish stays at the board only when the card already says that dish is served there.
+
 ## 7. Status history
 
 | Date | Status | Note |
@@ -279,6 +353,8 @@ On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-downl
 | 2026-10-28 | Active 1.3.1 | Menu row 1 asks for an HTML file name after the page name. An empty answer keeps the stored name, or `index.html` |
 | 2026-10-28 | Active 1.3.2 | An empty page name keeps the folder recommended from the URL. The HTML file question uses that recommendation too |
 | 2026-10-28 | Active 1.3.3 | The sample status line is package **1.1.0** |
+| 2026-10-28 | Active 1.3.4 | Components list, style guide, and storyboard of the captures already on disk. Terminologies added |
+| 2026-10-28 | Active 1.3.5 | The sample status line is package **1.1.1** |
 
 ---
 

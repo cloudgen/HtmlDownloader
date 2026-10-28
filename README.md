@@ -1,6 +1,6 @@
 # HtmlDownloader - Download a page from the command line and from the text menu
 
-![Version](https://img.shields.io/badge/Version-1.1.0-blue?style=flat-square)
+![Version](https://img.shields.io/badge/Version-1.1.1-blue?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 [![CIAO](https://img.shields.io/badge/Philosophy-CIAO%20(Caution%20%E2%80%A2%20Intentional%20%E2%80%A2%20Anti--fragile%20%E2%80%A2%20Over--engineered)-purple.svg)](https://github.com/cloudgen/ciao)
 [![Stars](https://img.shields.io/github/stars/cloudgen/HtmlDownloader?style=flat-square)](https://github.com/cloudgen/HtmlDownloader)
@@ -40,7 +40,7 @@ On a terminal, starting it with no arguments opens a text menu. The menu does no
 pip install HtmlDownloader
 ```
 
-This installs the console entry **`html-downloader`** and the package **`HtmlDownloader`**. Packaging name SSOT is `pyproject.toml` `[project].name` = `HtmlDownloader`. This tree is **1.1.0**. The PyPI badge above shows the live index.
+This installs the console entry **`html-downloader`** and the package **`HtmlDownloader`**. Packaging name SSOT is `pyproject.toml` `[project].name` = `HtmlDownloader`. This tree is **1.1.1**. The PyPI badge above shows the live index.
 
 ### Local install (checkout)
 
@@ -78,7 +78,7 @@ Path: /tmp/clips                                                       12:06:45
 ╭─────────────────────────────────────────────────────────────────────────────╮
 │ >                                                                           │
 ╰─────────────────────────────────────────────────────────────────────────────╯
-  HtmlDownloader 1.0.0  │  main menu  │  Up/Down  •  Enter
+  HtmlDownloader 1.1.1  │  main menu  │  Up/Down  •  Enter
 ```
 
 **System Log** (4). Numbers 44–49 are not printed.
@@ -97,7 +97,7 @@ Path: /tmp/clips                                                       12:06:45
 ╭─────────────────────────────────────────────────────────────────────────────╮
 │ >                                                                           │
 ╰─────────────────────────────────────────────────────────────────────────────╯
-  HtmlDownloader 1.0.0  │  System Log  │  Up/Down  •  Enter
+  HtmlDownloader 1.1.1  │  System Log  │  Up/Down  •  Enter
 ```
 
 **language** (7). The short on each language row is that language’s own name. Numbers 84–98 are not printed. `0` goes back and does not save.
@@ -123,7 +123,7 @@ Path: /tmp/clips                                                       12:06:46
 ╭─────────────────────────────────────────────────────────────────────────────╮
 │ >                                                                           │
 ╰─────────────────────────────────────────────────────────────────────────────╯
-  HtmlDownloader 1.0.0  │  language  │  Up/Down  •  Enter
+  HtmlDownloader 1.1.1  │  language  │  Up/Down  •  Enter
 ```
 
 **self-management** (6). Numbers 67–70 are not printed.
@@ -142,7 +142,7 @@ Path: /tmp/clips                                                       14:05:09
 ╭─────────────────────────────────────────────────────────────────────────────╮
 │ >                                                                           │
 ╰─────────────────────────────────────────────────────────────────────────────╯
-  HtmlDownloader 1.0.0  │  self-management  │  Up/Down  •  Enter
+  HtmlDownloader 1.1.1  │  self-management  │  Up/Down  •  Enter
 ```
 
 Choose a number, or type the command name in the box. The block caret appears in that box while it is focused.
@@ -191,7 +191,7 @@ html-downloader self-install
 html-downloader self-uninstall --force
 ```
 
-`version` prints `HtmlDownloader 1.0.0` and does not call pip. `about` shows one English page: the product identity, a host check of this computer, and a star box. It does not call pip. `download` saves the page and does not draw the menu. `help` prints usage.
+`version` prints `HtmlDownloader 1.1.1` and does not call pip. `about` shows one English page: the product identity, a host check of this computer, and a star box. It does not call pip. `download` saves the page and does not draw the menu. `help` prints usage.
 
 `version-check` runs `python -m pip index versions HtmlDownloader`. `self-update` runs `python -m pip install --upgrade HtmlDownloader`. `self-install` runs `python -m pip install HtmlDownloader`. `self-uninstall` runs `python -m pip uninstall -y HtmlDownloader` and needs `--force` on the command line. Those pip verbs do not use sudo. Empty arguments do not install or update.
 
@@ -206,107 +206,107 @@ from HtmlDownloader import main
 
 ## Screenshots
 
-Each heading is the file name. The paragraph is what that picture shows: the words on the screen and the characters in the input box. Package **1.0.0**. These pictures were captured from the running text menu in `/tmp/clips`. On each menu picture the input box shows `>` and no typed text, and **1 download** or the first row of that board is highlighted. The package index can fetch a picture only after that file is on the public `main` branch.
+Each heading is the file name. The paragraph is what that picture shows: the words on the screen and the characters in the input box. Package **1.1.1**. These pictures were captured from the running text menu in `/tmp/clips`. On each menu picture the input box shows `>` and no typed text, and **1 download** or the first row of that board is highlighted. The package index can fetch a picture only after that file is on the public `main` branch.
 
 ### `language-menu.png`
 
-Row **7** has opened the language list. **71 English** is highlighted, with the note "use English for this menu." The other rows are **72 简体中文**, **73 繁體中文**, **74 Español**, **75 العربية**, **76 Français**, **77 Português**, **78 Русский**, **79 Deutsch**, **80 日本語**, **81 한국어**, **82 Nederlands**, and **83 Ελληνικά**. Each note says to use that language for this menu. **0 Back** says "return to the main menu." The path label is `Path`. The path is `/tmp/clips`. The clock is `19:48:09` on the right of that row. The status line says `HtmlDownloader 1.0.0` and `language`.
+Row **7** has opened the language list. **71 English** is highlighted, with the note "use English for this menu." The other rows are **72 简体中文**, **73 繁體中文**, **74 Español**, **75 العربية**, **76 Français**, **77 Português**, **78 Русский**, **79 Deutsch**, **80 日本語**, **81 한국어**, **82 Nederlands**, and **83 Ελληνικά**. Each note says to use that language for this menu. **0 Back** says "return to the main menu." The path label is `Path`. The path is `/tmp/clips`. The clock is `19:48:09` on the right of that row. The status line says `HtmlDownloader 1.1.1` and `language`.
 
 ![Language list, 71 English highlighted](https://raw.githubusercontent.com/cloudgen/HtmlDownloader/main/screenshots/language-menu.png)
 
 ### `main-menu-en.png`
 
-English main menu. There is no saved-language line above the box. The path label is `Path`. The path is `/tmp/clips`. The clock is `19:48:12` on the right of that row. **1 download** is highlighted: "download a page and its stylesheets, scripts, and images." Then **2 list downloaded** "show saved page names," **3 serve** "serve a saved page on this computer," **4 System Log** "view, clear, and the log folder," **6 self-management** "version, about, and pip lifecycle," **7 language** "display language for this menu," and **9 Exit** "leave." The status line says `HtmlDownloader 1.0.0` and `main menu`.
+English main menu. There is no saved-language line above the box. The path label is `Path`. The path is `/tmp/clips`. The clock is `19:48:12` on the right of that row. **1 download** is highlighted: "download a page and its stylesheets, scripts, and images." Then **2 list downloaded** "show saved page names," **3 serve** "serve a saved page on this computer," **4 System Log** "view, clear, and the log folder," **6 self-management** "version, about, and pip lifecycle," **7 language** "display language for this menu," and **9 Exit** "leave." The status line says `HtmlDownloader 1.1.1` and `main menu`.
 
 ![English main menu](https://raw.githubusercontent.com/cloudgen/HtmlDownloader/main/screenshots/main-menu-en.png)
 
 ### `main-menu-zh-hans.png`
 
-Simplified Chinese main menu. The line above the box says `菜单语言是简体中文`. The path label is `路径`. The path is `/tmp/clips`. The clock is `19:48:14` on the right of that row. **1 download** is highlighted and stays `download`: "下载页面、样式表和脚本." **2** stays `list downloaded`. **3** stays `serve`. **4** is `系统日志`. **6** is `自我管理`. **7** is `语言`. **9** is `离开`. The status line says `HtmlDownloader 1.0.0` and `主菜单`.
+Simplified Chinese main menu. The line above the box says `菜单语言是简体中文`. The path label is `路径`. The path is `/tmp/clips`. The clock is `19:48:14` on the right of that row. **1 download** is highlighted and stays `download`: "下载页面、样式表和脚本." **2** stays `list downloaded`. **3** stays `serve`. **4** is `系统日志`. **6** is `自我管理`. **7** is `语言`. **9** is `离开`. The status line says `HtmlDownloader 1.1.1` and `主菜单`.
 
 ![Simplified Chinese main menu](https://raw.githubusercontent.com/cloudgen/HtmlDownloader/main/screenshots/main-menu-zh-hans.png)
 
 ### `main-menu-zh-hant.png`
 
-Traditional Chinese main menu. The line above the box says `選單語言是繁體中文`. The path label is `路徑`. The path is `/tmp/clips`. The clock is `19:48:17` on the right of that row. **1 download** is highlighted and stays `download`: "下載頁面、樣式表和指令碼." **2** stays `list downloaded`. **3** stays `serve`. **4** is `系統日誌`. **6** is `自我管理`. **7** is `語言`. **9** is `離開`. The status line says `HtmlDownloader 1.0.0` and `主選單`.
+Traditional Chinese main menu. The line above the box says `選單語言是繁體中文`. The path label is `路徑`. The path is `/tmp/clips`. The clock is `19:48:17` on the right of that row. **1 download** is highlighted and stays `download`: "下載頁面、樣式表和指令碼." **2** stays `list downloaded`. **3** stays `serve`. **4** is `系統日誌`. **6** is `自我管理`. **7** is `語言`. **9** is `離開`. The status line says `HtmlDownloader 1.1.1` and `主選單`.
 
 ![Traditional Chinese main menu](https://raw.githubusercontent.com/cloudgen/HtmlDownloader/main/screenshots/main-menu-zh-hant.png)
 
 ### `main-menu-es.png`
 
-Spanish main menu. The line above the box says `El idioma del menú es español`. The path label is `Ruta`. The path is `/tmp/clips`. The clock is `19:48:19` on the right of that row. **1 download** is highlighted and stays `download`: "descarga una página, sus hojas de estilo y sus scripts." **2** stays `list downloaded`. **3** stays `serve`. **4** is `registro`. **6** is `autogestión`. **7** is `idioma`. **9** is `Salir`. The status line says `HtmlDownloader 1.0.0` and `menú principal`.
+Spanish main menu. The line above the box says `El idioma del menú es español`. The path label is `Ruta`. The path is `/tmp/clips`. The clock is `19:48:19` on the right of that row. **1 download** is highlighted and stays `download`: "descarga una página, sus hojas de estilo y sus scripts." **2** stays `list downloaded`. **3** stays `serve`. **4** is `registro`. **6** is `autogestión`. **7** is `idioma`. **9** is `Salir`. The status line says `HtmlDownloader 1.1.1` and `menú principal`.
 
 ![Spanish main menu](https://raw.githubusercontent.com/cloudgen/HtmlDownloader/main/screenshots/main-menu-es.png)
 
 ### `main-menu-ar.png`
 
-Arabic main menu. The line above the box says `لغة القائمة هي العربية`. The path label is `المسار`. The path is `/tmp/clips`. The clock is `19:48:22` on the right of that row. The numbers stay on the left. Arabic words on each row are shaped and read right to left. **1 download** is highlighted and stays `download`. **2** stays `list downloaded`. **3** stays `serve`. **4** is `سجل النظام`. **6** is `إدارة ذاتية`. **7** is `لغة`. **9** is `خروج`. The status line says `HtmlDownloader 1.0.0` and `القائمة الرئيسية`.
+Arabic main menu. The line above the box says `لغة القائمة هي العربية`. The path label is `المسار`. The path is `/tmp/clips`. The clock is `19:48:22` on the right of that row. The numbers stay on the left. Arabic words on each row are shaped and read right to left. **1 download** is highlighted and stays `download`. **2** stays `list downloaded`. **3** stays `serve`. **4** is `سجل النظام`. **6** is `إدارة ذاتية`. **7** is `لغة`. **9** is `خروج`. The status line says `HtmlDownloader 1.1.1` and `القائمة الرئيسية`.
 
 ![Arabic main menu](https://raw.githubusercontent.com/cloudgen/HtmlDownloader/main/screenshots/main-menu-ar.png)
 
 ### `main-menu-fr.png`
 
-French main menu. The line above the box says `La langue du menu est le français`. The path label is `Chemin`. The path is `/tmp/clips`. The clock is `19:48:24` on the right of that row. **1 download** is highlighted and stays `download`: "télécharger une page, ses feuilles de style et ses scripts." **2** stays `list downloaded`. **3** stays `serve`. **4** is `journal`. **6** is `autogestion`. **7** is `langue`. **9** is `Quitter`. The status line says `HtmlDownloader 1.0.0` and `menu principal`.
+French main menu. The line above the box says `La langue du menu est le français`. The path label is `Chemin`. The path is `/tmp/clips`. The clock is `19:48:24` on the right of that row. **1 download** is highlighted and stays `download`: "télécharger une page, ses feuilles de style et ses scripts." **2** stays `list downloaded`. **3** stays `serve`. **4** is `journal`. **6** is `autogestion`. **7** is `langue`. **9** is `Quitter`. The status line says `HtmlDownloader 1.1.1` and `menu principal`.
 
 ![French main menu](https://raw.githubusercontent.com/cloudgen/HtmlDownloader/main/screenshots/main-menu-fr.png)
 
 ### `main-menu-pt.png`
 
-Portuguese main menu. The line above the box says `O idioma do menu é português`. The path label is `Caminho`. The path is `/tmp/clips`. The clock is `19:48:27` on the right of that row. **1 download** is highlighted and stays `download`: "transferir uma página, as folhas de estilo e os scripts." **2** stays `list downloaded`. **3** stays `serve`. **4** is `registo`. **6** is `autogestão`. **7** is `idioma`. **9** is `Sair`. The status line says `HtmlDownloader 1.0.0` and `menu principal`.
+Portuguese main menu. The line above the box says `O idioma do menu é português`. The path label is `Caminho`. The path is `/tmp/clips`. The clock is `19:48:27` on the right of that row. **1 download** is highlighted and stays `download`: "transferir uma página, as folhas de estilo e os scripts." **2** stays `list downloaded`. **3** stays `serve`. **4** is `registo`. **6** is `autogestão`. **7** is `idioma`. **9** is `Sair`. The status line says `HtmlDownloader 1.1.1` and `menu principal`.
 
 ![Portuguese main menu](https://raw.githubusercontent.com/cloudgen/HtmlDownloader/main/screenshots/main-menu-pt.png)
 
 ### `main-menu-ru.png`
 
-Russian main menu. The line above the box says `Язык меню — русский`. The path label is `Путь`. The path is `/tmp/clips`. The clock is `19:48:29` on the right of that row. **1 download** is highlighted and stays `download`: "скачать страницу, таблицы стилей и скрипты." **2** stays `list downloaded`. **3** stays `serve`. **4** is `системный журнал`. **6** is `самоуправление`. **7** is `язык`. **9** is `Выход`. The status line says `HtmlDownloader 1.0.0` and `главное меню`.
+Russian main menu. The line above the box says `Язык меню — русский`. The path label is `Путь`. The path is `/tmp/clips`. The clock is `19:48:29` on the right of that row. **1 download** is highlighted and stays `download`: "скачать страницу, таблицы стилей и скрипты." **2** stays `list downloaded`. **3** stays `serve`. **4** is `системный журнал`. **6** is `самоуправление`. **7** is `язык`. **9** is `Выход`. The status line says `HtmlDownloader 1.1.1` and `главное меню`.
 
 ![Russian main menu](https://raw.githubusercontent.com/cloudgen/HtmlDownloader/main/screenshots/main-menu-ru.png)
 
 ### `main-menu-de.png`
 
-German main menu. The line above the box says `Die Menüsprache ist Deutsch`. The path label is `Pfad`. The path is `/tmp/clips`. The clock is `19:48:32` on the right of that row. **1 download** is highlighted and stays `download`: "eine Seite, ihre Stylesheets und ihre Skripte herunterladen." **2** stays `list downloaded`. **3** stays `serve`. **4** is `Systemprotokoll`. **6** is `Selbstverwaltung`. **7** is `Sprache`. **9** is `Beenden`. The status line says `HtmlDownloader 1.0.0` and `Hauptmenü`.
+German main menu. The line above the box says `Die Menüsprache ist Deutsch`. The path label is `Pfad`. The path is `/tmp/clips`. The clock is `19:48:32` on the right of that row. **1 download** is highlighted and stays `download`: "eine Seite, ihre Stylesheets und ihre Skripte herunterladen." **2** stays `list downloaded`. **3** stays `serve`. **4** is `Systemprotokoll`. **6** is `Selbstverwaltung`. **7** is `Sprache`. **9** is `Beenden`. The status line says `HtmlDownloader 1.1.1` and `Hauptmenü`.
 
 ![German main menu](https://raw.githubusercontent.com/cloudgen/HtmlDownloader/main/screenshots/main-menu-de.png)
 
 ### `main-menu-ja.png`
 
-Japanese main menu. The line above the box says `メニューの言語は日本語`. The path label is `パス`. The path is `/tmp/clips`. The clock is `19:48:34` on the right of that row. **1 download** is highlighted and stays `download`: "ページとスタイルシートとスクリプトを取得する." **2** stays `list downloaded`. **3** stays `serve`. **4** is `システムログ`. **6** is `自己管理`. **7** is `言語`. **9** is `終了`. The status line says `HtmlDownloader 1.0.0` and `メインメニュー`.
+Japanese main menu. The line above the box says `メニューの言語は日本語`. The path label is `パス`. The path is `/tmp/clips`. The clock is `19:48:34` on the right of that row. **1 download** is highlighted and stays `download`: "ページとスタイルシートとスクリプトを取得する." **2** stays `list downloaded`. **3** stays `serve`. **4** is `システムログ`. **6** is `自己管理`. **7** is `言語`. **9** is `終了`. The status line says `HtmlDownloader 1.1.1` and `メインメニュー`.
 
 ![Japanese main menu](https://raw.githubusercontent.com/cloudgen/HtmlDownloader/main/screenshots/main-menu-ja.png)
 
 ### `main-menu-ko.png`
 
-Korean main menu. The line above the box says `메뉴 언어는 한국어`. The path label is `경로`. The path is `/tmp/clips`. The clock is `19:48:37` on the right of that row. **1 download** is highlighted and stays `download`: "페이지와 스타일시트와 스크립트를 받습니다." **2** stays `list downloaded`. **3** stays `serve`. **4** is `시스템 로그`. **6** is `자기관리`. **7** is `언어`. **9** is `종료`. The status line says `HtmlDownloader 1.0.0` and `주 메뉴`.
+Korean main menu. The line above the box says `메뉴 언어는 한국어`. The path label is `경로`. The path is `/tmp/clips`. The clock is `19:48:37` on the right of that row. **1 download** is highlighted and stays `download`: "페이지와 스타일시트와 스크립트를 받습니다." **2** stays `list downloaded`. **3** stays `serve`. **4** is `시스템 로그`. **6** is `자기관리`. **7** is `언어`. **9** is `종료`. The status line says `HtmlDownloader 1.1.1` and `주 메뉴`.
 
 ![Korean main menu](https://raw.githubusercontent.com/cloudgen/HtmlDownloader/main/screenshots/main-menu-ko.png)
 
 ### `main-menu-nl.png`
 
-Dutch main menu. The line above the box says `De menutaal is Nederlands`. The path label is `Pad`. The path is `/tmp/clips`. The clock is `19:48:39` on the right of that row. **1 download** is highlighted and stays `download`: "download een pagina, de stylesheets en de scripts." **2** stays `list downloaded`. **3** stays `serve`. **4** is `systeemlog`. **6** is `zelfbeheer`. **7** is `taal`. **9** is `Afsluiten`. The status line says `HtmlDownloader 1.0.0` and `hoofdmenu`.
+Dutch main menu. The line above the box says `De menutaal is Nederlands`. The path label is `Pad`. The path is `/tmp/clips`. The clock is `19:48:39` on the right of that row. **1 download** is highlighted and stays `download`: "download een pagina, de stylesheets en de scripts." **2** stays `list downloaded`. **3** stays `serve`. **4** is `systeemlog`. **6** is `zelfbeheer`. **7** is `taal`. **9** is `Afsluiten`. The status line says `HtmlDownloader 1.1.1` and `hoofdmenu`.
 
 ![Dutch main menu](https://raw.githubusercontent.com/cloudgen/HtmlDownloader/main/screenshots/main-menu-nl.png)
 
 ### `main-menu-el.png`
 
-Greek main menu. The line above the box says `Η γλώσσα του μενού είναι ελληνικά`. The path label is `Διαδρομή`. The path is `/tmp/clips`. The clock is `19:48:42` on the right of that row. **1 download** is highlighted and stays `download`: "κατέβασε μια σελίδα, τα φύλλα στυλ και τα σκριπτ." **2** stays `list downloaded`. **3** stays `serve`. **4** is `αρχείο καταγραφής`. **6** is `αυτοδιαχείριση`. **7** is `γλώσσα`. **9** is `Έξοδος`. The status line says `HtmlDownloader 1.0.0` and `κύριο μενού`.
+Greek main menu. The line above the box says `Η γλώσσα του μενού είναι ελληνικά`. The path label is `Διαδρομή`. The path is `/tmp/clips`. The clock is `19:48:42` on the right of that row. **1 download** is highlighted and stays `download`: "κατέβασε μια σελίδα, τα φύλλα στυλ και τα σκριπτ." **2** stays `list downloaded`. **3** stays `serve`. **4** is `αρχείο καταγραφής`. **6** is `αυτοδιαχείριση`. **7** is `γλώσσα`. **9** is `Έξοδος`. The status line says `HtmlDownloader 1.1.1` and `κύριο μενού`.
 
 ![Greek main menu](https://raw.githubusercontent.com/cloudgen/HtmlDownloader/main/screenshots/main-menu-el.png)
 
 ### `self-management.png`
 
-Row **6** has opened self-management. **61 version** is highlighted: "show the installed version." Then **62 about** "version and this computer", **63 version-check** "compare this install with pip", **64 self-update** "upgrade this package with pip", **65 self-uninstall** "remove this package with pip", **66 self-install** "install this package with pip", and **0 Back** "return to the main menu." The path label is `Path`. The path is `/tmp/clips`. The clock is `19:48:44` on the right of that row. The status line says `HtmlDownloader 1.0.0` and `self-management`.
+Row **6** has opened self-management. **61 version** is highlighted: "show the installed version." Then **62 about** "version and this computer", **63 version-check** "compare this install with pip", **64 self-update** "upgrade this package with pip", **65 self-uninstall** "remove this package with pip", **66 self-install** "install this package with pip", and **0 Back** "return to the main menu." The path label is `Path`. The path is `/tmp/clips`. The clock is `19:48:44` on the right of that row. The status line says `HtmlDownloader 1.1.1` and `self-management`.
 
 ![Self-management, 61 version highlighted](https://raw.githubusercontent.com/cloudgen/HtmlDownloader/main/screenshots/self-management.png)
 
 ### `tui-about.png`
 
-**about** (62) on the result page. The title is `HtmlDownloader (1.0.0) — result`. The page prints `HtmlDownloader 1.0.0`, `Domain: Download a page and its stylesheets, scripts, and images`, `Runtime tools: none`, and `Entry points: html-downloader, python -m HtmlDownloader`. The host check is stamped `2026-10-16 19:48:50.012150` and headed `[CHECK SYSTEM]:`. Visible lines include Python 3.12.11, C Library GCC 13.3.0, Ubuntu 24.04.5 LTS, amd64, the current user, the shell `/bin/bash`, Python Executable `python3`, python2 location, python3 location, a blank conda location, pyenv location, `Inside docker container: False`, and `Cython String: cpython-312-x86_64-linux-gnu`. The footer says `Up/Down scrolls this page.` and `Press a key to return to the main menu.` There is no input box and no clock. The page stays in English.
+**about** (62) on the result page. The title is `HtmlDownloader (1.1.1) — result`. The page prints `HtmlDownloader 1.1.1`, `Domain: Download a page and its stylesheets, scripts, and images`, `Runtime tools: none`, and `Entry points: html-downloader, python -m HtmlDownloader`. The host check is stamped `2026-10-28 16:58:41.549413` and headed `[CHECK SYSTEM]:`. Visible lines include Python 3.12.3, C Library GCC 13.3.0, Ubuntu 24.04.5 LTS, amd64, the current user, the shell `/bin/bash`, Python Executable `python3`, python2 location, python3 location, a blank conda location, pyenv location, `Inside docker container: False`, and `Cython String: cpython-312-x86_64-linux-gnu`. The footer says `Up/Down scrolls this page.` and `Press a key to return to the main menu.` There is no input box and no clock. The page stays in English.
 
 ![About host check, English](https://raw.githubusercontent.com/cloudgen/HtmlDownloader/main/screenshots/tui-about.png)
 
 ### `system-log.png`
 
-Row **4** has opened System Log. **41 view-log** is highlighted: "list a log file and show it." Then **42 clear-log** "empty one log file", **43 log-folder** "show the log folder", and **0 Back** "return to the main menu." The path label is `Path`. The path is `/tmp/clips`. The clock is `19:48:47` on the right of that row. The status line says `HtmlDownloader 1.0.0` and `System Log`.
+Row **4** has opened System Log. **41 view-log** is highlighted: "list a log file and show it." Then **42 clear-log** "empty one log file", **43 log-folder** "show the log folder", and **0 Back** "return to the main menu." The path label is `Path`. The path is `/tmp/clips`. The clock is `19:48:47` on the right of that row. The status line says `HtmlDownloader 1.1.1` and `System Log`.
 
 ![System Log, 41 view-log highlighted](https://raw.githubusercontent.com/cloudgen/HtmlDownloader/main/screenshots/system-log.png)
 
@@ -320,7 +320,7 @@ html-downloader
 html-downloader version
 ```
 
-`version` prints `HtmlDownloader 1.0.0` and does not call pip. A run that is not the text menu can also print ChronicleLogger status lines above that. The text menu keeps those lines off the screen.
+`version` prints `HtmlDownloader 1.1.1` and does not call pip. A run that is not the text menu can also print ChronicleLogger status lines above that. The text menu keeps those lines off the screen.
 
 ```bash
 html-downloader download --url https://example.com/ --name example
@@ -363,4 +363,4 @@ MIT — see [`LICENSE.md`](./LICENSE.md). Also declared in `pyproject.toml`.
 
 ## Last Update
 
-2026-10-28 — **1.1.0**. `download` can omit `--name` when the URL ends with `.html`, `.htm`, or a folder name such as `xxx`. `--html` names the saved HTML file. Serve, edit, and view use that file. Public source is https://github.com/cloudgen/HtmlDownloader. Menu pictures still show the **1.0.0** board: language **71**–**83**, one main menu for each language, self-management **61**–**66**, about, and System Log **41**–**43**. Version badge matches `pyproject.toml` and `__version__`. `ChronicleLogger>=1.3.1` is required.
+2026-10-28 — **1.1.1**. Saving a page logs the temp write, the publish, and the discard of an unfinished temp before those file operations. `download` can still omit `--name` when the URL ends with `.html`, `.htm`, or a folder name such as `xxx`. `--html` names the saved HTML file. Menu pictures show the **1.1.1** board: language **71**–**83**, one main menu for each language, self-management **61**–**66**, about, and System Log **41**–**43**. Version badge matches `pyproject.toml` and `__version__`. `ChronicleLogger>=1.3.1` is required.

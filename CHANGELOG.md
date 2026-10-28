@@ -3,6 +3,12 @@
 All notable changes to **HtmlDownloader** are documented here.  
 Version SSOT: `pyproject.toml` + `src/HtmlDownloader/__init__.__version__`.
 
+## [1.1.1] - 2026-10-28
+
+### Changed
+
+- Saving a page logs the temp write, the publish, and the discard of an unfinished temp before those file operations. The lines use component `PageDownload`. The menu and the `download` verb are unchanged.
+
 ## [1.1.0] - 2026-10-28
 
 ### Added

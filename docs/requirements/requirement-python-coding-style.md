@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-coding-style.md
-**Status**: Active (Version 1.2.2)
+**Status**: Active (Version 1.2.4)
 **Area**: python
 **Key**: `requirement-python-coding-style`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -9,6 +9,8 @@
 Define Python coding style and defensive file I/O conventions for HtmlDownloader: how agents and maintainers write Python so path, temp, and publish behavior stays safe across mounts, including USB, without duplicating the domain tables. This program does not call an encoder.
 
 Publish with `shutil.move` stays here. This program does not call an encoder. The class map is owned by `requirement-python-oop`. The logger construct is owned by `requirement-python-cli-logging`.
+
+Without this requirement, portable learned lessons arrive raw.
 
 ### 1.1 Human-facing
 
@@ -89,7 +91,7 @@ Log the temp write, the publish, and the discard of an unfinished temp before th
 | **Gate checklist (cite ID)** | `CL-PYTHON-SHUTIL-MOVE-PUBLISH` — run when auditing promote and staging publish paths |
 | **Architecture** | One class per file. StateLogic + `Attr` stays unordered |
 | **Logger** | Package import does not construct ChronicleLogger |
-| **Version** | `1.1.0` |
+| **Version** | `1.1.1` |
 | **User docs** | Root `README.md` Features must not claim a Cython-required runtime or an encoder |
 
 ### 2.6 Why This Requirement Exists (CIAO)
@@ -163,6 +165,20 @@ On Termux, Git Bash, Windows cmd, or the same class, temps and the published fil
 **Matrix:** `docs/reviews/requirement-test-matrix.md`
 **Map:** `docs/reviews/test-plan.md`
 
+## Terminologies
+
+**Project requirements.** Product law is the finished must/should rules for this product. They are complete for this product. They are not blank forms, not agent procedures, and not a glossary.
+
+**Daily-life example:** “This household must lock the door by 10” is law for this house. A blank curfew form in a stationery shop is not.
+
+**Coding-style requirement.** The specialize-in home for portable learned lessons about how this program is written. Without that file, those lessons arrive raw and get treated as this product’s law. This file is where a lesson is adopted, pointed at a peer requirement, or refused.
+
+**Daily-life example:** A newsroom keeps one style sheet (“we write dates this way”). That adopted sheet is the coding-style requirement. The industry handbook on the shelf is not house law until the sheet says so.
+
+**Avoid-factory-create-class.** An object is created by writing `ClassName(...)` at the site that needs that object. A factory is a function or a method whose only job is to instantiate a class and hand it back. The class can be created without that factory.
+
+**Daily-life example:** You want a kettle. You take a kettle off the shelf. You do not fill out a slip that a back-room clerk uses to fetch the same kettle and pass it through a window. That slip is a factory.
+
 ## 7. Status history
 
 | Date | Status | Note |
@@ -173,6 +189,8 @@ On Termux, Git Bash, Windows cmd, or the same class, temps and the published fil
 | 2026-10-16 | Active 1.2.0 | Version **1.0.0**. No encoder in the style rules. The class map is on disk |
 | 2026-10-28 | Active 1.2.1 | The page folder is the publish subject. No concat pipeline owner |
 | 2026-10-28 | Active 1.2.2 | Product version **1.1.0** |
+| 2026-10-28 | Active 1.2.3 | Purpose states that without this requirement, portable learned lessons arrive raw. Terminologies added |
+| 2026-10-28 | Active 1.2.4 | Product version **1.1.1**. Publish still uses `shutil.move`. The temp, publish, and discard lines are on `requirement-python-cli-logging` |
 
 ---
 

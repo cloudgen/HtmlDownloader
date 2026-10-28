@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-class-software-dev.md
-**Status**: Active (Version 1.2.2 – HtmlDownloader software-development class law + residual stack)
+**Status**: Active (Version 1.2.7 – HtmlDownloader software-development class law + residual stack)
 **Area**: class
 **Key**: `requirement-class-software-dev`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -8,7 +8,7 @@
 
 Declare this workspace as a software-development project class and hold the residual collection of software-engineering stack facts not already owned by more specific Active peer requirements: primary language, toolchain policy, package and build tooling, and runtime OS family.
 
-This file is class law plus the residual SSOT. It is not a second copy of the download domain, the CLI surface, the text menu, the logger construct, the class map, packaging tables, or error-handling tables. Those stay on peer requirements.
+This file is class law plus the residual SSOT. It is not a second copy of the download domain, the CLI surface, the text menu, the logger construct, the class map, packaging tables, error-handling tables, or the agent-use skill. Those stay on peer requirements.
 
 ### 1.1 Human-facing
 
@@ -24,7 +24,7 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 |----------|----------|
 | Language, interpreter, package tool, and the residual pointer table | A second copy of the menu, the logger construct, or the class map |
 | Shell install and root elevation marked absent | A pip lifecycle marked absent. That lifecycle is owned by the CLI and the TUI |
-| One human operator. No dest approver | A new actor-requirement file |
+| A pointer to the who-list. No dest approver | A second copy of that who-list, or an Approver column |
 
 | Surface | What you open | What for |
 |---------|---------------|----------|
@@ -110,10 +110,10 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 | **Architectures supported** | any architecture with CPython |
 | **Git surface** | used — remote `https://github.com/cloudgen/HtmlDownloader` |
 | **Ship surface** | installable Python package `HtmlDownloader`; console script `html-downloader`; module form `python -m HtmlDownloader` |
-| **Product version SSOT** | `src/HtmlDownloader/__init__.py` → `__version__` and `pyproject.toml` `[project].version` stay equal when either is bumped (current: **1.1.0**) |
+| **Product version SSOT** | `src/HtmlDownloader/__init__.py` → `__version__` and `pyproject.toml` `[project].version` stay equal when either is bumped (current: **1.1.1**) |
 | **Install mode** | pip / local package. Not a shell online-install product |
 | **Type 1 elevation** | intentionally absent. No root or sudo product surface |
-| **Actor / role / subject / approver** | **Considered — no dest approver.** The human operator of `html-downloader` is the only actor. No dest approval machine. **None** is valid. Do not add an actor requirement file |
+| **Actor / role / subject / approver** | **Points at `requirement-actor-role-subject`.** The human operator of `html-downloader` is the only actor. No dest approval machine. The who-list has Actor, Role, and Subject. This residual does not replace that file |
 | **Dest fence conditions** | **Considered — no dest fence conditions.** No dest inbound, approve, or reject queue |
 | **Author contact (non-secret)** | Wilgat Wong · `wilgat.wong@gmail.com` |
 
@@ -129,7 +129,8 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 | CLI entry / typed verbs | `requirement-python-cli-interface` | Empty argv and the verb table |
 | Text menu | `requirement-python-tui` | Front board and the picture |
 | Menu language | `requirement-python-cli-language` | Front row 7, codes 71–83, and the language leaf |
-| Status logger | `requirement-python-cli-logging` | Construct in `def main` |
+| Status logger | `requirement-python-cli-logging` | Construct in `def main`. How to ask ChronicleLogger |
+| Debug values | `requirement-python-cli-debug` | Printed catalog and the environment switch. This row points. It does not copy the list |
 | Domain surface | `requirement-domain-htmldownloader` | Download, list, and serve. The about page uses the domain sentence |
 | About page | `requirement-python-about` | Identity, host check, and the star box |
 | No encoder | `requirement-domain-htmldownloader` and `requirement-runtime-prerequisites` | This program does not call an encoder |
@@ -139,8 +140,9 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 | Shell online install / shell self-update / Type O | **intentionally absent** | Not a shell channel |
 | Pip lifecycle (`version-check`, `self-update`, `self-install`, `self-uninstall`) | `requirement-python-cli-interface` and `requirement-python-tui` | `python -m pip` only. Not a shell channel |
 | Type 1 sudoers / root elevation | **intentionally absent** | No elevation law |
-| Actor / role / subject / approver | **this file (residual)** | Considered — no dest approver |
+| Actor / role / subject / approver | `requirement-actor-role-subject` | No dest approver. This file points. It does not own the table |
 | Dest fence conditions | **this file (residual)** | Considered — no dest fence conditions |
+| Agent use skill | `requirement-agent-use-skill` | Side-product. Instructs an LLM agent to use `html-downloader`. Not a second domain file |
 
 ## 3. Why This Requirement Exists (Direct CIAO Alignment)
 
@@ -170,7 +172,7 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 7. Introduce Type 1 sudoers or root elevation without an explicit user order and an elevation allowlist.
 8. Treat this file as server-maintenance allowlist law, or register an Active server-maintenance class file in parallel.
 9. Invent a second primary language that contradicts the Python requirements.
-10. Add an actor-requirement file while the residual says no dest approver.
+10. Skip `requirement-actor-role-subject`, add an Approver column to it, or publish `requirement-actor-role-subject-approver` while there is no dest approver.
 11. Mark pip lifecycle absent, or mark shell Type O present.
 
 **Violating any of these is a critical regression.**
@@ -182,10 +184,10 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 | AC-1 | The sole Active class file is `requirement-class-software-dev.md` |
 | AC-2 | Primary language is Python with the CPython toolchain |
 | AC-3 | The package tool is setuptools plus `pyproject.toml` |
-| AC-4 | The residual table points at the CLI, TUI, logging, OOP, and domain peers without copying their bodies |
+| AC-4 | The residual table points at the CLI, TUI, logging, debug, OOP, and domain peers without copying their bodies |
 | AC-5 | Shell Type O and Type 1 elevation are absent. Pip lifecycle is owned by the CLI and the TUI |
 | AC-6 | Registered in `docs/requirements/index.md` with Area `class` |
-| AC-7 | Actor residual stays “no dest approver”. No actor requirement file |
+| AC-7 | Actor residual points at Active `requirement-actor-role-subject`. Columns are Actor, Role, and Subject. No Approver column |
 
 ## 7. Related requirements (peer keys only)
 
@@ -196,11 +198,14 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 | `requirement-python-oop` | Class map |
 | `requirement-python-cli-interface` | Typed verbs and empty argv |
 | `requirement-python-tui` | Text menu |
-| `requirement-python-cli-logging` | Logger construct |
+| `requirement-python-cli-logging` | Logger construct. How to ask ChronicleLogger |
+| `requirement-python-cli-debug` | Debug catalog. This file points |
 | `requirement-domain-htmldownloader` | Download, list, and serve |
 | `requirement-python-coding-style` | Temps and `shutil.move` |
 | `requirement-python-error-handling` | Console errors |
 | `requirement-runtime-prerequisites` | Host tools and the logger floor |
+| `requirement-agent-use-skill` | Side-product skill for an LLM agent |
+| `requirement-actor-role-subject` | Who-list. This file points. It does not copy the table |
 | `docs/requirements/index.md` | Registry |
 
 ## Design-time verification
@@ -216,6 +221,20 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 
 On Termux, Git Bash, Windows cmd, or the same class, HtmlDownloader runs as the normal user. **This requirement:** do not use administrator privilege, `sudo`, `apt`, or a dedicated system user. Do not pipe a downloaded script into a shell. Type 1 and Type 2 are unused on Termux, Git Bash, and Windows cmd. Git Bash and Windows cmd do not call Termux `pkg`. Pip lifecycle, when the operator asks for it, is `python -m pip` from the CLI and TUI requirements.
 
+## Terminologies
+
+**Project requirements.** Product law is the finished must/should rules for this product. They are complete for this product. They are not blank forms, not agent procedures, and not a glossary.
+
+**Daily-life example:** “This household must lock the door by 10” is law for this house. A blank curfew form in a stationery shop is not.
+
+**Project class.** The internal name for which kind of work this folder is. Everyday talk says project nature. Every workspace is one kind. This file is the software-development class law plus the residual stack.
+
+**Daily-life example:** Before you stock a room, you decide whether it is a bakery, a law office, or an empty spare room. The workshop word for that choice is project class.
+
+**Coding-style requirement.** The specialize-in home for portable learned lessons about how this program is written. Without that file, those lessons arrive raw and get treated as this product’s law. This file is where a lesson is adopted, pointed at a peer requirement, or refused.
+
+**Daily-life example:** A newsroom keeps one style sheet (“we write dates this way”). That adopted sheet is the coding-style requirement. The industry handbook on the shelf is not house law until the sheet says so.
+
 ## 8. Status history
 
 | Date | Status | Note |
@@ -227,6 +246,11 @@ On Termux, Git Bash, Windows cmd, or the same class, HtmlDownloader runs as the 
 | 2026-10-16 | Active 1.2.0 | Product version **1.0.0**. No FFmpeg dependency. Menu language is front row 7 |
 | 2026-10-28 | Active 1.2.1 | Residual points at the page save. The domain file owns download, list, and serve |
 | 2026-10-28 | Active 1.2.2 | Product version **1.1.0** |
+| 2026-10-28 | Active 1.2.3 | Terminologies for project requirements, project class, and the coding-style requirement |
+| 2026-10-28 | Active 1.2.4 | Residual points at `requirement-agent-use-skill`. Product version stays **1.1.0**. No actor file |
+| 2026-10-28 | Active 1.2.5 | Residual points at `requirement-actor-role-subject`. No dest approver. Product version stays **1.1.0** |
+| 2026-10-28 | Active 1.2.6 | Residual points at `requirement-python-cli-debug`. The value list stays on that file. Product version stays **1.1.0** |
+| 2026-10-28 | Active 1.2.7 | Product version **1.1.1** |
 
 ---
 

@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-oop.md
-**Status**: Active (Version 1.1.1)
+**Status**: Active (Version 1.1.3)
 **Area**: python
 **Key**: `requirement-python-oop`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -193,6 +193,7 @@ class Cli:
 | Key | Relationship |
 |-----|----------------|
 | `requirement-python-cli-logging` | Construct, `instantiated` line, quiet |
+| `requirement-python-cli-debug` | Values printed inside `isDebug()`. The `instantiated` line stays on the logging requirement |
 | `requirement-python-tui` | Picture the classes draw |
 | `requirement-python-cli-interface` | Verb names `Cli` dispatches |
 | `requirement-python-about` | About page line text. This file names `AboutPage` and `CheckSystem` |
@@ -215,6 +216,20 @@ class Cli:
 **Matrix:** `docs/reviews/requirement-test-matrix.md`
 **Map:** `docs/reviews/test-plan.md`
 
+## Terminologies
+
+**Project requirements.** Product law is the finished must/should rules for this product. They are complete for this product. They are not blank forms, not agent procedures, and not a glossary.
+
+**Daily-life example:** “This household must lock the door by 10” is law for this house. A blank curfew form in a stationery shop is not.
+
+**Python OOP style levels.** A ladder for how much object structure a Python program uses, from a plain script up to a framework-grade orchestrator. The labels name kitchen organization. They are not the kind of shop this folder is. This file’s map is L2: one class in one module.
+
+**Daily-life example:** Cooking from a scribbled list versus a boxed setup with labeled bowls is the same dinner and a different kitchen organization.
+
+**Avoid-factory-create-class.** An object is created by writing `ClassName(...)` at the site that needs that object. A factory is a function or a method whose only job is to instantiate a class and hand it back. The class can be created without that factory.
+
+**Daily-life example:** You want a kettle. You take a kettle off the shelf. You do not fill out a slip that a back-room clerk uses to fetch the same kettle and pass it through a window. That slip is a factory.
+
 ## 7. Status history
 
 | Date | Status | Note |
@@ -226,6 +241,8 @@ class Cli:
 | 2026-10-04 | Active 1.0.4 | `CheckSystem` owns the host check. `AboutPage` owns `framework_about`. No second version triple. `TP-OOP-*` stay todo |
 | 2026-10-16 | Active 1.1.0 | `PageDownload`, `PageServe`, and `PageOpen` are on the map. No `Join`. No welcome line. About is row 62 |
 | 2026-10-28 | Active 1.1.1 | The other role is the page folder. No concat order |
+| 2026-10-28 | Active 1.1.2 | Terminologies for the class ladder, the direct class construct, and project requirements |
+| 2026-10-28 | Active 1.1.3 | Related row points at `requirement-python-cli-debug`. Instantiated lines stay on the logging requirement. Product version stays **1.1.0** |
 
 ---
 

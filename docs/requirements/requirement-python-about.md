@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-about.md
-**Status**: Active (Version 1.1.1)
+**Status**: Active (Version 1.1.3)
 **Area**: python
 **Key**: `requirement-python-about`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -112,12 +112,12 @@ Pyenv and conda path reads for this page stay in this file. This product does no
 Values in angle brackets are the live read. They are not a frozen login or home path.
 
 ```text
-HtmlDownloader 1.1.0
+HtmlDownloader 1.1.1
 Domain: Download a page and its stylesheets, scripts, and images
 Runtime tools: none
 Entry points: html-downloader, python -m HtmlDownloader
 
-2026-10-04 11:16:23.700590 HtmlDownloader(v1.1.0)  [CHECK SYSTEM]:
+2026-10-04 11:16:23.700590 HtmlDownloader(v1.1.1)  [CHECK SYSTEM]:
   Now checking your operation system!
     Python: 3.12.3
     C Library: GCC 13.3.0
@@ -144,7 +144,7 @@ Entry points: html-downloader, python -m HtmlDownloader
 
 ***************************************************
 *                                                 *
-* HtmlDownloader (1.1.0) by Wilgat Wong on 2026-10-04  *
+* HtmlDownloader (1.1.1) by Wilgat Wong on 2026-10-04  *
 *                                                 *
 * You are using an UNINSTALLED version, location: *
 *     <program path>                              *
@@ -188,7 +188,7 @@ Invocation: `html-downloader` on a terminal, then `6`, then `62`. The same page 
 | **TTY / Interactive** | `yes` or `no` from `sys.stdout.isatty()` |
 | **JSON** | Not claimed. No `--json` stream |
 | **Privilege** | normal user privilege |
-| **Product version** | `1.1.0` |
+| **Product version** | `1.1.1` |
 
 ### 2.3 Why This Requirement Exists (Direct CIAO Alignment)
 
@@ -278,6 +278,16 @@ TP-ABOUT-01 asserts the identity line, every host-check label, the star-box titl
 | `src/HtmlDownloader/check_system.py` | Class `CheckSystem` |
 | `pyproject.toml` | Homepage URL and the version string |
 
+## Terminologies
+
+**Project requirements.** Product law is the finished must/should rules for this product. They are complete for this product. They are not blank forms, not agent procedures, and not a glossary.
+
+**Daily-life example:** “This household must lock the door by 10” is law for this house. A blank curfew form in a stationery shop is not.
+
+**CLI about.** The operator page of the verb `about`. It prints live facts for this run: which program this is, what this computer is, and where the program is running from. The page is identity, then the host check. A missing host-check value stays a blank on a line that remains. The check reads the environment and path existence. It does not start `python2`, `python3`, `conda`, or `pyenv`, and it does not freeze a login or a home path into the page.
+
+**Daily-life example:** You ask the kitchen timer “about.” It says which model it is and which counter it is on. It does not start the oven to answer.
+
 ## 7. Status history
 
 | Date | Status | Note |
@@ -285,6 +295,8 @@ TP-ABOUT-01 asserts the identity line, every host-check label, the star-box titl
 | 2026-10-04 | Active 1.0.0 | About page: identity, host check, star box. Pyenv and conda reads stay here. No `--json`. Product version **1.0.5**. `./tests/run.sh` — 23 tests, OK. `TP-ABOUT-01` through `TP-ABOUT-14` and `TP-ABOUT-16` are have. There is no `TP-ABOUT-15` |
 | 2026-10-16 | Active 1.1.0 | Domain sentence is the download line. Runtime tools are `none`. Menu about is row **62**. Usage line is `download --url URL --name PAGENAME`. Product version **1.0.0** |
 | 2026-10-28 | Active 1.1.1 | The sample version token is **1.1.0**. A later package version still replaces it |
+| 2026-10-28 | Active 1.1.2 | Terminologies for the about page and project requirements |
+| 2026-10-28 | Active 1.1.3 | The sample version token is **1.1.1** |
 
 **Last Updated**: 2026-10-28
 **Owner**: project maintainers

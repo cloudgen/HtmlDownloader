@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-error-handling.md
-**Status**: Active (Version 1.3.1)
+**Status**: Active (Version 1.3.2)
 **Area**: python
 **Key**: `requirement-python-error-handling`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -150,6 +150,20 @@ On Termux, Git Bash, Windows cmd, or the same class, failure sentences are for t
 **Matrix:** `docs/reviews/requirement-test-matrix.md`
 **Map:** `docs/reviews/test-plan.md`
 
+## Terminologies
+
+**Project requirements.** Product law is the finished must/should rules for this product. They are complete for this product. They are not blank forms, not agent procedures, and not a glossary.
+
+**Daily-life example:** “This household must lock the door by 10” is law for this house. A blank curfew form in a stationery shop is not.
+
+**Error-handling.** The plan for when something goes wrong: detect the failure, say how bad it is, report it on the right channel, stop the damage spreading, and leave a known safe state. A silent failure is not that plan.
+
+**Daily-life example:** The oven beeps and you pull the tray, open a window, and write “do not use until cool” on a sticky note. That is error-handling. Pretending dinner is fine is not.
+
+**Operator-readable error.** A failure message a person at the prompt can act on. It says what happened, what that means, and what to do next, without maintainer slang.
+
+**Daily-life example:** “The oven is off; turn the knob to 180 and press Start” beats a code that only a repair bench can read.
+
 ## 7. Status history
 
 | Date | Status | Note |
@@ -159,6 +173,7 @@ On Termux, Git Bash, Windows cmd, or the same class, failure sentences are for t
 | 2026-10-04 | Active 1.2.0 | ChronicleLogger is required for durable status. Console sentences stay. Missing library is a console line. Empty argv off a terminal is help, return 0 |
 | 2026-10-16 | Active 1.3.0 | Failures are download and serve. No encoder errors. An existing page stays |
 | 2026-10-28 | Active 1.3.1 | Serve checks the stored HTML file. The default name remains `index.html`. A rename moves that file |
+| 2026-10-28 | Active 1.3.2 | Terminologies for error-handling and an operator-readable error |
 
 ---
 
