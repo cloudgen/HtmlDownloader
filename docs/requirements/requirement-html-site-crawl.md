@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-html-site-crawl.md
-**Status**: Active (Version 1.0.2)
+**Status**: Active (Version 1.0.3)
 **Area**: crawl
 **Key**: `requirement-html-site-crawl`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -227,9 +227,9 @@ On Termux, Git Bash, Windows cmd, or the same class, the crawl runs as the norma
 | 2026-10-28 | Active 1.0.0 | Same-site walk. Required depth and page cap. One-second delay. Robots fail closed. Dispatcher wiring waits. |
 | 2026-10-28 | Active 1.0.1 | `crawl` is routed. Output root is the live app name. `TP-CRAWL-01` through `TP-CRAWL-04` are have. |
 | 2026-10-28 | Active 1.0.2 | A root start stores `html` as `index.html` in the url map. Product version **1.1.1** |
+| 2026-10-28 | Active 1.0.3 | Product version **1.1.2**. Root start still stores `html` as `index.html`. |
 
 ---
-
 **Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

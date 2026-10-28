@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-cli-language.md
-**Status**: Active (Version 1.1.0)
+**Status**: Active (Version 1.1.1)
 **Area**: python
 **Key**: `requirement-python-cli-language`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -175,6 +175,16 @@ On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-crawl
 **Matrix:** `docs/reviews/requirement-test-matrix.md`
 **Map:** `docs/reviews/test-plan.md`
 
+## Terminologies
+
+**Project requirements.** Product law is the finished must/should rules for this product. They are complete for this product. They are not blank forms, not agent procedures, and not a glossary.
+
+**Daily-life example:** “This household must lock the door by 10” is law for this house. A blank curfew form in a stationery shop is not.
+
+**Avoid-factory-create-class.** An object is created by writing `ClassName(...)` at the site that needs that object. A factory is a function or a method whose only job is to instantiate a class and hand it back. The class can be created without that factory.
+
+**Daily-life example:** You want a kettle. You take a kettle off the shelf. You do not fill out a slip that a back-room clerk uses to fetch the same kettle and pass it through a window. That slip is a factory.
+
 ## 7. Status history
 
 | Date | Status | Note |
@@ -182,9 +192,10 @@ On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-crawl
 | 2026-10-04 | Active 1.0.0 | Menu language for HtmlCrawler. Front row 4. Thirteen codes. Leaf under this login’s home. `TP-LANG-01` has |
 | 2026-10-04 | Active 1.0.1 | English about explain is `version and this computer`. The about page stays English |
 | 2026-10-16 | Active 1.1.0 | Front row **7**. Printed codes **71**–**83**. Unprinted **84**–**98**. `zh-Hant` is **73**. About explain is `version and this computer`. Override is `HTMLDOWNLOADER_LANG` |
+| 2026-10-28 | Active 1.1.1 | Terminologies for project requirements and the direct class construct |
 
 ---
 
-**Last Updated**: 2026-10-16
+**Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

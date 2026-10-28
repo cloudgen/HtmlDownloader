@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-cli-debug.md
-**Status**: Active (Version 1.0.2)
+**Status**: Active (Version 1.0.3)
 **Area**: python
 **Key**: `requirement-python-cli-debug`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -80,7 +80,7 @@ The running `src/HtmlDownloader/cli.py` does not yet print these four lines. The
 
 ### 2.5 Version token on line 1
 
-17. Line 1 and the `version` verb read the same package version: the single string `__version__` (`requirement-python-packaging`, restated on `requirement-python-cli-logging`). The current string is `1.0.0`. **MUST NOT** add `MAJOR` / `MINOR` / `PATCH` integers. **MUST NOT** keep a second version literal for display.
+17. Line 1 and the `version` verb read the same package version: the single string `__version__` (`requirement-python-packaging`, restated on `requirement-python-cli-logging`). The current string is `1.1.2`. **MUST NOT** add `MAJOR` / `MINOR` / `PATCH` integers. **MUST NOT** keep a second version literal for display.
 
 ### 2.6 Implementation Notes (this project)
 
@@ -89,14 +89,14 @@ The running `src/HtmlDownloader/cli.py` does not yet print these four lines. The
 | **Owner of the four messages** | This file |
 | **Who calls ChronicleLogger** | `requirement-python-cli-logging`. `def main` in `src/HtmlDownloader/cli.py` writes `ChronicleLogger(...)`, then this block |
 | **logname** | `HtmlCrawler`, which `logName()` resolves to `html-crawler` |
-| **Line 1** | `html-crawler v1.1.1 (<this file>)` using `__version__` and `__file__` |
+| **Line 1** | `html-crawler v1.1.2 (<this file>)` using `__version__` and `__file__` |
 | **Line 2** | `Using` plus `ChronicleLogger.class_version()` |
 | **Line 3** | `Base` plus `baseDir()`, `level="DEBUG"`, `component="main"` |
 | **Line 4** | `debug mode` |
 | **Switch** | `DEBUG` or `debug` already `1`, `true`, or `show`. No `--debug`. No `--verbose` |
 | **Practice** | `DEBUG=1 html-crawler version` |
 | **Live console this tree** | `html-downloader`, until the ship-unit pass |
-| **Proof** | `TP-DEBUG-01` stays todo. The suite file `tests/test_logging.py` is not on disk. Do not mark the row have |
+| **Proof** | `TP-DBG-01`, `TP-DBG-02`, and `TP-DBG-03` are have in `tests/test_debug.py`. `TP-LOG-02` is the quiet mirror in that same file |
 
 ### 2.7 Why This Requirement Exists (CIAO)
 
@@ -127,7 +127,7 @@ On Termux, Git Bash, Windows cmd, or the same class, debug mode is an environmen
 6. Print `in_venv`, `in_pyenv`, or `in_conda` as one of these four lines.
 7. Put `instantiated`, a file operation, or a thread line inside this debug block.
 8. Add `MAJOR` / `MINOR` / `PATCH` integers beside `__version__`.
-9. Mark `TP-DEBUG-01` have while `tests/test_logging.py` does not assert these four messages.
+9. Mark `TP-DBG-01` have while `tests/test_debug.py` does not assert these four messages.
 10. Treat this file as a new routed verb.
 
 **Violating this rule is a critical debug-output regression.**
@@ -158,8 +158,10 @@ On Termux, Git Bash, Windows cmd, or the same class, debug mode is an environmen
 
 | TP family / ID | Suite | Status | Note |
 |----------------|-------|--------|------|
-| **TP-DEBUG-01** | `tests/test_logging.py` | todo | Primary owner of the four messages. `DEBUG` already on shows them on a non-screen run. Unset shows none. The suite file is not on disk |
-| **TP-LOG-02** | `tests/test_logging.py` | todo | Quiet mirror. Primary owner is `requirement-python-cli-logging`. A text-screen run does not mirror the four lines. The daily file still receives them |
+| **TP-DBG-01** | `tests/test_debug.py` | have | Primary owner of the four messages. `DEBUG` already on shows them on a non-screen run |
+| **TP-DBG-02** | `tests/test_debug.py` | have | Unset `DEBUG` and `debug` show none of the four messages |
+| **TP-DBG-03** | `tests/test_debug.py` | have | A text-screen run does not mirror the four lines. The daily file still receives them |
+| **TP-LOG-02** | `tests/test_debug.py` | have | Quiet mirror. Primary owner is `requirement-python-cli-logging`. The case is `TP-DBG-03` |
 
 **Matrix:** `docs/reviews/requirement-test-matrix.md`
 **Map:** `docs/reviews/test-plan.md`
@@ -185,9 +187,9 @@ On Termux, Git Bash, Windows cmd, or the same class, debug mode is an environmen
 | 2026-10-28 | Active 1.0.0 | The four debug messages leave the logging requirement. Logging still calls ChronicleLogger for this list |
 | 2026-10-28 | Active 1.0.1 | The sample identity line uses the current `__version__` string **1.0.1** |
 | 2026-10-28 | Active 1.0.2 | The sample identity line uses **1.1.1**. The four printed values are unchanged |
+| 2026-10-28 | Active 1.0.3 | The sample identity line uses **1.1.2**. `TP-DBG-01` through `TP-DBG-03` are have. |
 
 ---
-
 **Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

@@ -30,17 +30,31 @@ Do not pipe a downloaded script into a shell. Do not use `sudo`, `apt`, or a ded
 
 ## Save one page
 
-`download` needs `--url` and `--name`. Both are required. It does not draw the menu. It does not take `--depth` or `--max-pages`. There is no `--html` flag.
+`download` needs `--url`. It does not draw the menu. It does not take `--depth` or `--max-pages`.
+
+```bash
+html-downloader download --url https://example.com/guide.html
+```
+
+That URL ends with `guide.html`, so the page folder is `guide` and the HTML file is `guide.html`. A URL that ends with a folder name such as `xxx` saves `xxx/index.html`.
+
+Omit `--name` only when the URL recommends the folder that way. A host-only URL does not recommend a folder. Pass `--name` or the command exits non-zero.
 
 ```bash
 html-downloader download --url https://example.com/ --name example
 ```
 
-On this tree the page lands at `~/.app/HtmlDownloader/output/example/index.html`. The law folder, after the ship-unit pass, is `~/.app/HtmlCrawler/output/<pagename>/index.html`.
+`--html` chooses the HTML file name inside the page folder. Omit it to keep a stored name, or to use the name recommended from the URL. `--html` is only for `download`.
 
-A missing `--url` or a missing `--name` exits non-zero and names the gap. The URL must be `http` or `https`, must have a host, and must not carry a username or password.
+```bash
+html-downloader download --url https://example.com/guide.html --name docs --html page.html
+```
 
-The save stores that one page and the stylesheets, scripts, images, and fonts it links. It does not follow links to more HTML pages. Run the same command again to fill files that are still missing. When `index.html` is already there, the page URL is not fetched again.
+On this tree the page lands under `~/.app/HtmlDownloader/output/`. The law folder, after the ship-unit pass, is `~/.app/HtmlCrawler/output/`.
+
+A missing `--url` exits non-zero and names the gap. The URL must be `http` or `https`, must have a host, and must not carry a username or password.
+
+The save stores that one page and the stylesheets, scripts, images, and fonts it links. It does not follow links to more HTML pages. Run the same command again to fill files that are still missing. When the stored HTML file is already there, the page URL is not fetched again.
 
 ## Crawl one site
 
@@ -75,7 +89,7 @@ List downloaded is menu row **2**. It is not a typed verb. Do not invent `list` 
 
 The front rows are 1 download, 2 list downloaded, 3 serve, 4 System Log, 6 self-management, 7 language, and 9 Exit. Rows 5 and 8 are omitted. Do not drive this menu when no person is there.
 
-`language` is menu row **7**. It is not a typed verb.
+`language` is menu row 7, not a typed verb.
 
 ## What you must not run
 

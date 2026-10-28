@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-agent-use-skill.md
-**Status**: Active (Version 1.0.1)
+**Status**: Active (Version 1.0.2)
 **Area**: agent
 **Key**: `requirement-agent-use-skill`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -43,13 +43,13 @@ The human menu, the typed verbs, the page folder, and the site walk stay on thei
 
 1. A specialized product **MAY** ship one side-product. That side-product **MUST** be a skill whose only job is to instruct an LLM agent to use this application.
 2. The skill **MUST** name the console script this tree actually installs, and the console script the law intends. On this tree the installed script is `html-downloader`. The intended script is `html-crawler`. The intended module is `python -m HtmlCrawler`. The module that runs today is `python -m HtmlDownloader`.
-3. The skill **MUST** name `download` and `serve` as typed verbs the copied dispatcher accepts. `download` **MUST** require `--url` and `--name`. The skill **MUST NOT** tell the agent to omit `--name`. There is no `--html` flag. `serve` **MUST** require `--page-name`. The bind address **MUST** be `127.0.0.1`. The default port **MUST** be **5000**.
+3. The skill **MUST** name `download` and `serve` as typed verbs the copied dispatcher accepts. `download` **MUST** require `--url`. The skill **MUST** say: omit `--name` only when the URL recommends the folder, and a host-only URL does not recommend a folder. `--html` names the HTML file and belongs to `download` only. The skill **MUST NOT** say there is no `--html` flag. `serve` **MUST** require `--page-name`. The bind address **MUST** be `127.0.0.1`. The default port **MUST** be **5000**.
 4. The skill **MUST** give the intended `crawl` command with `--url`, `--name`, `--depth`, and `--max-pages`, all required. It **MUST** say `--depth` is an integer ≥ 0 and `--max-pages` is an integer ≥ 1. It **MUST NOT** default either bound to unlimited. It **MUST NOT** put those two flags on `download`.
 5. On this tree the skill **MUST** give the live `crawl` command on `html-downloader` with `--url`, `--name`, `--depth`, and `--max-pages`. It **MUST** say help lists `crawl`, `download`, and `serve`. It **MUST NOT** label `crawl` as an unknown verb. It **MUST NOT** tell the agent to edit the dispatcher to add `crawl`. It **MUST NOT** say this product has no `crawl` verb.
 6. The skill **MUST** tell the agent to use typed verbs. Empty argv opens the text menu for a person at a terminal. An agent **MUST NOT** be told to drive that menu when no person is there. With no terminal, empty argv prints help and returns 0.
 7. The skill **MUST** say that list-downloaded is menu row **2** and not a typed verb. `language` is menu row **7** and not a typed verb. `crawl` is not a menu row.
 8. The skill **MUST** forbid `hello`, `join`, `list-videos`, an encoder, a working-directory file listing, a shell installer, and root elevation. It **MUST NOT** give those as steps the agent should run.
-9. The skill **MUST NOT** restate the save procedure or the walk procedure. Folder shape, resume, and caps stay on `requirement-html-page-download`. Depth, page cap, same host, robots, and the wait stay on `requirement-html-site-crawl`.
+9. The skill **MUST NOT** restate the save procedure or the walk procedure. It **MAY** name when `--name` may be omitted and that `--html` belongs to `download`. Folder shape, resume, and caps stay on `requirement-html-page-download`. Depth, page cap, same host, robots, and the wait stay on `requirement-html-site-crawl`.
 10. The skill **MUST NOT** become a second domain file. Exactly one Active domain file remains `requirement-domain-htmlcrawler`.
 11. The skill **MUST** be one file at the path in Implementation Notes. A second skill that teaches the same use is forbidden.
 12. The skill **MUST NOT** contain a session login or a home directory path. The page-folder family in Implementation Notes is the product path and is allowed.
@@ -87,7 +87,7 @@ The human menu, the typed verbs, the page folder, and the site walk stay on thei
 
 - **Principle 2 – Intentional**: The agent is told the real verbs, including `crawl` on `html-downloader`.
 - **Principle 5 – SSOT**: One skill file. The domain file still owns crawl, list, and serve. The walk stays on the crawl requirement.
-- **Principle 1 – Caution**: A missing `--url` or `--name` stays an error. A crawl without depth or a page cap stays an error.
+- **Principle 1 – Caution**: A missing `--url` stays an error. A host-only URL without `--name` stays an error. A crawl without depth or a page cap stays an error.
 - **Principle 10 – Least privilege**: The skill must not tell the agent to use root.
 
 ## Under command line for normal user only
@@ -124,7 +124,7 @@ On Termux, Git Bash, Windows cmd, or the same class, the agent runs the console 
 | ID | Criterion |
 |----|-----------|
 | AC-1 | `agent/SKILL.md` exists and names `html-downloader download --url` with `--name`, and `html-downloader serve --page-name` |
-| AC-2 | The skill says both `--url` and `--name` are required for `download` |
+| AC-2 | The skill says omit `--name` only when the URL recommends the folder, and a host-only URL does not |
 | AC-3 | The skill says the server binds to `127.0.0.1` and defaults to port **5000** |
 | AC-4 | The skill gives `html-downloader crawl` with `--depth` and `--max-pages`, and does not label `crawl` as an unknown verb |
 | AC-5 | The skill does not invent a typed verb for list downloaded |
@@ -146,8 +146,8 @@ On Termux, Git Bash, Windows cmd, or the same class, the agent runs the console 
 
 | TP family / ID | Suite | Status | Note |
 |----------------|-------|--------|------|
-| **TP-AGENT-01** | `tests/test_agent_skill.py` | todo | The skill names download with `--name`, serve, and `html-downloader crawl`. The suite file is not in the tree |
-| **TP-AGENT-02** | `tests/test_agent_skill.py` | todo | The crawl sample includes `--depth` and `--max-pages`. The download sample does not |
+| **TP-AGENT-01** | `tests/test_agent_skill.py` | have | The skill names download, serve, `html-downloader crawl`, and the bans |
+| **TP-AGENT-02** | `tests/test_agent_skill.py` | have | The crawl sample includes `--depth` and `--max-pages`. The download samples do not |
 
 **Matrix:** `docs/reviews/requirement-test-matrix.md`
 **Map:** `docs/reviews/test-plan.md`
@@ -176,6 +176,7 @@ On Termux, Git Bash, Windows cmd, or the same class, the agent runs the console 
 |------|--------|------|
 | 2026-10-28 | Active 1.0.0 | The side-product is `agent/SKILL.md`. It instructs an LLM agent to use HtmlCrawler. On this tree the console script is `html-downloader`, and `crawl` is a gap. |
 | 2026-10-28 | Active 1.0.1 | `html-downloader crawl` is the live command. The skill does not freeze a version literal. |
+| 2026-10-28 | Active 1.0.2 | `download` may omit `--name` when the URL recommends the folder. `--html` belongs to `download`. `TP-AGENT-01` and `TP-AGENT-02` are have. Product version **1.1.2**. |
 
 ---
 

@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-html-page-download.md
-**Status**: Active (Version 1.0.3)
+**Status**: Active (Version 1.0.4)
 **Area**: download
 **Key**: `requirement-html-page-download`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -189,9 +189,9 @@ On Termux, Git Bash, Windows cmd, or the same class, the save runs as the normal
 | 2026-10-28 | Active 1.0.1 | Product name HtmlCrawler. The walk stays on `requirement-html-site-crawl` |
 | 2026-10-28 | Active 1.0.2 | Verb owner is `requirement-domain-htmlcrawler` |
 | 2026-10-28 | Active 1.0.3 | `--html` names the file. An omitted `--name` uses `recommend`. The map stores `html`. Product version **1.1.1** |
+| 2026-10-28 | Active 1.0.4 | Product version **1.1.2**. `--html` and an omitted `--name` stay. |
 
 ---
-
 **Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

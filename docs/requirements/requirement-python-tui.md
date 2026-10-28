@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-tui.md
-**Status**: Active (Version 1.3.3)
+**Status**: Active (Version 1.3.4)
 **Area**: python
 **Key**: `requirement-python-tui`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -91,7 +91,7 @@ Path: /tmp/clips                                              14:05:09
 ╭──────────────╮
 │ > █          │
 ╰──────────────╯
-  HtmlCrawler 1.1.1  │  main menu  │  Up/Down  •  Enter
+  HtmlCrawler 1.1.2  │  main menu  │  Up/Down  •  Enter
 ```
 
 The same first row when `requirement-python-cli-language` has selected Traditional Chinese:
@@ -279,9 +279,9 @@ On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-crawl
 | 2026-10-28 | Active 1.3.1 | Domain owner is `requirement-domain-htmlcrawler` |
 | 2026-10-28 | Active 1.3.2 | The sample status line uses **1.0.1**. The intended name in the sample stays HtmlCrawler |
 | 2026-10-28 | Active 1.3.3 | The sample status line uses **1.1.1**. The intended name in the sample stays HtmlCrawler |
+| 2026-10-28 | Active 1.3.4 | The sample status line uses **1.1.2**. The intended name in the sample stays HtmlCrawler. |
 
 ---
-
 **Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

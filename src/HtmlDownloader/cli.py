@@ -2,7 +2,7 @@
 # =============================================================================
 # HtmlDownloader CLI — text menu and typed verbs.
 # Law keys: requirement-python-cli-interface, requirement-python-cli-logging,
-#           requirement-python-tui, requirement-python-oop,
+#           requirement-python-cli-debug, requirement-python-tui, requirement-python-oop,
 #           requirement-python-about, requirement-domain-htmlcrawler,
 #           requirement-python-error-handling, requirement-python-coding-style,
 #           requirement-runtime-prerequisites, requirement-html-site-crawl,

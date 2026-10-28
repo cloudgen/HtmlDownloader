@@ -3,7 +3,7 @@
 **Product:** HtmlCrawler (Python CLI — text menu on a terminal; intended verb `crawl` saves a same-site set of pages)
 **Ship unit this pass:** the copied tree still uses `src/HtmlDownloader`, and packaging still exposes `html-downloader`, until the ship-unit pass. Requirements name `html-crawler`. Origin stays `https://github.com/cloudgen/HtmlDownloader` until you confirm a new remote. The dispatcher accepts `crawl`.
 **Workspace state:** Specialized product law (left genesis); **software-development** class; **pip/local package** install (not shell online Type O).
-**Product version:** **1.1.1** (align `pyproject.toml`, `__init__.__version__`, root `README.md` Version badge)
+**Product version:** **1.1.2** (align `pyproject.toml`, `__init__.__version__`, root `README.md` Version badge)
 **Updated:** 2026-10-28
 
 | ID / key | Title | Area | Status | Path | Updated |

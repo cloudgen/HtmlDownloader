@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-packaging.md
-**Status**: Active (Version 1.3.3)
+**Status**: Active (Version 1.3.4)
 **Area**: python
 **Key**: `requirement-python-packaging`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -12,7 +12,7 @@ This file owns the ChronicleLogger floor together with `requirement-runtime-prer
 
 ### 1.1 Human-facing
 
-**In one sentence:** HtmlCrawler is a pip package, version 1.1.1, and the status library is a required dependency. On this tree `[project].name` is still `HtmlDownloader`.
+**In one sentence:** HtmlCrawler is a pip package, version 1.1.2, and the status library is a required dependency. On this tree `[project].name` is still `HtmlDownloader`.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
@@ -77,7 +77,7 @@ This file owns the ChronicleLogger floor together with `requirement-runtime-prer
 |------|--------|
 | **Manifest** | `pyproject.toml` |
 | **Project name** | `HtmlCrawler` |
-| **Version** | `1.1.1` |
+| **Version** | `1.1.2` |
 | **requires-python** | `>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*` (as declared — re-verify support claims before marketing) |
 | **Dependencies (law)** | `ChronicleLogger>=1.3.1`, required |
 | **Dependencies (live manifest)** | `ChronicleLogger>=1.3.1`. Matches the law floor |
@@ -88,7 +88,7 @@ This file owns the ChronicleLogger floor together with `requirement-runtime-prer
 | **License** | MIT |
 | **Public package exports** | `__version__`, `main` only. **MUST NOT** re-export `ChronicleLogger` |
 | **User docs** | Root `README.md` Quick Installation documents pip |
-| **README version badge** | Must match packaging version when README claims complete (`1.1.1`) |
+| **README version badge** | Must match packaging version when README claims complete (`1.1.2`) |
 
 ### 2.7 Why This Requirement Exists (CIAO)
 
@@ -129,7 +129,7 @@ On Termux, Git Bash, Windows cmd, or the same class, install and upgrade use pip
 | AC-1 | `pyproject.toml` names HtmlCrawler |
 | AC-2 | Console script `html-crawler` is declared |
 | AC-3 | Law and the live manifest both require `ChronicleLogger>=1.3.1` |
-| AC-4 | Version matches `__init__.py` when a release is claimed (`1.1.1`) |
+| AC-4 | Version matches `__init__.py` when a release is claimed (`1.1.2`) |
 | AC-5 | Public exports are `__version__` and `main` only |
 
 ## 6. Related requirements (peer keys only)
@@ -168,9 +168,9 @@ On Termux, Git Bash, Windows cmd, or the same class, install and upgrade use pip
 | 2026-10-28 | Active 1.3.1 | External-binary dependency rule removed |
 | 2026-10-28 | Active 1.3.2 | Product version **1.0.1**. Live `[project].name` stays `HtmlDownloader` |
 | 2026-10-28 | Active 1.3.3 | Product version **1.1.1**. Live `[project].name` stays `HtmlDownloader` |
+| 2026-10-28 | Active 1.3.4 | Product version **1.1.2**. Live `[project].name` stays `HtmlDownloader`. |
 
 ---
-
 **Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

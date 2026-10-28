@@ -3,7 +3,7 @@
 All notable changes to **HtmlDownloader** are documented here.  
 Version SSOT: `pyproject.toml` + `src/HtmlDownloader/__init__.__version__`.
 
-## [1.1.1] - 2026-10-28
+## [1.1.2] - 2026-10-28
 
 ### Added
 
@@ -14,9 +14,15 @@ Version SSOT: `pyproject.toml` + `src/HtmlDownloader/__init__.__version__`.
 
 ### Changed
 
-- Version is **1.1.1**. This release keeps the 1.1.0 download file names and adds same-site crawl. Menu pictures were captured again. The status line says `HtmlDownloader 1.1.1`. The about picture stamp is `2026-10-28 17:20:24.211107`.
+- Version is **1.1.2**. This release keeps the 1.1.0 download file names, keeps the 1.1.1 temp-write logs, and adds same-site crawl. Menu pictures were captured again. The status line says `HtmlDownloader 1.1.2`. The about picture stamp is `2026-10-28 17:31:13.896044`.
 - `--depth` and `--max-pages` are refused on `download`. `--html` is refused on `crawl`. Crawl is not a menu row. Empty arguments do not crawl.
 - Package name stays **HtmlDownloader**. Console script stays `html-downloader`.
+
+## [1.1.1] - 2026-10-28
+
+### Changed
+
+- Saving a page logs the temp write, the publish, and the discard of an unfinished temp before those file operations. The lines use component `PageDownload`. The menu and the `download` verb are unchanged.
 
 ## [1.1.0] - 2026-10-28
 

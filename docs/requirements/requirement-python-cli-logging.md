@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-cli-logging.md
-**Status**: Active (Version 1.1.5)
+**Status**: Active (Version 1.1.6)
 **Area**: python
 **Key**: `requirement-python-cli-logging`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -146,11 +146,11 @@ The class-name components are `Cli`, `Tui`, `MenuPainter`, `MenuModel`, `MenuSes
 | **Resolved name** | `html-crawler` from `logName()` |
 | **Call order** | Inside `def main`: peek argv for the text screen, write `ChronicleLogger(...)` with `logname` and `is_quiet` when that screen is already known, read `logName()`, `baseDir()`, and `logDir()`, run the `isDebug()` block whose four messages are `requirement-python-cli-debug`, then parse arguments, then `Cli(logger)`. |
 | **Quiet** | `is_quiet=True` for empty argv on a terminal and for `about` on a terminal. `download`, `crawl`, and `serve` leave it false. `quiet(True)` after return does not hide `Created directory:`. |
-| **Version** | Identity and `version` use `__version__` (`1.1.1`). No second integer triple. `cli.py` reads `__version__` and does not keep a second literal. |
+| **Version** | Identity and `version` use `__version__` (`1.1.2`). No second integer triple. `cli.py` reads `__version__` and does not keep a second literal. |
 | **Threads** | None in the running product. No timeout is named. |
 | **Control-C** | Not confirmed law here. |
 | **Debug switch** | Environment `DEBUG` or `debug` already set to `1`, `true`, or `show`. No `--debug` flag. The four messages are `requirement-python-cli-debug`. The sample in this file is the ChronicleLogger call. |
-| **Proof** | `TP-LOG-01`, `TP-LOG-03`, `TP-LOG-04`, and `TP-LOG-05` stay todo on this file. `TP-LOG-02` is the quiet mirror and stays todo. `TP-DEBUG-01` owns the four messages and stays todo. Its primary owner is `requirement-python-cli-debug`. The suite `tests/test_logging.py` is not on disk. |
+| **Proof** | `TP-LOG-01`, `TP-LOG-03`, `TP-LOG-04`, and `TP-LOG-05` are have in `tests/test_logging.py`. `TP-LOG-02` is have in `tests/test_debug.py`. The four messages are `TP-DBG-01` through `TP-DBG-03` on `requirement-python-cli-debug` |
 
 ### Sample code
 
@@ -279,11 +279,11 @@ On Termux, Git Bash, Windows cmd, or the same class, status files stay in the fo
 
 | TP family / ID | Suite | Status | Note |
 |----------------|-------|--------|------|
-| **TP-LOG-01** | `tests/test_logging.py` | todo | One construct in `main`. `logName` / `baseDir` / `logDir` read back. Resolved name is `html-crawler` |
-| **TP-LOG-02** | `tests/test_logging.py` | todo | Quiet mirror. A text-screen run does not mirror the four lines. The daily file still receives them. `TP-DEBUG-01` owns the four messages. Primary of that id is `requirement-python-cli-debug` |
-| **TP-LOG-03** | `tests/test_logging.py` | todo | The product creates no threads. A later thread logs create, start, join, wait, lock, and pool before the blocking call, and does not call `log_message` under a work lock |
-| **TP-LOG-04** | `tests/test_logging.py` | todo | Each class `__init__` logs `instantiated` at INFO, component the class name, outside `isDebug()` |
-| **TP-LOG-05** | `tests/test_logging.py` | todo | Temp write, publish, and discard are logged before the operation, component the class that does the work |
+| **TP-LOG-01** | `tests/test_logging.py` | have | One construct in `main`. `logName` / `baseDir` / `logDir` read back. Live resolved name is `html-downloader` |
+| **TP-LOG-02** | `tests/test_debug.py` | have | Quiet mirror. A text-screen run does not mirror the four lines. The daily file still receives them. Primary of the four messages is `requirement-python-cli-debug` |
+| **TP-LOG-03** | `tests/test_logging.py` | have | The `version` verb does not create a thread |
+| **TP-LOG-04** | `tests/test_logging.py` | have | Each mapped class `__init__` logs `instantiated` at INFO, component the class name, outside `isDebug()`. `SiteCrawl` is in that map |
+| **TP-LOG-05** | `tests/test_logging.py` | have | Temp write, publish, and discard are logged before the operation, component `PageDownload` |
 | **TP-ABOUT-16** | `tests/test_about.py` | have | `in_venv`, `in_pyenv`, and `in_conda` call the one logger and do not select location lines. Primary owner is `requirement-python-about` |
 
 **Matrix:** `docs/reviews/requirement-test-matrix.md`
@@ -316,9 +316,9 @@ On Termux, Git Bash, Windows cmd, or the same class, status files stay in the fo
 | 2026-10-28 | Active 1.1.3 | The four printed values move to `requirement-python-cli-debug`. This file still shows the ChronicleLogger `isDebug()` / `log_message` call |
 | 2026-10-28 | Active 1.1.4 | Product version string in the notes is **1.0.1**. `crawl` leaves `is_quiet` false |
 | 2026-10-28 | Active 1.1.5 | Product version string in the notes is **1.1.1** |
+| 2026-10-28 | Active 1.1.6 | Product version string in the notes is **1.1.2**. `TP-LOG-01` and `TP-LOG-03` through `TP-LOG-05` are have. |
 
 ---
-
 **Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

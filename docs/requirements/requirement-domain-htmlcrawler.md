@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-domain-htmlcrawler.md
-**Status**: Active (Version 1.0.3)
+**Status**: Active (Version 1.0.4)
 **Area**: domain
 **Key**: `requirement-domain-htmlcrawler`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -161,9 +161,9 @@ On Termux, Git Bash, Windows cmd, or the same class, crawl, download, list, and 
 | 2026-10-28 | Active 1.0.1 | This file stays the only domain file |
 | 2026-10-28 | Active 1.0.2 | The dispatcher accepts `crawl`. The remaining gap is the package name and the console script |
 | 2026-10-28 | Active 1.0.3 | `download` may omit `--name` and may pass `--html`. Product version **1.1.1** |
+| 2026-10-28 | Active 1.0.4 | Product version **1.1.2**. One domain file stays `requirement-domain-htmlcrawler`. |
 
 ---
-
 **Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

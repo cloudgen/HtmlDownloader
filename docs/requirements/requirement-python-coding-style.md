@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-coding-style.md
-**Status**: Active (Version 1.2.4)
+**Status**: Active (Version 1.2.5)
 **Area**: python
 **Key**: `requirement-python-coding-style`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -88,7 +88,7 @@ Log the temp write, the publish, and the discard of an unfinished temp before th
 | **Gate checklist (cite ID)** | `CL-PYTHON-SHUTIL-MOVE-PUBLISH` — run when auditing promote and staging publish paths |
 | **Architecture** | One class per file. StateLogic + `Attr` stays unordered |
 | **Logger** | Package import does not construct ChronicleLogger |
-| **Version** | `1.1.1` |
+| **Version** | `1.1.2` |
 | **User docs** | Root `README.md` Features must not claim a Cython-required runtime |
 
 ### 2.6 Why This Requirement Exists (CIAO)
@@ -171,9 +171,9 @@ On Termux, Git Bash, Windows cmd, or the same class, temps and the published fil
 | 2026-10-28 | Active 1.2.2 | Notes for a feature this product does not have were removed. Publish stays `shutil.move` |
 | 2026-10-28 | Active 1.2.3 | Product version in the notes is **1.0.1** |
 | 2026-10-28 | Active 1.2.4 | Product version in the notes is **1.1.1** |
+| 2026-10-28 | Active 1.2.5 | Product version in the notes is **1.1.2**. |
 
 ---
-
 **Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-about.md
-**Status**: Active (Version 1.1.3)
+**Status**: Active (Version 1.1.4)
 **Area**: python
 **Key**: `requirement-python-about`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -112,12 +112,12 @@ Pyenv and conda path reads for this page stay in this file. This product does no
 Values in angle brackets are the live read. They are not a frozen login or home path.
 
 ```text
-HtmlCrawler 1.1.1
+HtmlCrawler 1.1.2
 Domain: Crawl a same-site set of pages, and save one page on its own.
 Runtime tools: none
 Entry points: html-crawler, python -m HtmlCrawler
 
-2026-10-04 11:16:23.700590 HtmlCrawler(v1.1.1)  [CHECK SYSTEM]:
+2026-10-04 11:16:23.700590 HtmlCrawler(v1.1.2)  [CHECK SYSTEM]:
   Now checking your operation system!
     Python: 3.12.3
     C Library: GCC 13.3.0
@@ -144,7 +144,7 @@ Entry points: html-crawler, python -m HtmlCrawler
 
 ***************************************************
 *                                                 *
-* HtmlCrawler (1.1.1) by Wilgat Wong on 2026-10-04  *
+* HtmlCrawler (1.1.2) by Wilgat Wong on 2026-10-04  *
 *                                                 *
 * You are using an UNINSTALLED version, location: *
 *     <program path>                              *
@@ -188,7 +188,7 @@ Invocation: `html-crawler` on a terminal, then `6`, then `62`. The same page is 
 | **TTY / Interactive** | `yes` or `no` from `sys.stdout.isatty()` |
 | **JSON** | Not claimed. No `--json` stream |
 | **Privilege** | normal user privilege |
-| **Product version** | `1.1.1` |
+| **Product version** | `1.1.2` |
 
 ### 2.3 Why This Requirement Exists (Direct CIAO Alignment)
 
@@ -287,7 +287,7 @@ TP-ABOUT-01 asserts the identity line, every host-check label, the star-box titl
 | 2026-10-28 | Active 1.1.1 | Domain sentence owner is `requirement-domain-htmlcrawler` |
 | 2026-10-28 | Active 1.1.2 | The sample domain sentence is the crawl line. Product version **1.0.1** |
 | 2026-10-28 | Active 1.1.3 | Rule 2 uses the crawl domain sentence. The sample version string is **1.1.1** |
-
+| 2026-10-28 | Active 1.1.4 | The sample version string is **1.1.2**. Rule 2 stays the crawl domain sentence. |
 **Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-cli-interface.md
-**Status**: Active (Version 1.3.4)
+**Status**: Active (Version 1.3.5)
 **Area**: python
 **Key**: `requirement-python-cli-interface`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -149,7 +149,7 @@ Esc on a menu question returns to the previous board and does not download.
 | **Privilege** | user-level only |
 | **Running tree** | `cli.py` dispatches `download`, `crawl`, and `serve` |
 | **Copied console script** | `html-downloader` until the ship-unit rename |
-| **Product version** | `1.1.1` |
+| **Product version** | `1.1.2` |
 | **User docs** | Root `README.md` matches this contract |
 
 Inside `_dispatch`, a bound that belongs to another verb fails closed. The crawl branch follows the download branch. These two snippets are the real fence and the real call. They are not one contiguous paste:
@@ -285,9 +285,9 @@ On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-crawl
 | 2026-10-28 | Active 1.3.2 | `--debug` stays forbidden. The environment gate is `requirement-python-cli-debug` |
 | 2026-10-28 | Active 1.3.3 | The running dispatcher accepts `crawl`. Product version **1.0.1** |
 | 2026-10-28 | Active 1.3.4 | Product version **1.1.1**. `download` keeps `--html` and may omit `--name`. `--html` stays off `crawl` |
+| 2026-10-28 | Active 1.3.5 | Product version **1.1.2**. `download` keeps `--html` and may omit `--name`. `--html` stays off `crawl`. |
 
 ---
-
 **Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

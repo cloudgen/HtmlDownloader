@@ -2,17 +2,17 @@
 
 Authoritative specialized product law for **HtmlCrawler** lives here.
 
-**Current state (2026-10-28):** Specialized **software-development** product. Left genesis. Registry is populated — see `index.md`. Product version is **1.1.1**. The dispatcher accepts `crawl`. `download` accepts `--html` and may omit `--name` when the URL recommends the folder.
+**Current state (2026-10-28):** Specialized **software-development** product. Left genesis. Registry is populated — see `index.md`. Product version is **1.1.2**. The dispatcher accepts `crawl`. `download` accepts `--html` and may omit `--name` when the URL recommends the folder.
 
 ## Product identity (summary)
 
 | Field | Value |
 |-------|--------|
 | Product / package | `HtmlCrawler` |
-| Version SSOT | **`1.1.1`** (`pyproject.toml` + `src/HtmlDownloader/__init__.py`) |
+| Version SSOT | **`1.1.2`** (`pyproject.toml` + `src/HtmlDownloader/__init__.py`) |
 | Product README SSOT | Root `README.md`. Sections and pictures: `requirement-python-readme` |
 | Ship surface | Python package; console script **`html-crawler`**; module `python -m HtmlCrawler` |
-| Install mode | **pip / local package** (`pip install HtmlDownloader` on this tree; version **1.1.1**; checkout `pip install -e .`) — not shell Type O |
+| Install mode | **pip / local package** (`pip install HtmlDownloader` on this tree; version **1.1.2**; checkout `pip install -e .`) — not shell Type O |
 | Public source | `https://github.com/cloudgen/HtmlDownloader` |
 | Domain surface | `requirement-domain-htmlcrawler` — crawl a site, list saved sites, serve one saved site. One page: `requirement-html-page-download`. Walk: `requirement-html-site-crawl` |
 | Text menu | `requirement-python-tui` — front rows **1** download, **2** list downloaded, **3** serve, **4** System Log, **6** self-management, **7** language, **9** Exit. Default path word is `Path` |

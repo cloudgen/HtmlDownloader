@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-runtime-prerequisites.md
-**Status**: Active (Version 1.2.3)
+**Status**: Active (Version 1.2.4)
 **Area**: runtime
 **Key**: `requirement-runtime-prerequisites`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -71,7 +71,7 @@ Declare the host and Python runtime prerequisites required to run HtmlCrawler. T
 | **System binary** | none |
 | **Auto install command** | none. The product does not run a root install |
 | **Platform notes** | Linux primary. macOS and Windows when CPython is available |
-| **Product version** | 1.1.1 |
+| **Product version** | 1.1.2 |
 | **Startup check** | ChronicleLogger import |
 | **User docs** | Root `README.md` Quick Installation |
 
@@ -144,9 +144,9 @@ On Termux, Git Bash, Windows cmd, or the same class, the normal user installs th
 | 2026-10-28 | Active 1.2.1 | External-binary rules removed from this file |
 | 2026-10-28 | Active 1.2.2 | Product version **1.0.1** |
 | 2026-10-28 | Active 1.2.3 | Product version **1.1.1** |
+| 2026-10-28 | Active 1.2.4 | Product version **1.1.2**. |
 
 ---
-
 **Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).
