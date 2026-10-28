@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-cli-interface.md
-**Status**: Active (Version 1.3.3)
+**Status**: Active (Version 1.3.4)
 **Area**: python
 **Key**: `requirement-python-cli-interface`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -39,7 +39,7 @@ The text-menu picture is `requirement-python-tui`. Crawl, download, list, and se
 |---------|---------------|---------------|
 | Start on a terminal | The front board opens. Pip does not run. | `html-crawler` |
 | Start in a script | Help text, exit 0. | `html-crawler` |
-| Save a page | Needs `--url` and `--name`. The menu does not open. | `html-crawler download --url URL --name PAGENAME` |
+| Save a page | Needs `--url`. `--name` is the page folder. Omit it when the URL ends with `.html`, `.htm`, or a folder name such as `xxx`. `--html` names the HTML file. An empty `--html` keeps a stored name, or the name recommended from the URL. The menu does not open. | `html-crawler download --url URL` |
 | Serve a saved page | Needs `--page-name`. `--port` defaults to 5000. Listens on `127.0.0.1`. | `html-crawler serve --page-name PAGENAME` |
 | Check or change the install | Pip runs only when you ask. Empty argv does not. | `html-crawler version-check` |
 
@@ -62,10 +62,10 @@ The text-menu picture is `requirement-python-tui`. Crawl, download, list, and se
 
 8. `ArgumentParser.parse_args` **MUST** run after `ChronicleLogger(...)` and after the debug block.
 9. The typed verbs are `help`, `version`, `about`, `download`, `crawl`, `serve`, `self-install`, `version-check`, `self-update`, and `self-uninstall`. Each one is operational. **MUST NOT** add a verb whose only purpose is a test. `language` is not a typed verb. Menu row 7 owns it (`requirement-python-cli-language`). **MUST NOT** add `language` to `PRODUCT_VERBS`.
-10. **MUST NOT** invent flags that scan the working directory. `download` accepts `--url` and `--name` only. `crawl` accepts `--url`, `--name`, `--depth`, and `--max-pages`, and all four are required. `serve` accepts `--page-name` and `--port` only. `--force` belongs only to `self-uninstall`. `--depth` and `--max-pages` **MUST NOT** be accepted on `download`.
+10. **MUST NOT** invent flags that scan the working directory. `download` accepts `--url`, `--name`, and `--html` only. `--url` is required. `--name` and `--html` may be omitted. The omitted names follow `requirement-html-page-download`. `crawl` accepts `--url`, `--name`, `--depth`, and `--max-pages`, and all four are required. `serve` accepts `--page-name` and `--port` only. `--force` belongs only to `self-uninstall`. `--depth` and `--max-pages` **MUST NOT** be accepted on `download`. `--html` **MUST NOT** be accepted on `crawl`.
 11. On a terminal, `download`, `crawl`, and `serve` **MUST NOT** draw the text screen. `about` **MUST** open the about page.
 12. With no terminal, `about` **MUST** print the about page and return 0. It does not draw the text screen. `download` and `serve` still run. They do not need a terminal.
-13. `help` **MUST NOT** draw the text screen and returns 0. `download` needs `--url` and `--name`. `crawl` needs `--url`, `--name`, `--depth`, and `--max-pages`. `serve` needs `--page-name`. `--port` defaults to 5000. Menu row 1 is download. It is not a welcome line. `crawl` is not a menu row in this pass.
+13. `help` **MUST NOT** draw the text screen and returns 0. `download` needs `--url`. `--name` may be omitted when the URL recommends the page folder. `crawl` needs `--url`, `--name`, `--depth`, and `--max-pages`. `serve` needs `--page-name`. `--port` defaults to 5000. Menu row 1 is download. It is not a welcome line. `crawl` is not a menu row.
 14. `version` **MUST** print `__version__` and **MUST NOT** call pip and **MUST NOT** draw the text screen.
 15. `version-check`, `self-update`, `self-install`, and `self-uninstall` **MUST NOT** open the text screen. The commands are:
 
@@ -99,6 +99,7 @@ html-crawler help
 html-crawler version
 html-crawler about
 html-crawler download --url URL --name PAGENAME
+html-crawler download --url URL --name PAGENAME --html FILENAME
 html-crawler crawl --url URL --name SITENAME --depth N --max-pages N
 html-crawler serve --page-name PAGENAME
 html-crawler self-install
@@ -112,7 +113,7 @@ python -m HtmlCrawler
 
 These rules are the `download` and `serve` verbs. The text screen draws the menu forms (`requirement-python-tui`). The domain file owns the page folder. They are not what empty argv does.
 
-16. `download` **MUST** require `--url` and `--name`. A missing flag exits non-zero and names the gap. It **MUST NOT** scan the working directory. The save **MUST** obey `requirement-html-page-download`.
+16. `download` **MUST** require `--url`. A missing `--url` exits non-zero and names the gap. `--name` may be omitted when the URL recommends the page folder, as `requirement-html-page-download` states. Otherwise a missing `--name` exits non-zero and names the gap. `--html` may be omitted. It **MUST NOT** scan the working directory. The save **MUST** obey `requirement-html-page-download`.
 17. `serve` **MUST** require `--page-name`. `--port` defaults to **5000**. It **MUST** listen on `127.0.0.1` only.
 18. A URL that does not start with `http://` or `https://`, or a page name that is not one file name, **MUST** fail with a message and **MUST NOT** claim success.
 19. A `--page-name` that is not a saved page **MUST** fail with a message. It **MUST NOT** delete a folder.
@@ -148,9 +149,10 @@ Esc on a menu question returns to the previous board and does not download.
 | **Privilege** | user-level only |
 | **Running tree** | `cli.py` dispatches `download`, `crawl`, and `serve` |
 | **Copied console script** | `html-downloader` until the ship-unit rename |
-| **Product version** | `1.0.1` |
+| **Product version** | `1.1.1` |
+| **User docs** | Root `README.md` matches this contract |
 
-Inside `_dispatch`, a bound that belongs to another verb fails closed. The crawl branch follows the download branch:
+Inside `_dispatch`, a bound that belongs to another verb fails closed. The crawl branch follows the download branch. These two snippets are the real fence and the real call. They are not one contiguous paste:
 
 ```python
 if (args.depth is not None or args.max_pages is not None) and verb != "crawl":
@@ -160,12 +162,26 @@ if (args.depth is not None or args.max_pages is not None) and verb != "crawl":
             Cli.CONSOLE_NAME
         ),
     )
+if args.html and verb != "download":
+    return self.report_error(
+        "--html is only for download.",
+        "{0} download --url URL --name PAGENAME".format(Cli.CONSOLE_NAME),
+    )
+if (args.url or args.name) and verb not in ("download", "crawl"):
+    return self.report_error(
+        "--url and --name are only for download and crawl.",
+        "{0} download --url URL --name PAGENAME".format(Cli.CONSOLE_NAME),
+    )
+```
+
+```python
+if verb == "download":
+    return self._verb_download(args.url, args.name, args.html)
 if verb == "crawl":
     return self._verb_crawl(args.url, args.name, args.depth, args.max_pages)
 ```
 
-`_verb_crawl` is the method quoted on `requirement-html-site-crawl`. `--depth` uses `_depth_value` (integer ≥ 0). `--max-pages` uses `_max_pages_value` (integer ≥ 1).
-| **User docs** | Root `README.md` matches this contract |
+`_verb_download` passes the HTML file name through. An empty `--name` or `--html` is resolved in `PageDownload.download`. `_verb_crawl` is the method quoted on `requirement-html-site-crawl`. `--depth` uses `_depth_value` (integer ≥ 0). `--max-pages` uses `_max_pages_value` (integer ≥ 1).
 
 ### 2.8 Why This Requirement Exists (CIAO)
 
@@ -197,7 +213,7 @@ On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-crawl
 6. Add `--json` or `--debug` in this file.
 7. Treat help text as the second mention of a verb.
 8. Add `language` as an argv verb. Row 7 is the menu language.
-9. Drop `crawl` from the typed verbs, or accept `--depth` or `--max-pages` on `download`.
+9. Drop `crawl` from the typed verbs, accept `--depth` or `--max-pages` on `download`, or accept `--html` on `crawl`.
 
 **Violating this rule is a critical CLI regression.**
 
@@ -209,7 +225,7 @@ On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-crawl
 | AC-2 | `python -m HtmlCrawler` reaches `main` |
 | AC-3 | Empty argv on a terminal opens the front board and does not download and does not run pip |
 | AC-4 | Empty argv with no terminal prints help and returns 0 |
-| AC-5 | `download` without `--url` or `--name` exits non-zero. `crawl` without `--depth` or `--max-pages` exits non-zero. `serve` without `--page-name` exits non-zero |
+| AC-5 | `download` without `--url` exits non-zero. Without `--name`, the URL must recommend the folder, or the command exits non-zero. `crawl` without `--depth` or `--max-pages` exits non-zero. `serve` without `--page-name` exits non-zero |
 | AC-6 | A URL that is not http or https does not save a page. An unlisted menu number asks again |
 | AC-7 | Pip verbs match the command table and do not use sudo or curl |
 
@@ -268,6 +284,7 @@ On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-crawl
 | 2026-10-28 | Active 1.3.1 | Sections that named a media verb were removed |
 | 2026-10-28 | Active 1.3.2 | `--debug` stays forbidden. The environment gate is `requirement-python-cli-debug` |
 | 2026-10-28 | Active 1.3.3 | The running dispatcher accepts `crawl`. Product version **1.0.1** |
+| 2026-10-28 | Active 1.3.4 | Product version **1.1.1**. `download` keeps `--html` and may omit `--name`. `--html` stays off `crawl` |
 
 ---
 

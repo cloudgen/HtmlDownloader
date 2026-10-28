@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-html-site-crawl.md
-**Status**: Active (Version 1.0.1)
+**Status**: Active (Version 1.0.2)
 **Area**: crawl
 **Key**: `requirement-html-site-crawl`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -141,7 +141,7 @@ def _agents_apply(self, agents) -> bool:
     return False
 ```
 
-`DELAY_SECONDS` is `1`. `CRAWL_PRODUCT` is `HtmlCrawler`. The stop line is `Stopped by --max-pages.`, `Stopped by --depth.`, `Stopped by --max-pages and --depth.`, or `Finished.` A root start calls `PageDownload._remember` so menu row 2 and `serve` see the site.
+`DELAY_SECONDS` is `1`. `CRAWL_PRODUCT` is `HtmlCrawler`. The stop line is `Stopped by --max-pages.`, `Stopped by --depth.`, `Stopped by --max-pages and --depth.`, or `Finished.` A root start calls `PageDownload._remember(start, name, pages.INDEX_NAME)` so menu row 2 and `serve` see the site. The map row stores `html` as `index.html`. A non-root start does not write a map row.
 
 ### 2.6 Why This Requirement Exists (CIAO)
 
@@ -226,6 +226,7 @@ On Termux, Git Bash, Windows cmd, or the same class, the crawl runs as the norma
 |------|--------|------|
 | 2026-10-28 | Active 1.0.0 | Same-site walk. Required depth and page cap. One-second delay. Robots fail closed. Dispatcher wiring waits. |
 | 2026-10-28 | Active 1.0.1 | `crawl` is routed. Output root is the live app name. `TP-CRAWL-01` through `TP-CRAWL-04` are have. |
+| 2026-10-28 | Active 1.0.2 | A root start stores `html` as `index.html` in the url map. Product version **1.1.1** |
 
 ---
 

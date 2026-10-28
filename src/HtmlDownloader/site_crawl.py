@@ -104,7 +104,7 @@ class SiteCrawl:
                 if canon not in seen:
                     queue.append((canon, level + 1))
         if saved and self._is_root(start):
-            self.pages._remember(start, name)
+            self.pages._remember(start, name, self.pages.INDEX_NAME)
         return self._report(name, saved, skipped, stopped_pages, stopped_depth)
 
     def _gate(self, url) -> None:

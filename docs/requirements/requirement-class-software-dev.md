@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-class-software-dev.md
-**Status**: Active (Version 1.2.2 – HtmlCrawler software-development class law + residual stack)
+**Status**: Active (Version 1.2.3 – HtmlCrawler software-development class law + residual stack)
 **Area**: class
 **Key**: `requirement-class-software-dev`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -110,7 +110,7 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 | **Architectures supported** | any architecture with CPython |
 | **Git surface** | used — remote `https://github.com/cloudgen/HtmlDownloader` |
 | **Ship surface** | installable Python package `HtmlCrawler`; console script `html-crawler`; module form `python -m HtmlCrawler` |
-| **Product version SSOT** | `src/HtmlDownloader/__init__.py` → `__version__` and `pyproject.toml` `[project].version` stay equal when either is bumped (current: **1.0.1**) |
+| **Product version SSOT** | `src/HtmlDownloader/__init__.py` → `__version__` and `pyproject.toml` `[project].version` stay equal when either is bumped (current: **1.1.1**) |
 | **Install mode** | pip / local package. Not a shell online-install product |
 | **Type 1 elevation** | intentionally absent. No root or sudo product surface |
 | **Actor / role / subject / approver** | **Considered — no dest approver.** The human operator of `html-crawler` is the only actor. No dest approval machine. **None** is valid. Do not add an actor requirement file |
@@ -226,6 +226,7 @@ On Termux, Git Bash, Windows cmd, or the same class, HtmlCrawler runs as the nor
 | 2026-10-16 | Active 1.2.0 | Product version **1.0.0**. Menu language is front row 7 |
 | 2026-10-28 | Active 1.2.1 | Domain pointer is `requirement-domain-htmlcrawler` |
 | 2026-10-28 | Active 1.2.2 | Product version **1.0.1** |
+| 2026-10-28 | Active 1.2.3 | Product version **1.1.1** |
 
 ---
 

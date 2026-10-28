@@ -3,7 +3,7 @@
 All notable changes to **HtmlDownloader** are documented here.  
 Version SSOT: `pyproject.toml` + `src/HtmlDownloader/__init__.__version__`.
 
-## [1.0.1] - 2026-10-28
+## [1.1.1] - 2026-10-28
 
 ### Added
 
@@ -14,9 +14,20 @@ Version SSOT: `pyproject.toml` + `src/HtmlDownloader/__init__.__version__`.
 
 ### Changed
 
-- Version is **1.0.1**. Menu pictures were captured again. The status line says `HtmlDownloader 1.0.1`. The about picture shows the new domain sentence, Python 3.12.3, and the stamp `2026-10-28 16:54:37.204930`.
-- `--depth` and `--max-pages` are refused on `download`. Crawl is not a menu row. Empty arguments do not crawl.
+- Version is **1.1.1**. This release keeps the 1.1.0 download file names and adds same-site crawl. Menu pictures were captured again. The status line says `HtmlDownloader 1.1.1`. The about picture stamp is `2026-10-28 17:20:24.211107`.
+- `--depth` and `--max-pages` are refused on `download`. `--html` is refused on `crawl`. Crawl is not a menu row. Empty arguments do not crawl.
 - Package name stays **HtmlDownloader**. Console script stays `html-downloader`.
+
+## [1.1.0] - 2026-10-28
+
+### Added
+
+- `download` accepts `--html FILENAME`. The HTML file defaults to `index.html`. Menu row 1 asks for that file name after the page name. An empty answer keeps the stored name. A different name moves the saved HTML file and does not fetch the page URL again. `serve` uses that file as `/`. Edit and view open that file.
+- `download` can omit `--name`. A URL that ends with `.html` or `.htm` saves that file under a folder of the same name without the extension, such as `guide/guide.html`. A URL that ends with a folder name such as `xxx` saves `xxx/index.html`. Menu row 1 offers the same names. An explicit `--name` or `--html`, and a page already stored, keep those names.
+
+### Changed
+
+- Product version is **1.1.0**. `download --url URL --name PAGENAME` still saves a page. A host-only URL still needs `--name`.
 
 ## [1.0.0] - 2026-10-16
 

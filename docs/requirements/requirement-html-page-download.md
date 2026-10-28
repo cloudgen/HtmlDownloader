@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-html-page-download.md
-**Status**: Active (Version 1.0.2)
+**Status**: Active (Version 1.0.3)
 **Area**: download
 **Key**: `requirement-html-page-download`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -12,7 +12,7 @@ The typed verb `download` and menu row 1 stay on `requirement-domain-htmlcrawler
 
 ### 1.1 Human-facing
 
-**In one sentence:** One download stores the page as `index.html` and stores the stylesheets, scripts, images, and fonts that page links to beside it.
+**In one sentence:** One download stores the page as one HTML file, `index.html` unless another name is chosen, and stores the stylesheets, scripts, images, and fonts that page links to beside it.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
@@ -22,19 +22,21 @@ The typed verb `download` and menu row 1 stay on `requirement-domain-htmlcrawler
 
 | Includes | Excludes |
 |----------|----------|
-| One `index.html` and flat `assets/css`, `assets/js`, and `assets/img` | A second HTML page reached from `<a href>` |
-| Resume when `index.html` is already there | Fetching that page URL again |
+| One HTML file, default `index.html`, and flat `assets/css`, `assets/js`, and `assets/img` | A second HTML page reached from `<a href>` |
+| Resume when that HTML file is already there | Fetching that page URL again |
 | Fonts in `assets/css` | Running JavaScript to discover more links |
 
 | Surface | What you open | What for |
 |---------|---------------|----------|
 | `download --url URL --name PAGENAME` | The terminal | Save that one page |
-| Menu row 1 | The text menu | The same save after a URL and a page name |
+| Menu row 1 | The text menu | The same save after a URL, a page name, and an HTML file name |
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
-| Save a page | `index.html` plus linked assets land under that page name | `html-crawler download --url https://example.com/ --name example` |
-| Save again | `index.html` stays. Missing assets are fetched. Files already there stay. | The same command again |
+| Save a page | The HTML file defaults to `index.html`. Linked assets land under that page name | `html-crawler download --url https://example.com/ --name example` |
+| Choose the file name | `--html FILENAME` stores that file name. The menu asks the same question | `html-crawler download --url https://example.com/ --name example --html page.html` |
+| Let the URL name the folder | A path that ends with `guide.html` saves `guide/guide.html`. A last segment such as `xxx` saves `xxx/index.html` | `html-crawler download --url https://example.com/guide.html` |
+| Save again | The stored HTML file stays. Missing assets are fetched. Files already there stay. | The same command again |
 
 ## 2. Core Rules / Requirements (Mandatory)
 
@@ -49,15 +51,29 @@ The typed verb `download` and menu row 1 stay on `requirement-domain-htmlcrawler
 
 ### 2.2 Folder
 
-The page is `~/.app/HtmlCrawler/output/<pagename>/index.html`. Stylesheets and fonts go in `output/<pagename>/assets/css/`. Scripts go in `output/<pagename>/assets/js/`. Images go in `output/<pagename>/assets/img/`. Those three folders stay flat. `output/url-map.json` remembers each URL and page name.
+The page is `~/.app/<app name>/output/<pagename>/<html file>`. The intended app folder is `HtmlCrawler`. On this tree the live app name is `Cli.APP_NAME`, which is still `HtmlDownloader`, so the folder is `~/.app/HtmlDownloader/output/<pagename>/<html file>`. The HTML file name defaults to `index.html`. Stylesheets and fonts go in `output/<pagename>/assets/css/`. Scripts go in `output/<pagename>/assets/js/`. Images go in `output/<pagename>/assets/img/`. Those three folders stay flat. `output/url-map.json` remembers each URL, page name, and HTML file name.
 
-7. The page name **MUST** be one file name. `/`, `\`, and an empty name **MUST** fail.
-8. The names `assets` and `url-map.json` **MUST** stay reserved.
+7. The page name **MUST** be one file name. `/`, `\`, and an empty name **MUST** fail when a name is required. An omitted `--name` uses the folder recommended from the URL. A host-only URL that recommends no folder **MUST** fail and name `--name`.
+8. The names `assets` and `url-map.json` **MUST** stay reserved for the page folder and for the HTML file name.
 9. The page folder **MUST** stay inside `output/`.
+9a. The HTML file name defaults to `index.html`. An empty name keeps the name stored for that page, or the name `recommend` takes from the URL. A path that ends with `.html` or `.htm` recommends that file. The folder is that name without the extension. A last segment with no extension, such as `xxx`, recommends `xxx/index.html`. A different `--html` **MUST** move the stored file and **MUST NOT** fetch the page URL again.
+
+`recommend` is the method that reads the URL path:
+
+```python
+def recommend(self, url):
+    """General Purpose: Page folder and HTML file suggested by the URL path.
+
+    A path that ends with .html or .htm suggests that file name. The folder
+    is that name without the extension. A last segment with no extension,
+    such as xxx, suggests the folder xxx and index.html. A host-only URL
+    suggests no folder. Returns (page name or "", html file name).
+    """
+```
 
 ### 2.3 Resume and saved HTML
 
-10. When `index.html` exists and is not empty, the page URL **MUST NOT** be fetched again.
+10. When the stored HTML file exists and is not empty, the page URL **MUST NOT** be fetched again.
 11. An asset file already in the page folder **MUST** be kept. A missing asset **MUST** be fetched.
 12. After local links are written, the saved HTML **MUST** drop `<base>`, `xml:base`, `<link rel="canonical">`, and HTML comments.
 13. A failed page fetch **MUST** stop and name the URL. A failed asset **MUST** be listed. Files already saved **MUST** stay.
@@ -82,10 +98,10 @@ The page is `~/.app/HtmlCrawler/output/<pagename>/index.html`. Stylesheets and f
 |------|--------|
 | **Product** | `HtmlCrawler` |
 | **Class** | `PageDownload` in `src/HtmlDownloader/page_download.py` (copied tree; package rename waits) |
-| **Page folder** | `~/.app/HtmlCrawler/output/<pagename>/index.html` |
-| **Map** | `~/.app/HtmlCrawler/output/url-map.json` |
+| **Page folder** | Live root `~/.app/HtmlDownloader/output/<pagename>/<html file>`. Intended folder name remains `HtmlCrawler` |
+| **Map** | `output/url-map.json` stores `url`, `name`, and `html` |
 | **Verb owner** | `requirement-domain-htmlcrawler` (typed `download`, menu row 1) |
-| **Flag owner** | `requirement-python-cli-interface` (`--url` and `--name` only) |
+| **Flag owner** | `requirement-python-cli-interface` (`--url` required; `--name` and `--html` may be omitted) |
 | **Crawl** | Not this file. The walk is `requirement-html-site-crawl`. This save still does not follow `<a href>` |
 
 ### 2.6 Why This Requirement Exists (CIAO)
@@ -102,7 +118,7 @@ On Termux, Git Bash, Windows cmd, or the same class, the save runs as the normal
 
 - **Caution:** A URL that is not `http` or `https` does not save a page.
 - **Intentional:** One page, then the assets that page names.
-- **Anti-fragile:** Resume keeps `index.html` and files already stored.
+- **Anti-fragile:** Resume keeps the stored HTML file and files already stored.
 - **Over-protect:** Anchors to other HTML pages stay out of this save.
 
 ## 4. Protection Rule (Sacred)
@@ -120,8 +136,8 @@ On Termux, Git Bash, Windows cmd, or the same class, the save runs as the normal
 
 | ID | Criterion |
 |----|-----------|
-| AC-1 | `download --url URL --name PAGENAME` writes `output/<pagename>/index.html` and the linked assets |
-| AC-2 | When `index.html` exists and is not empty, that page URL is not fetched again |
+| AC-1 | `download --url URL --name PAGENAME` writes `output/<pagename>/index.html` and the linked assets. `--html FILENAME` writes that file name instead |
+| AC-2 | When the stored HTML file exists and is not empty, that page URL is not fetched again |
 | AC-3 | A URL that is not `http` or `https`, or a page name with a slash, does not save a page |
 | AC-4 | Saved HTML drops `<base>`, `xml:base`, the canonical link, and HTML comments |
 | AC-5 | The save does not enqueue another HTML document from `<a href>` |
@@ -131,7 +147,7 @@ On Termux, Git Bash, Windows cmd, or the same class, the save runs as the normal
 | Key | Relationship |
 |-----|----------------|
 | `requirement-domain-htmlcrawler` | Owns the `download` verb and menu row 1 |
-| `requirement-python-cli-interface` | Owns `--url` and `--name` |
+| `requirement-python-cli-interface` | Owns `--url`, `--name`, and `--html` |
 | `requirement-python-error-handling` | A failed fetch stays visible |
 | `requirement-python-oop` | Class `PageDownload` |
 | `requirement-python-coding-style` | Publish with `shutil.move` |
@@ -143,8 +159,10 @@ On Termux, Git Bash, Windows cmd, or the same class, the save runs as the normal
 |----------------|-------|--------|------|
 | **TP-PAGE-01** | `tests/test_download.py` | have | The suite saves one page and its assets |
 | **TP-PAGE-02** | `tests/test_download.py` | have | A bad URL or a bad page name does not save a page |
-| **TP-PAGE-03** | `tests/test_download.py` | have | Resume keeps `index.html` and fills missing assets |
+| **TP-PAGE-03** | `tests/test_download.py` | have | Resume keeps the stored HTML file and fills missing assets |
 | **TP-PAGE-04** | `tests/test_download.py` | todo | A response over 15 MiB is refused |
+| **TP-PAGE-05** | `tests/test_download.py` | have | `--html`, a rename, and a rejected path |
+| **TP-PAGE-06** | `tests/test_download.py` | have | An omitted `--name` uses the folder recommended from the URL |
 
 **Matrix:** `docs/reviews/requirement-test-matrix.md`
 **Map:** `docs/reviews/test-plan.md`
@@ -170,6 +188,7 @@ On Termux, Git Bash, Windows cmd, or the same class, the save runs as the normal
 | 2026-10-28 | Active 1.0.0 | Save law moved out of the domain file. One page, flat assets, resume, caps |
 | 2026-10-28 | Active 1.0.1 | Product name HtmlCrawler. The walk stays on `requirement-html-site-crawl` |
 | 2026-10-28 | Active 1.0.2 | Verb owner is `requirement-domain-htmlcrawler` |
+| 2026-10-28 | Active 1.0.3 | `--html` names the file. An omitted `--name` uses `recommend`. The map stores `html`. Product version **1.1.1** |
 
 ---
 

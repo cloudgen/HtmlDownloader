@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-domain-htmlcrawler.md
-**Status**: Active (Version 1.0.2)
+**Status**: Active (Version 1.0.3)
 **Area**: domain
 **Key**: `requirement-domain-htmlcrawler`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -36,7 +36,7 @@ One HTML document and its stylesheets, scripts, images, and fonts are `requireme
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
 | Crawl a site | Pages on that host, up to the depth and the page cap | `html-crawler crawl --url https://example.com/ --name example --depth 1 --max-pages 20` |
-| Save one page | One `index.html` and its assets. No further HTML pages | `html-crawler download --url https://example.com/ --name example` |
+| Save one page | One HTML file, `index.html` unless `--html` names another, and its assets. No further HTML pages | `html-crawler download --url https://example.com/ --name example` |
 | Serve | The folder is the site root on `127.0.0.1` | `html-crawler serve --page-name example` |
 
 ## 2. Core Rules / Requirements (Mandatory)
@@ -46,7 +46,7 @@ One HTML document and its stylesheets, scripts, images, and fonts are `requireme
 | Step ID | User action | Inputs | Output / effect | Ops SSOT |
 |---------|-------------|--------|-----------------|----------|
 | C-01 | Crawl a site | typed verb `crawl` with `--url`, `--name`, `--depth`, `--max-pages` | A site folder. Return 0 when the walk finishes. The menu does not open | this file + CLI + site-crawl law |
-| C-02 | Save one page | typed verb `download` with `--url` and `--name` | One page. The menu does not open | this file + CLI + page-download law |
+| C-02 | Save one page | typed verb `download` with `--url`. `--name` and `--html` may be omitted | One page. The menu does not open | this file + CLI + page-download law |
 
 **Routing:** Bare `html-crawler` on a terminal opens the front board and **MUST NOT** crawl and **MUST NOT** download.
 
@@ -160,6 +160,7 @@ On Termux, Git Bash, Windows cmd, or the same class, crawl, download, list, and 
 | 2026-10-28 | Active 1.0.0 | HtmlCrawler domain. Crawl plus one-page download. Copied dispatcher does not accept `crawl` yet. |
 | 2026-10-28 | Active 1.0.1 | This file stays the only domain file |
 | 2026-10-28 | Active 1.0.2 | The dispatcher accepts `crawl`. The remaining gap is the package name and the console script |
+| 2026-10-28 | Active 1.0.3 | `download` may omit `--name` and may pass `--html`. Product version **1.1.1** |
 
 ---
 

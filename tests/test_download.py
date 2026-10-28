@@ -94,6 +94,7 @@ class TestDownload(unittest.TestCase):
     """Typed download saves a page. Menu row 1 is download."""
 
     def test_cli_download_saves_page_assets_and_map(self):
+        """TP-HTMLDOWNLOADER-01, TP-PAGE-01: one page, its assets, and the url map."""
         home = tempfile.mkdtemp(prefix="htmldl_", dir="/tmp")
         previous_home = os.environ.get("HOME")
         previous_lang = os.environ.get("HTMLDOWNLOADER_LANG")
@@ -156,7 +157,10 @@ class TestDownload(unittest.TestCase):
             self.assertIn(".css", linked)
             with open(os.path.join(root, "url-map.json"), encoding="utf-8") as handle:
                 saved = json.load(handle)
-            self.assertEqual(saved["pages"], [{"url": url, "name": "sample"}])
+            self.assertEqual(
+                saved["pages"],
+                [{"url": url, "name": "sample", "html": "index.html"}],
+            )
             summary = buf.getvalue()
             self.assertIn("Stylesheets: 3", summary)
             self.assertIn("Scripts: 1", summary)
@@ -185,6 +189,7 @@ class TestDownload(unittest.TestCase):
                 os.environ["HTMLDOWNLOADER_LANG"] = previous_lang
 
     def test_download_rejects_a_bad_url_a_bad_name_and_hello(self):
+        """TP-HTMLDOWNLOADER-03, TP-PAGE-02, TP-ERR-01: a bad URL, a bad name, and hello do not save."""
         home = tempfile.mkdtemp(prefix="htmldl_", dir="/tmp")
         previous_home = os.environ.get("HOME")
         os.environ["HOME"] = home
@@ -223,8 +228,12 @@ class TestDownload(unittest.TestCase):
                 self.assertEqual(app.run(["help"]), 0)
             help_text = help_buf.getvalue()
             self.assertIn("download", help_text)
+            self.assertIn("crawl", help_text)
             self.assertIn("--url", help_text)
             self.assertIn("--name", help_text)
+            self.assertIn("--html", help_text)
+            self.assertIn("--depth", help_text)
+            self.assertNotIn("list-videos", help_text)
         finally:
             shutil.rmtree(home, ignore_errors=True)
             if previous_home is None:
@@ -350,6 +359,7 @@ class TestDownload(unittest.TestCase):
             shutil.rmtree(home, ignore_errors=True)
 
     def test_images_are_flat_and_a_saved_page_is_not_fetched_again(self):
+        """TP-HTMLDOWNLOADER-02, TP-PAGE-03: a stored page is not fetched again."""
         home = tempfile.mkdtemp(prefix="htmldl_", dir="/tmp")
         seen = []
         page = """<!DOCTYPE html>
@@ -497,6 +507,294 @@ class TestDownload(unittest.TestCase):
         finally:
             shutil.rmtree(home, ignore_errors=True)
 
+    def test_html_file_name_defaults_renames_and_rejects(self):
+        """TP-PAGE-05: --html, a rename, and a rejected path."""
+        home = tempfile.mkdtemp(prefix="htmldl_", dir="/tmp")
+        calls = []
+
+        def opener(url):
+            calls.append(url)
+            return (b"<html><p>ok</p></html>", "text/html")
+
+        try:
+            worker = PageDownload(Cli.APP_NAME, home=home, opener=opener)
+            url = "https://cdn.example/page"
+            text = worker.download(url, "sample")
+            root = os.path.join(home, ".app", Cli.APP_NAME, "output")
+            index = os.path.join(root, "sample", "index.html")
+            custom = os.path.join(root, "sample", "page.html")
+            self.assertIn("Saved sample", text)
+            self.assertTrue(os.path.isfile(index))
+            self.assertEqual(calls, [url])
+            text = worker.download(url, "sample")
+            self.assertIn("Continued sample", text)
+            self.assertEqual(calls, [url])
+            text = worker.download(url, "sample", "page.html")
+            self.assertIn("Continued sample", text)
+            self.assertEqual(calls, [url])
+            self.assertFalse(os.path.isfile(index))
+            self.assertTrue(os.path.isfile(custom))
+            with open(os.path.join(root, "url-map.json"), encoding="utf-8") as handle:
+                saved = json.load(handle)
+            self.assertEqual(saved["pages"][0]["html"], "page.html")
+            self.assertIn("sample [page.html]", "\n".join(worker.choice_lines()))
+            text = worker.download(url, "sample")
+            self.assertIn("Continued sample", text)
+            self.assertEqual(calls, [url])
+            self.assertTrue(os.path.isfile(custom))
+            for bad in ("assets", "url-map.json", "../x", "a/b", "a\\b", ".", ".."):
+                with self.assertRaises(PageDownloadError):
+                    worker.download(url, "sample", bad)
+            self.assertTrue(os.path.isfile(custom))
+            self.assertFalse(os.path.exists(os.path.join(home, "x")))
+            self.assertFalse(os.path.isdir(os.path.join(root, "sample", "a")))
+        finally:
+            shutil.rmtree(home, ignore_errors=True)
+
+    def test_url_recommends_the_html_file_and_the_folder(self):
+        """TP-PAGE-06: guide.html and xxx recommend the folder and the file."""
+        home = tempfile.mkdtemp(prefix="htmldl_", dir="/tmp")
+        calls = []
+
+        def opener(url):
+            calls.append(url)
+            return (b"<html>ok</html>", "text/html")
+
+        try:
+            worker = PageDownload(Cli.APP_NAME, home=home, opener=opener)
+            self.assertEqual(
+                worker.recommend("https://example.com/docs/guide.html"),
+                ("guide", "guide.html"),
+            )
+            self.assertEqual(
+                worker.recommend("https://example.com/docs/guide.htm?x=1"),
+                ("guide", "guide.htm"),
+            )
+            self.assertEqual(
+                worker.recommend("https://example.com/docs/Guide.HTML"),
+                ("Guide", "Guide.HTML"),
+            )
+            self.assertEqual(
+                worker.recommend("https://example.com/a/xxx/"),
+                ("xxx", "index.html"),
+            )
+            self.assertEqual(worker.recommend("https://example.com/"), ("", "index.html"))
+            self.assertEqual(
+                worker.recommend("https://example.com/a/b.php"),
+                ("", "index.html"),
+            )
+            self.assertEqual(
+                worker.recommend("https://example.com/assets.html"),
+                ("", "assets.html"),
+            )
+            self.assertEqual(
+                worker.recommend("https://example.com/my%2Fevil.html"),
+                ("evil", "evil.html"),
+            )
+            root = os.path.join(home, ".app", Cli.APP_NAME, "output")
+            text = worker.download("https://example.com/docs/guide.html", "")
+            self.assertIn("Saved guide", text)
+            self.assertTrue(os.path.isfile(os.path.join(root, "guide", "guide.html")))
+            self.assertFalse(os.path.isfile(os.path.join(root, "guide", "index.html")))
+            self.assertEqual(calls, ["https://example.com/docs/guide.html"])
+            text = worker.download("https://example.com/docs/guide.html", "")
+            self.assertIn("Continued guide", text)
+            self.assertEqual(calls, ["https://example.com/docs/guide.html"])
+            text = worker.download("https://example.com/a/xxx/", "")
+            self.assertIn("Saved xxx", text)
+            self.assertTrue(os.path.isfile(os.path.join(root, "xxx", "index.html")))
+            text = worker.download("https://example.com/docs/guide.html", "docs")
+            self.assertTrue(os.path.isfile(os.path.join(root, "docs", "guide.html")))
+            text = worker.download("https://example.com/a/xxx", "sample")
+            self.assertTrue(os.path.isfile(os.path.join(root, "sample", "index.html")))
+            seen = len(calls)
+            text = worker.download("https://example.com/docs/guide.html", "sample")
+            self.assertIn("Continued sample", text)
+            self.assertEqual(len(calls), seen)
+            self.assertTrue(os.path.isfile(os.path.join(root, "sample", "index.html")))
+            self.assertFalse(os.path.isfile(os.path.join(root, "sample", "guide.html")))
+            with self.assertRaises(PageDownloadError):
+                worker.download("https://example.com/", "")
+            self.assertEqual(len(calls), seen)
+        finally:
+            shutil.rmtree(home, ignore_errors=True)
+
+    def test_menu_accepts_the_name_recommended_from_the_url(self):
+        home = tempfile.mkdtemp(prefix="htmlname_", dir="/tmp")
+        painter = MenuPainter(home=home)
+        model = MenuModel(painter=painter)
+        tui = Tui()
+        tui.painter = painter
+        worker = PageDownload(Cli.APP_NAME, home=home)
+
+        class EnterScreen:
+            def __init__(self, keys):
+                self.keys = list(keys)
+
+            def getmaxyx(self):
+                return (24, 80)
+
+            def erase(self):
+                return None
+
+            def addstr(self, y, x, text, _attr=0):
+                return None
+
+            def refresh(self):
+                return None
+
+            def curs_set(self, _visibility):
+                return None
+
+            def timeout(self, _milliseconds):
+                return None
+
+            def getch(self):
+                if self.keys:
+                    return self.keys.pop(0)
+                return 27
+
+        try:
+            folder = tui._ask_page_name(
+                EnterScreen([10]),
+                model,
+                worker,
+                "https://example.com/a/xxx/",
+            )
+            self.assertEqual(folder, "xxx")
+            self.assertEqual(
+                worker.suggested_html("https://example.com/a/xxx/", folder),
+                "index.html",
+            )
+            folder = tui._ask_page_name(
+                EnterScreen([10]),
+                model,
+                worker,
+                "https://example.com/docs/guide.html",
+            )
+            self.assertEqual(folder, "guide")
+            self.assertEqual(
+                worker.suggested_html("https://example.com/docs/guide.html", folder),
+                "guide.html",
+            )
+            missing = tui._ask_page_name(
+                EnterScreen([10, 27]),
+                model,
+                worker,
+                "https://example.com/",
+            )
+            self.assertIsNone(missing)
+        finally:
+            shutil.rmtree(home, ignore_errors=True)
+
+    def test_cli_download_uses_the_url_when_name_is_omitted(self):
+        """TP-PAGE-06: an omitted --name uses the name recommended from the URL."""
+        home = tempfile.mkdtemp(prefix="htmldl_", dir="/tmp")
+        previous_home = os.environ.get("HOME")
+        os.environ["HOME"] = home
+
+        class Handler(BaseHTTPRequestHandler):
+            def do_GET(self):
+                path = self.path.split("?", 1)[0]
+                if path not in ("/guide.html", "/xxx"):
+                    self.send_response(404)
+                    self.end_headers()
+                    return
+                body = b"<html>ok</html>"
+                self.send_response(200)
+                self.send_header("Content-Type", "text/html")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+
+            def log_message(self, fmt, *args):
+                return
+
+        server = HTTPServer(("127.0.0.1", 0), Handler)
+        thread = threading.Thread(target=server.serve_forever)
+        thread.daemon = True
+        thread.start()
+        port = server.server_address[1]
+        try:
+            app = Cli()
+            guide = "http://127.0.0.1:{0}/guide.html".format(port)
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                code = app.run(["download", "--url", guide])
+            self.assertEqual(code, 0, buf.getvalue())
+            root = os.path.join(home, ".app", Cli.APP_NAME, "output")
+            self.assertTrue(os.path.isfile(os.path.join(root, "guide", "guide.html")))
+            self.assertFalse(os.path.isfile(os.path.join(root, "guide", "index.html")))
+            folder = "http://127.0.0.1:{0}/xxx".format(port)
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                code = app.run(["download", "--url", folder])
+            self.assertEqual(code, 0, buf.getvalue())
+            self.assertTrue(os.path.isfile(os.path.join(root, "xxx", "index.html")))
+            err = io.StringIO()
+            with redirect_stderr(err):
+                code = app.run(["download", "--url", "http://127.0.0.1:{0}/".format(port)])
+            self.assertEqual(code, 1)
+            self.assertIn("--name", err.getvalue())
+        finally:
+            server.shutdown()
+            server.server_close()
+            thread.join(timeout=5)
+            shutil.rmtree(home, ignore_errors=True)
+            if previous_home is None:
+                os.environ.pop("HOME", None)
+            else:
+                os.environ["HOME"] = previous_home
+
+    def test_cli_html_flag_is_download_only(self):
+        seen = {}
+        original = PageDownload.download
+
+        def fake_download(self, url, name, html=None):
+            seen["url"] = url
+            seen["name"] = name
+            seen["html"] = html
+            return "Saved sample"
+
+        PageDownload.download = fake_download
+        try:
+            app = Cli()
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                code = app.run([
+                    "download",
+                    "--url",
+                    "https://example.com/",
+                    "--name",
+                    "sample",
+                    "--html",
+                    "page.html",
+                ])
+            self.assertEqual(code, 0)
+            self.assertEqual(seen["html"], "page.html")
+            self.assertIn("Saved sample", buf.getvalue())
+            previous_tty = Cli.stdout_is_tty
+            Cli.stdout_is_tty = staticmethod(lambda: True)
+            try:
+                self.assertFalse(Cli.opens_text_screen([
+                    "download",
+                    "--url",
+                    "https://example.com/",
+                    "--name",
+                    "sample",
+                    "--html",
+                    "page.html",
+                ]))
+            finally:
+                Cli.stdout_is_tty = previous_tty
+            err = io.StringIO()
+            with redirect_stderr(err):
+                code = app.run(["serve", "--html", "page.html", "--page-name", "sample"])
+            self.assertEqual(code, 1)
+            self.assertIn("only for download", err.getvalue())
+        finally:
+            PageDownload.download = original
+
     def test_menu_row_1_is_download(self):
         home = tempfile.mkdtemp(prefix="htmldl_", dir="/tmp")
         saved = os.environ.get("HTMLDOWNLOADER_LANG")
@@ -543,7 +841,7 @@ class TestDownload(unittest.TestCase):
         tui = Tui()
         tui.painter = painter
         keys = [ord(char) for char in "https://example.com/"] + [10]
-        keys += [ord(char) for char in "fiori"] + [10]
+        keys += [ord(char) for char in "fiori"] + [10, 10]
 
         class WaitScreen:
             """Feeds the page-name keys and records the painted text."""
@@ -579,9 +877,10 @@ class TestDownload(unittest.TestCase):
         captured = {}
         original = PageDownload.download
 
-        def fake_download(self, url, name):
+        def fake_download(self, url, name, html=None):
             captured["url"] = url
             captured["name"] = name
+            captured["html"] = html
             captured["buffer"] = model.buffer
             captured["focus"] = model.focus
             captured["text"] = [item[2] for item in screen.calls]
@@ -607,11 +906,55 @@ class TestDownload(unittest.TestCase):
         self.assertEqual(text, "Saved fiori")
         self.assertEqual(captured["url"], "https://example.com/")
         self.assertEqual(captured["name"], "fiori")
+        self.assertEqual(captured["html"], "index.html")
         self.assertEqual(captured["buffer"], "")
         self.assertEqual(captured["focus"], "list")
         self.assertIn("Please wait.", captured["text"])
         self.assertIn("Page name: fiori", captured["text"])
+        self.assertIn("HTML file: index.html", captured["text"])
         self.assertNotIn("█", "".join(captured["text"]))
+
+    def test_menu_html_prompt_accepts_a_typed_name(self):
+        painter = MenuPainter()
+        model = MenuModel(painter=painter)
+        tui = Tui()
+        tui.painter = painter
+        worker = PageDownload(Cli.APP_NAME, home=tempfile.mkdtemp(prefix="htmlname_", dir="/tmp"))
+        keys = [ord(char) for char in "assets"] + [10]
+        keys += [ord(char) for char in "home.html"] + [10]
+
+        class NameScreen:
+            def __init__(self):
+                self.keys = list(keys)
+
+            def getmaxyx(self):
+                return (24, 80)
+
+            def erase(self):
+                return None
+
+            def addstr(self, y, x, text, _attr=0):
+                return None
+
+            def refresh(self):
+                return None
+
+            def curs_set(self, _visibility):
+                return None
+
+            def timeout(self, _milliseconds):
+                return None
+
+            def getch(self):
+                if self.keys:
+                    return self.keys.pop(0)
+                return 27
+
+        try:
+            chosen = tui._ask_html_name(NameScreen(), model, worker, "index.html")
+        finally:
+            shutil.rmtree(worker.home, ignore_errors=True)
+        self.assertEqual(chosen, "home.html")
 
 
 class TestListDownloaded(unittest.TestCase):
@@ -676,12 +1019,27 @@ class TestListDownloaded(unittest.TestCase):
         pages = worker.saved_pages()
         self.assertEqual([item["name"] for item in pages], ["fiori"])
         self.assertEqual(pages[0]["index"], kept)
+        self.assertEqual(pages[0]["html"], "index.html")
         self.assertEqual(self._commit("2"), "list-downloaded")
         self.assertIsNone(self.tui._open_downloaded(self.model))
         self.assertEqual(self.model.layer, "pages")
         shown = self.model.rows()
         self.assertEqual([(row[0], row[1]) for row in shown], [(1, "fiori"), (0, "Back")])
         self.assertEqual(shown[0][2], "https://example.com/fiori")
+
+    def test_list_shows_a_custom_html_name(self):
+        index = self._write_page("fiori", "https://example.com/fiori")
+        custom = os.path.join(os.path.dirname(index), "page.html")
+        os.rename(index, custom)
+        self._write_map([{
+            "url": "https://example.com/fiori",
+            "name": "fiori",
+            "html": "page.html",
+        }])
+        self.assertIsNone(self.tui._open_downloaded(self.model))
+        shown = self.model.rows()
+        self.assertEqual(shown[0][1], "fiori [page.html]")
+        self.assertEqual(self.tui._saved_by_kind["saved-1"]["index"], custom)
 
     def test_no_saved_pages_is_a_result(self):
         self.assertEqual(self.tui._open_downloaded(self.model), "No saved pages.")

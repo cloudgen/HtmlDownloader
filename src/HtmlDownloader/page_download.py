@@ -3,7 +3,10 @@
 # requirement-python-oop — class PageDownload.
 # requirement-python-coding-style — publish with shutil.move.
 # requirement-python-error-handling — a failed fetch names the URL and stops.
-# Each page is ~/.app/<app name>/output/<page name>/index.html.
+# Each page is ~/.app/<app name>/output/<page name>/<html file>.
+# The HTML file name defaults to index.html.
+# A URL that ends in .html or .htm recommends that file name.
+# A URL that ends in a folder name such as xxx recommends xxx/index.html.
 # Flat asset folders are assets/css, assets/js, and assets/img under that page.
 # The url map stays at ~/.app/<app name>/output/url-map.json.
 # =============================================================================
@@ -16,7 +19,7 @@ import re
 import shutil
 import tempfile
 from html.parser import HTMLParser
-from urllib.parse import urlsplit, urlunsplit, urljoin
+from urllib.parse import unquote, urlsplit, urlunsplit, urljoin
 
 
 class PageDownloadError(Exception):
@@ -32,12 +35,14 @@ class PageDownloadError(Exception):
 class PageDownload:
     """Save one page, its stylesheets, its scripts, and its images.
 
-    output/<page name>/index.html is the page.
-    output/<page name>/assets/css/, assets/js/, and assets/img/ are flat.
-    Those three folders have no subfolders. Font files sit in assets/css/.
-    output/url-map.json remembers url to page name for the next download.
-    When index.html is already there, the page URL is not fetched again.
-    Links in that file are checked, missing files are fetched, and saved files are kept.
+    output/<page name>/<html file> is the page. The HTML file name defaults
+    to index.html. output/<page name>/assets/css/, assets/js/, and assets/img/
+    are flat. Those three folders have no subfolders. Font files sit in
+    assets/css/. output/url-map.json remembers the url, the page name, and
+    the HTML file name. When that HTML file is already there, the page URL
+    is not fetched again. A different HTML file name moves the file already
+    stored for this page. Links in that file are checked, missing files are
+    fetched, and saved files are kept.
     """
 
     APP_PARENT = ".app"
@@ -117,19 +122,24 @@ class PageDownload:
             url = item.get("url")
             name = item.get("name")
             if isinstance(url, str) and isinstance(name, str) and url and name:
-                kept.append({"url": url, "name": name})
+                kept.append({
+                    "url": url,
+                    "name": name,
+                    "html": self._stored_html(item.get("html")),
+                })
         return kept
 
     def saved_pages(self) -> list:
-        """General Purpose: Downloaded pages that already have an index.html.
+        """General Purpose: Downloaded pages that already have an HTML file.
 
-        Each item has name, url, and index. The url-map order is kept.
-        A map row with no page file is left out.
+        Each item has name, url, html, and index. The url-map order is kept.
+        A map row with no page file is left out. A row with no html name
+        means index.html.
         """
         found = []
         for entry in self.entries():
             try:
-                path = self._index_path(entry["name"])
+                path = self._html_path(entry["name"], entry["html"])
             except PageDownloadError:
                 continue
             if not os.path.isfile(path):
@@ -140,7 +150,12 @@ class PageDownload:
                 continue
             if size <= 0:
                 continue
-            found.append({"name": entry["name"], "url": entry["url"], "index": path})
+            found.append({
+                "name": entry["name"],
+                "url": entry["url"],
+                "html": entry["html"],
+                "index": path,
+            })
         return found
 
     def choice_lines(self) -> list:
@@ -150,7 +165,10 @@ class PageDownload:
             return ["No saved pages.", "Type a URL:"]
         lines = ["Saved pages:"]
         for index, entry in enumerate(entries, start=1):
-            lines.append("{0}. {1}: {2}".format(index, entry["name"], entry["url"]))
+            label = entry["name"]
+            if entry["html"] != self.INDEX_NAME:
+                label = "{0} [{1}]".format(entry["name"], entry["html"])
+            lines.append("{0}. {1}: {2}".format(index, label, entry["url"]))
         lines.append("")
         lines.append("Type a number, or type a URL:")
         return lines
@@ -191,6 +209,83 @@ class PageDownload:
             raise PageDownloadError("That page name is reserved.")
         return text
 
+    def clean_html(self, html) -> str:
+        """General Purpose: One HTML file name inside the page folder.
+
+        An empty value is index.html. A path, assets, and url-map.json are rejected.
+        """
+        text = (html or "").strip()
+        if text == "":
+            return self.INDEX_NAME
+        if text in (".", ".."):
+            raise PageDownloadError("Type an HTML file name.")
+        if "/" in text or "\\" in text or "\x00" in text:
+            raise PageDownloadError("The HTML file name must be one file name, without a folder.")
+        if len(text) > 200:
+            raise PageDownloadError("The HTML file name is too long.")
+        if text == self.MAP_NAME or text == self.ASSETS_DIR:
+            raise PageDownloadError("That HTML file name is reserved.")
+        return text
+
+    def html_name_for(self, name) -> str:
+        """General Purpose: The stored HTML file name for one page. Default index.html."""
+        clean = self.clean_name(name)
+        for entry in self.entries():
+            if entry["name"] == clean:
+                return entry["html"]
+        return self.INDEX_NAME
+
+    def recommend(self, url):
+        """General Purpose: Page folder and HTML file suggested by the URL path.
+
+        A path that ends with .html or .htm suggests that file name. The folder
+        is that name without the extension. A last segment with no extension,
+        such as xxx, suggests the folder xxx and index.html. A host-only URL
+        suggests no folder. Returns (page name or "", html file name).
+        """
+        leaf = self._url_leaf(url)
+        if not leaf:
+            return "", self.INDEX_NAME
+        lower = leaf.lower()
+        if lower.endswith(".html") or lower.endswith(".htm"):
+            try:
+                html_name = self.clean_html(leaf)
+            except PageDownloadError:
+                html_name = self.INDEX_NAME
+            if lower.endswith(".html"):
+                stem = leaf[:-5]
+            else:
+                stem = leaf[:-4]
+            page_name = ""
+            if stem:
+                try:
+                    page_name = self.clean_name(stem)
+                except PageDownloadError:
+                    page_name = ""
+            return page_name, html_name
+        if "." not in leaf:
+            try:
+                return self.clean_name(leaf), self.INDEX_NAME
+            except PageDownloadError:
+                return "", self.INDEX_NAME
+        return "", self.INDEX_NAME
+
+    def suggested_html(self, url, name) -> str:
+        """General Purpose: HTML file to offer for this page and URL.
+
+        A page already in the url map keeps its stored file name. A new page
+        takes the file name recommended from the URL.
+        """
+        try:
+            clean = self.clean_name(name)
+        except PageDownloadError:
+            return self.INDEX_NAME
+        for entry in self.entries():
+            if entry["name"] == clean:
+                return entry["html"]
+        _page_name, html_name = self.recommend(url)
+        return html_name
+
     def validate_url(self, url) -> str:
         """General Purpose: An http or https URL with a host and no password."""
         text = (url or "").strip()
@@ -209,22 +304,49 @@ class PageDownload:
             raise PageDownloadError("The URL must not contain a username or password.")
         return text
 
-    def download(self, url, name) -> str:
+    def download(self, url, name, html=None) -> str:
         """General Purpose: Fetch the page and its linked stylesheets, scripts, and images.
 
-        Creates the page folder, writes index.html, then updates the url map.
-        When index.html already exists, the page URL is not fetched again.
-        Stylesheets, scripts, and images named by that file are fetched only when missing.
-        A failed page fetch raises. A failed stylesheet, script, or image is listed.
+        Creates the page folder, writes the HTML file, then updates the url map.
+        An empty page name uses the folder recommended from the URL. An empty
+        HTML file name keeps the stored name, or the name recommended from the
+        URL. A path that ends with .html or .htm recommends that file. A last
+        segment with no extension, such as xxx, recommends xxx/index.html.
+        When that file already exists, the page URL is not fetched again.
+        A different name moves the file already stored for this page.
+        Stylesheets, scripts, and images are fetched only when missing.
+        A failed page fetch raises. A failed asset is listed.
         """
-        name = self.clean_name(name)
         url = self.validate_url(url)
+        suggested_name, suggested_html = self.recommend(url)
+        explicit_name = (name or "").strip()
+        if explicit_name:
+            name = self.clean_name(explicit_name)
+        else:
+            known = self._entry_for_url(url)
+            if known is not None:
+                name = known["name"]
+            elif suggested_name:
+                name = suggested_name
+            else:
+                raise PageDownloadError(
+                    "download needs --name. The URL did not end with an "
+                    ".html file or a folder name."
+                )
+        if html is None or str(html).strip() == "":
+            known_page = self._entry_for_name(name)
+            if known_page is not None:
+                html_name = known_page["html"]
+            else:
+                html_name = suggested_html
+        else:
+            html_name = self.clean_html(html)
         if self.logger is not None:
             self.logger.log_message(
-                "download {0} as {1}".format(url, name),
+                "download {0} as {1}/{2}".format(url, name, html_name),
                 component="PageDownload",
             )
-        index_path, resumed = self._prepare_index(name)
+        index_path, resumed = self._prepare_index(name, html_name)
         if resumed:
             html = self._read_text(index_path)
             base_url = url
@@ -264,7 +386,7 @@ class PageDownload:
         )
         self._publish(rewritten.encode("utf-8"), index_path)
         try:
-            self._remember(url, name)
+            self._remember(url, name, html_name)
         except PageDownloadError as exc:
             failures.append(str(exc))
         head = "Continued {0}".format(name) if resumed else "Saved {0}".format(name)
@@ -392,8 +514,45 @@ class PageDownload:
         self._mkdir(img_dir)
         return css_dir, js_dir, img_dir
 
+    def _url_leaf(self, url) -> str:
+        """The last path segment, without a query or a trailing slash."""
+        text = (url or "").strip()
+        try:
+            path = unquote(urlsplit(text).path or "")
+        except ValueError:
+            return ""
+        path = path.replace("\\", "/").rstrip("/")
+        if not path:
+            return ""
+        leaf = path.split("/")[-1]
+        if leaf in ("", ".", "..") or "\x00" in leaf:
+            return ""
+        return leaf
+
+    def _entry_for_url(self, url):
+        for entry in self.entries():
+            if entry["url"] == url:
+                return entry
+        return None
+
+    def _entry_for_name(self, name):
+        for entry in self.entries():
+            if entry["name"] == name:
+                return entry
+        return None
+
+    def _stored_html(self, html) -> str:
+        """A missing or unusable map value means index.html."""
+        try:
+            return self.clean_html(html)
+        except PageDownloadError:
+            return self.INDEX_NAME
+
+    def _html_path(self, name, html_name) -> str:
+        return os.path.join(self._page_dir(name), html_name)
+
     def _index_path(self, name) -> str:
-        return os.path.join(self._page_dir(name), self.INDEX_NAME)
+        return self._html_path(name, self.INDEX_NAME)
 
     def _inside(self, root, dest) -> bool:
         root_norm = os.path.normpath(root)
@@ -429,15 +588,21 @@ class PageDownload:
         self._mkdir(img_dir)
         return css_dir, js_dir, img_dir
 
-    def _prepare_index(self, name):
-        """Return (index path, already saved).
+    def _prepare_index(self, name, html_name):
+        """Return (html path, already saved).
 
-        A previous save that wrote output/<name> as a file is moved to index.html.
-        That file is not downloaded again.
+        An empty HTML name is index.html. A ready file at the requested name is
+        not downloaded again. A ready file stored under the previous name is
+        moved to the requested name and is not downloaded again. A previous save
+        that wrote output/<name> as a file is moved to the requested name.
         """
         root = self.output_root()
-        index_path = self._index_path(name)
+        index_path = self._html_path(name, html_name)
         if self._file_ready(index_path):
+            return index_path, True
+        previous = self._stored_html_path(name, html_name)
+        if previous and self._file_ready(previous):
+            self._rename_html(previous, index_path)
             return index_path, True
         legacy = os.path.join(root, name)
         if not os.path.isfile(legacy):
@@ -1383,19 +1548,58 @@ class PageDownload:
                     pass
             raise PageDownloadError("Could not save {0}. {1}".format(dest, exc))
 
-    def _remember(self, url, name) -> None:
+    def _stored_html_path(self, name, html_name) -> str:
+        """The previous HTML file for this page when the requested name differs."""
+        previous_name = ""
+        for entry in self.entries():
+            if entry["name"] == name:
+                previous_name = entry["html"]
+                break
+        if not previous_name:
+            previous_name = self.INDEX_NAME
+        if previous_name == html_name:
+            return ""
+        try:
+            return self._html_path(name, previous_name)
+        except PageDownloadError:
+            return ""
+
+    def _rename_html(self, source, dest) -> None:
+        """Move one saved HTML file onto its new name inside the page folder."""
+        self._mkdir(os.path.dirname(dest))
+        if self.logger is not None:
+            self.logger.log_message(
+                "publish {0}".format(dest),
+                component="PageDownload",
+            )
+        try:
+            shutil.move(source, dest)
+            os.chmod(dest, 0o600)
+        except OSError as exc:
+            raise PageDownloadError(
+                "Could not rename the HTML file to {0}. {1}".format(
+                    os.path.basename(dest), exc.strerror or exc
+                )
+            )
+
+    def _remember(self, url, name, html_name) -> None:
         pages = self.entries()
         kept = []
         placed = False
+        record = {"url": url, "name": name, "html": html_name}
         for item in pages:
             if item["name"] == name or item["url"] == url:
                 if not placed:
-                    kept.append({"url": url, "name": name})
+                    kept.append(record)
                     placed = True
                 continue
-            kept.append(item)
+            kept.append({
+                "url": item["url"],
+                "name": item["name"],
+                "html": item["html"],
+            })
         if not placed:
-            kept.append({"url": url, "name": name})
+            kept.append(record)
         self._write_map(kept)
 
     def _write_map(self, pages) -> None:

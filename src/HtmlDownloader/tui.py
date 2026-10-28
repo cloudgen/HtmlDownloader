@@ -98,16 +98,22 @@ class Tui:
             "self-install, version-check, self-update, self-uninstall.\n"
             "version shows the installed version and does not call pip.\n"
             "about shows the about page.\n"
-            "download saves one page. On the command line it needs --url and --name\n"
-            "and does not draw this menu. Menu row 1 download lists saved pages\n"
-            "or accepts a URL. Menu row 2 list downloaded lists saved page names.\n"
+            "download saves one page. On the command line it needs --url.\n"
+            "--name is the page folder. Omit it when the URL ends with .html, .htm,\n"
+            "or a folder name such as xxx. --html names the HTML file. An empty --html\n"
+            "keeps a stored name, or the name taken from the URL.\n"
+            "It does not draw this menu. Menu row 1 download lists saved pages\n"
+            "or accepts a URL, then a page name, then an HTML file name.\n"
+            "An empty page name keeps the saved name, or the name from the URL.\n"
+            "Menu row 2 list downloaded lists saved page names.\n"
             "After a page is chosen, 21 edit opens it in Visual Studio Code when\n"
             "code is installed, and 22 view opens it in the default browser when\n"
             "one is set. A tool that is not installed is left off that menu.\n"
             "serve serves one saved page on 127.0.0.1. On the command line it needs\n"
             "--page-name. --port defaults to {1}. Menu row 3 serve lists saved page\n"
             "names, then asks for a port. An empty port uses {1}.\n"
-            "Each page is ~/.app/{0}/output/<name>/index.html.\n"
+            "Each page is ~/.app/{0}/output/<name>/<html file>.\n"
+            "The HTML file defaults to index.html.\n"
             "This program does not join media or list files in this folder.\n"
             "version-check runs: python -m pip index versions {0}\n"
             "self-update runs: python -m pip install --upgrade {0}\n"
@@ -396,7 +402,7 @@ class Tui:
         return code_box["code"]
 
     def _download_on_screen(self, screen, model):
-        """List saved pages, or accept a URL and a page name, then download."""
+        """List saved pages, or accept a URL, a page name, and an HTML file name."""
         worker = PageDownload(self._name(), logger=self.logger)
         while True:
             raw = self.read_key(screen, model, worker.choice_lines(), title="download")
@@ -409,18 +415,23 @@ class Tui:
             if kind == "page":
                 url = value["url"]
                 name = value["name"]
+                default_html = value.get("html") or PageDownload.INDEX_NAME
             else:
                 url = value
                 name = self._ask_page_name(screen, model, worker, url)
                 if name is None:
                     return None
-            self._please_wait(screen, model, name)
+                default_html = worker.suggested_html(url, name)
+            html_name = self._ask_html_name(screen, model, worker, default_html)
+            if html_name is None:
+                return None
+            self._please_wait(screen, model, name, html_name)
             try:
-                return worker.download(url, name)
+                return worker.download(url, name, html_name)
             except PageDownloadError as exc:
                 return "ERROR: {0}".format(exc)
 
-    def _please_wait(self, screen, model, name):
+    def _please_wait(self, screen, model, name, html_name):
         """Clear the input box and show Please wait before the download runs."""
         model.buffer = ""
         model.cursor = 0
@@ -431,7 +442,12 @@ class Tui:
             screen,
             model,
             "download",
-            ["Page name: {0}".format(name), "", "Please wait."],
+            [
+                "Page name: {0}".format(name),
+                "HTML file: {0}".format(html_name),
+                "",
+                "Please wait.",
+            ],
             pin_last=True,
         )
 
@@ -459,7 +475,7 @@ class Tui:
         for index, page in enumerate(pages, start=1):
             kind = "saved-{0}".format(index)
             self._saved_by_kind[kind] = page
-            rows.append((index, page["name"], page["url"], kind))
+            rows.append((index, self._page_label(page), page["url"], kind))
         rows.append((
             0,
             language.row_short("back", "Back"),
@@ -526,7 +542,7 @@ class Tui:
         return None
 
     def _edit_saved_page(self):
-        """Open the chosen index.html in Visual Studio Code."""
+        """Open the saved HTML file in Visual Studio Code."""
         page = getattr(self, "_open_page", None)
         opener = getattr(self, "_action_opener", None)
         if page is None or opener is None:
@@ -538,7 +554,7 @@ class Tui:
         return "Opened {0} in Visual Studio Code.".format(page["name"])
 
     def _view_saved_page(self):
-        """Open the chosen index.html in the default browser."""
+        """Open the saved HTML file in the default browser."""
         page = getattr(self, "_open_page", None)
         opener = getattr(self, "_action_opener", None)
         if page is None or opener is None:
@@ -574,7 +590,7 @@ class Tui:
         for index, page in enumerate(pages, start=1):
             kind = "serve-saved-{0}".format(index)
             self._serve_by_kind[kind] = page
-            rows.append((index, page["name"], page["url"], kind))
+            rows.append((index, self._page_label(page), page["url"], kind))
         rows.append((
             0,
             language.row_short("back", "Back"),
@@ -644,16 +660,44 @@ class Tui:
         finally:
             self._resume_screen(screen)
 
+    def _page_label(self, page):
+        """Page name. A non-default HTML file is shown in brackets."""
+        html = page.get("html") or PageDownload.INDEX_NAME
+        if html != PageDownload.INDEX_NAME:
+            return "{0} [{1}]".format(page["name"], html)
+        return page["name"]
+
+    def _ask_html_name(self, screen, model, worker, default_html):
+        """HTML file name. Esc returns None. Empty keeps the shown default."""
+        lines = ["HTML file [{0}]:".format(default_html)]
+        while True:
+            raw = self.read_key(screen, model, lines, title="download")
+            if raw is None:
+                return None
+            text = raw.strip()
+            if text == "":
+                return default_html
+            try:
+                return worker.clean_html(text)
+            except PageDownloadError as exc:
+                model.error = str(exc)
+
     def _ask_page_name(self, screen, model, worker, url):
-        """Page name for a typed URL. Esc returns None. Empty reuses a saved name."""
+        """Page name for a typed URL. Esc returns None.
+
+        Empty keeps the saved name for this URL. A new URL keeps the folder
+        recommended from the path. A host-only URL still needs a typed name.
+        """
         known = ""
         for entry in worker.entries():
             if entry["url"] == url:
                 known = entry["name"]
                 break
+        suggested, _html_name = worker.recommend(url)
+        default = known or suggested
         lines = ["URL: {0}".format(url), ""]
-        if known:
-            lines.append("Page name [{0}]:".format(known))
+        if default:
+            lines.append("Page name [{0}]:".format(default))
         else:
             lines.append("Page name:")
         while True:
@@ -661,8 +705,8 @@ class Tui:
             if raw is None:
                 return None
             text = raw.strip()
-            if text == "" and known:
-                return known
+            if text == "" and default:
+                return default
             if text == "":
                 model.error = "Type a page name."
                 continue

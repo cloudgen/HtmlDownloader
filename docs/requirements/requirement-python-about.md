@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-about.md
-**Status**: Active (Version 1.1.2)
+**Status**: Active (Version 1.1.3)
 **Area**: python
 **Key**: `requirement-python-about`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -48,7 +48,7 @@ Pyenv and conda path reads for this page stay in this file. This product does no
 ## 2. Core Rules (Mandatory)
 
 1. **One page.** Menu action **about** and the verb `html-crawler about` **MUST** show one result page whose body is this file. The verb **MUST NOT** ask for a folder or a file. The page **MUST** be three blocks in this order: identity, host check, star box. A blank line **MUST** separate the blocks. The page **MUST NOT** be `--version`. Without a terminal, that page **MUST** be the whole of standard output. This product does not claim `--json`. The page **MUST NOT** gain a JSON stream.
-2. **Identity block.** The first four lines **MUST** be, in order: `{APP_NAME} {version}`, `Domain: Download a page and its stylesheets, scripts, and images`, `Runtime tools: none`, `Entry points: html-crawler, python -m HtmlCrawler`. `{version}` **MUST** be the package version string `__version__`. The domain sentence **MUST** stay the sentence on `requirement-domain-htmlcrawler`. The runtime-tools line is static. The page **MUST NOT** name `py-tui`. It **MUST NOT** print `python -m pip install` or an author email.
+2. **Identity block.** The first four lines **MUST** be, in order: `{APP_NAME} {version}`, `Domain: Crawl a same-site set of pages, and save one page on its own.`, `Runtime tools: none`, `Entry points: html-crawler, python -m HtmlCrawler`. `{version}` **MUST** be the package version string `__version__`. The domain sentence **MUST** stay the sentence on `requirement-domain-htmlcrawler`. The runtime-tools line is static. The page **MUST NOT** name `py-tui`. It **MUST NOT** print `python -m pip install` or an author email.
 3. **Host-check header.** The check **MUST** start with `{local stamp} {APP_NAME}(v{version})  [CHECK SYSTEM]:` and the next line **MUST** be two spaces then `Now checking your operation system!`. The stamp **MUST** be local time `YYYY-MM-DD HH:MM:SS.ffffff` from `datetime.datetime.now()`. There are two spaces before `[CHECK SYSTEM]:`.
 4. **Host-check fields.** After the header, the page **MUST** print these labels in this order, each starting with four spaces, then the label, a colon, a space, and the value. A missing value **MUST** leave the line in place. The check **MUST NOT** spawn `python2`, `python3`, `conda`, `pyenv`, or `id`.
 
@@ -112,12 +112,12 @@ Pyenv and conda path reads for this page stay in this file. This product does no
 Values in angle brackets are the live read. They are not a frozen login or home path.
 
 ```text
-HtmlCrawler 1.0.1
+HtmlCrawler 1.1.1
 Domain: Crawl a same-site set of pages, and save one page on its own.
 Runtime tools: none
 Entry points: html-crawler, python -m HtmlCrawler
 
-2026-10-04 11:16:23.700590 HtmlCrawler(v1.0.1)  [CHECK SYSTEM]:
+2026-10-04 11:16:23.700590 HtmlCrawler(v1.1.1)  [CHECK SYSTEM]:
   Now checking your operation system!
     Python: 3.12.3
     C Library: GCC 13.3.0
@@ -144,7 +144,7 @@ Entry points: html-crawler, python -m HtmlCrawler
 
 ***************************************************
 *                                                 *
-* HtmlCrawler (1.0.1) by Wilgat Wong on 2026-10-04  *
+* HtmlCrawler (1.1.1) by Wilgat Wong on 2026-10-04  *
 *                                                 *
 * You are using an UNINSTALLED version, location: *
 *     <program path>                              *
@@ -188,7 +188,7 @@ Invocation: `html-crawler` on a terminal, then `6`, then `62`. The same page is 
 | **TTY / Interactive** | `yes` or `no` from `sys.stdout.isatty()` |
 | **JSON** | Not claimed. No `--json` stream |
 | **Privilege** | normal user privilege |
-| **Product version** | `1.0.1` |
+| **Product version** | `1.1.1` |
 
 ### 2.3 Why This Requirement Exists (Direct CIAO Alignment)
 
@@ -286,6 +286,7 @@ TP-ABOUT-01 asserts the identity line, every host-check label, the star-box titl
 | 2026-10-16 | Active 1.1.0 | Domain sentence is the download line. Runtime tools are `none`. Menu about is row **62**. Usage line is `download --url URL --name PAGENAME`. Product version **1.0.0** |
 | 2026-10-28 | Active 1.1.1 | Domain sentence owner is `requirement-domain-htmlcrawler` |
 | 2026-10-28 | Active 1.1.2 | The sample domain sentence is the crawl line. Product version **1.0.1** |
+| 2026-10-28 | Active 1.1.3 | Rule 2 uses the crawl domain sentence. The sample version string is **1.1.1** |
 
 **Last Updated**: 2026-10-28
 **Owner**: project maintainers

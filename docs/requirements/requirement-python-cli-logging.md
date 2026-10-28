@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-cli-logging.md
-**Status**: Active (Version 1.1.4)
+**Status**: Active (Version 1.1.5)
 **Area**: python
 **Key**: `requirement-python-cli-logging`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -146,7 +146,7 @@ The class-name components are `Cli`, `Tui`, `MenuPainter`, `MenuModel`, `MenuSes
 | **Resolved name** | `html-crawler` from `logName()` |
 | **Call order** | Inside `def main`: peek argv for the text screen, write `ChronicleLogger(...)` with `logname` and `is_quiet` when that screen is already known, read `logName()`, `baseDir()`, and `logDir()`, run the `isDebug()` block whose four messages are `requirement-python-cli-debug`, then parse arguments, then `Cli(logger)`. |
 | **Quiet** | `is_quiet=True` for empty argv on a terminal and for `about` on a terminal. `download`, `crawl`, and `serve` leave it false. `quiet(True)` after return does not hide `Created directory:`. |
-| **Version** | Identity and `version` use `__version__` (`1.0.1`). No second integer triple. `cli.py` reads `__version__` and does not keep a second literal. |
+| **Version** | Identity and `version` use `__version__` (`1.1.1`). No second integer triple. `cli.py` reads `__version__` and does not keep a second literal. |
 | **Threads** | None in the running product. No timeout is named. |
 | **Control-C** | Not confirmed law here. |
 | **Debug switch** | Environment `DEBUG` or `debug` already set to `1`, `true`, or `show`. No `--debug` flag. The four messages are `requirement-python-cli-debug`. The sample in this file is the ChronicleLogger call. |
@@ -315,6 +315,7 @@ On Termux, Git Bash, Windows cmd, or the same class, status files stay in the fo
 | 2026-10-28 | Active 1.1.2 | A denial of a class this product does not have was removed |
 | 2026-10-28 | Active 1.1.3 | The four printed values move to `requirement-python-cli-debug`. This file still shows the ChronicleLogger `isDebug()` / `log_message` call |
 | 2026-10-28 | Active 1.1.4 | Product version string in the notes is **1.0.1**. `crawl` leaves `is_quiet` false |
+| 2026-10-28 | Active 1.1.5 | Product version string in the notes is **1.1.1** |
 
 ---
 

@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-cli-debug.md
-**Status**: Active (Version 1.0.1)
+**Status**: Active (Version 1.0.2)
 **Area**: python
 **Key**: `requirement-python-cli-debug`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -89,7 +89,7 @@ The running `src/HtmlDownloader/cli.py` does not yet print these four lines. The
 | **Owner of the four messages** | This file |
 | **Who calls ChronicleLogger** | `requirement-python-cli-logging`. `def main` in `src/HtmlDownloader/cli.py` writes `ChronicleLogger(...)`, then this block |
 | **logname** | `HtmlCrawler`, which `logName()` resolves to `html-crawler` |
-| **Line 1** | `html-crawler v1.0.1 (<this file>)` using `__version__` and `__file__` |
+| **Line 1** | `html-crawler v1.1.1 (<this file>)` using `__version__` and `__file__` |
 | **Line 2** | `Using` plus `ChronicleLogger.class_version()` |
 | **Line 3** | `Base` plus `baseDir()`, `level="DEBUG"`, `component="main"` |
 | **Line 4** | `debug mode` |
@@ -184,6 +184,7 @@ On Termux, Git Bash, Windows cmd, or the same class, debug mode is an environmen
 |------|--------|------|
 | 2026-10-28 | Active 1.0.0 | The four debug messages leave the logging requirement. Logging still calls ChronicleLogger for this list |
 | 2026-10-28 | Active 1.0.1 | The sample identity line uses the current `__version__` string **1.0.1** |
+| 2026-10-28 | Active 1.0.2 | The sample identity line uses **1.1.1**. The four printed values are unchanged |
 
 ---
 

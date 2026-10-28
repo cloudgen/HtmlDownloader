@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-project-structure.md
-**Status**: Active (Version 1.2.2)
+**Status**: Active (Version 1.2.3)
 **Area**: python
 **Key**: `requirement-python-project-structure`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -70,7 +70,7 @@ Define the repository layout and the package structure for HtmlCrawler: where so
 | Path | Role |
 |------|------|
 | `src/HtmlDownloader/` | Installable package |
-| `src/HtmlDownloader/__init__.py` | `__version__` (`1.0.1`) |
+| `src/HtmlDownloader/__init__.py` | `__version__` (`1.1.1`) |
 | `src/HtmlDownloader/__main__.py` | Module entry. Imports `main` from `cli` |
 | `src/HtmlDownloader/cli.py` | Class `Cli` and `def main` |
 | `src/HtmlDownloader/site_crawl.py` | Class `SiteCrawl` |
@@ -157,6 +157,7 @@ On Termux, Git Bash, Windows cmd, or the same class, the package is the normal u
 | 2026-10-16 | Active 1.2.0 | The class modules are on disk, including page download, open, and serve. Version **1.0.0** |
 | 2026-10-28 | Active 1.2.1 | An absence rule for a module this product does not ship was removed |
 | 2026-10-28 | Active 1.2.2 | `site_crawl.py` is on disk. Version **1.0.1** |
+| 2026-10-28 | Active 1.2.3 | `__version__` is **1.1.1** |
 
 ---
 
