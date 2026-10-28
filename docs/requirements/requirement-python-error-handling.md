@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-error-handling.md
-**Status**: Active (Version 1.3.0)
+**Status**: Active (Version 1.3.1)
 **Area**: python
 **Key**: `requirement-python-error-handling`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -18,7 +18,7 @@ Console sentences in this file stay required. Durable status, once the logger ex
 |-----|---------|---------|
 | You / this login | Person who typed a bad URL or a missing page | You see the reason and can try again or stop |
 | The other role | The status file | The same fact is written by ChronicleLogger after `main` has constructed it |
-| Not this file | The menu frame, and the page folder | `requirement-python-tui`, `requirement-domain-videojoin` |
+| Not this file | The menu frame, and the page folder | `requirement-python-tui`, `requirement-domain-htmldownloader` |
 
 | Includes | Excludes |
 |----------|----------|
@@ -52,7 +52,7 @@ Console sentences in this file stay required. Durable status, once the logger ex
 | Category | Detection | Required action |
 |----------|-----------|-----------------|
 | Bad URL or page name | Not http or https, or not one file name | Message. Direct `download` exits non-zero. Do not claim a save |
-| Page was not saved | `serve` name has no `index.html` | Message. Do not bind. Do not delete a folder |
+| Page was not saved | `serve` name has no stored HTML file. The default file is `index.html` | Message. Do not bind. Do not delete a folder |
 | Port rejected | Not a number from 1 to 65535, or the port is taken | Message. Do not claim the server started |
 | Invalid menu number | Not on the current list | Ask again. Do not proceed |
 | Download failed | `PageDownloadError` | Report the sentence. Do not claim success. Keep files already saved |
@@ -62,7 +62,7 @@ Console sentences in this file stay required. Durable status, once the logger ex
 ### 2.3 Cleanup on failure
 
 5. A failed download **MUST NOT** delete files outside that page folder.
-6. A non-empty `index.html` that already existed **MUST** stay. That page URL is not fetched again.
+6. A non-empty stored HTML file that already existed **MUST** stay. A new HTML file name moves that file. That page URL is not fetched again. The default file name is `index.html`.
 7. A failed serve **MUST NOT** delete the saved page.
 8. An unfinished temp is not the result. Discard it, and log that discard before the unlink when the logger exists (`requirement-python-cli-logging`).
 
@@ -132,12 +132,11 @@ On Termux, Git Bash, Windows cmd, or the same class, failure sentences are for t
 
 | Key | Relationship |
 |-----|----------------|
-| `requirement-video-ffmpeg-pipeline` | Retired |
 | `requirement-python-cli-interface` | Verb exits |
 | `requirement-python-tui` | Where the sentence sits on the screen |
 | `requirement-python-cli-logging` | Durable status after the construct |
 | `requirement-runtime-prerequisites` | The logger floor. No encoder |
-| `requirement-domain-videojoin` | Session outcomes |
+| `requirement-domain-htmldownloader` | Session outcomes |
 | `docs/requirements/index.md` | Registry |
 
 ## Design-time verification
@@ -159,9 +158,10 @@ On Termux, Git Bash, Windows cmd, or the same class, failure sentences are for t
 | 2026-08-09 | Active 1.1.0 | Fail-closed fallback and unique temp cleanup notes |
 | 2026-10-04 | Active 1.2.0 | ChronicleLogger is required for durable status. Console sentences stay. Missing library is a console line. Empty argv off a terminal is help, return 0 |
 | 2026-10-16 | Active 1.3.0 | Failures are download and serve. No encoder errors. An existing page stays |
+| 2026-10-28 | Active 1.3.1 | Serve checks the stored HTML file. The default name remains `index.html`. A rename moves that file |
 
 ---
 
-**Last Updated**: 2026-10-16
+**Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

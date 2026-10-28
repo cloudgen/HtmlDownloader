@@ -47,11 +47,11 @@ class TestServe(unittest.TestCase):
     def _root(self):
         return os.path.join(self.home, ".app", "HtmlDownloader", "output")
 
-    def _write_page(self, name, url, body="<html>hello</html>\n", css="body{}\n"):
+    def _write_page(self, name, url, body="<html>hello</html>\n", css="body{}\n", html_name="index.html"):
         folder = os.path.join(self._root(), name)
         css_dir = os.path.join(folder, "assets", "css")
         os.makedirs(css_dir, mode=0o700)
-        index = os.path.join(folder, "index.html")
+        index = os.path.join(folder, html_name)
         with open(index, "w", encoding="utf-8") as handle:
             handle.write(body)
         with open(os.path.join(css_dir, "app.css"), "w", encoding="utf-8") as handle:
@@ -92,6 +92,7 @@ class TestServe(unittest.TestCase):
                 worker.parse_port(bad)
 
     def test_missing_page_and_flags(self):
+        """TP-CLI-03, TP-ERR-02: a missing page does not start the server."""
         app = Cli()
         err = io.StringIO()
         with redirect_stderr(err):
@@ -178,6 +179,48 @@ class TestServe(unittest.TestCase):
                 self.assertNotIn(b"SECRET-TOKEN", payload)
                 self.assertNotEqual(response.status, 200)
             self.assertTrue(url.startswith("http://127.0.0.1:"))
+        finally:
+            httpd.shutdown()
+            httpd.server_close()
+            thread.join(timeout=5)
+
+    def test_renamed_html_is_the_site_root(self):
+        """TP-HTMLDOWNLOADER-01: the stored HTML file is /."""
+        self._write_page(
+            "sample",
+            "https://example.com/sample",
+            body="<html>renamed</html>\n",
+            html_name="page.html",
+        )
+        self._write_map([{
+            "url": "https://example.com/sample",
+            "name": "sample",
+            "html": "page.html",
+        }])
+        worker = PageServe("HtmlDownloader", home=self.home)
+        port = self._free_port()
+        httpd, _url, clean, directory = worker.listen("sample", port)
+        self.assertEqual(clean, "sample")
+        self.assertTrue(os.path.isfile(os.path.join(directory, "page.html")))
+        self.assertFalse(os.path.isfile(os.path.join(directory, "index.html")))
+        thread = threading.Thread(target=httpd.serve_forever)
+        thread.daemon = True
+        thread.start()
+        try:
+            conn = HTTPConnection("127.0.0.1", httpd.server_address[1], timeout=5)
+            conn.request("GET", "/")
+            response = conn.getresponse()
+            body = response.read()
+            self.assertEqual(response.status, 200)
+            self.assertIn(b"renamed", body)
+            conn.request("GET", "/page.html")
+            response = conn.getresponse()
+            self.assertEqual(response.status, 200)
+            self.assertIn(b"renamed", response.read())
+            conn.request("HEAD", "/")
+            response = conn.getresponse()
+            response.read()
+            self.assertEqual(response.status, 200)
         finally:
             httpd.shutdown()
             httpd.server_close()

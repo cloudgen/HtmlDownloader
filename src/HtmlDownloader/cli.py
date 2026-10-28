@@ -3,7 +3,7 @@
 # HtmlDownloader CLI — text menu and typed verbs.
 # Law keys: requirement-python-cli-interface, requirement-python-cli-logging,
 #           requirement-python-tui, requirement-python-oop,
-#           requirement-python-about, requirement-domain-videojoin,
+#           requirement-python-about, requirement-domain-htmldownloader,
 #           requirement-python-error-handling, requirement-python-coding-style,
 #           requirement-runtime-prerequisites
 # Video join, FFmpeg, and file listing are not part of this program.
@@ -146,7 +146,7 @@ class Cli:
         """
         General Purpose: One optional product verb.
         help is also --help. --force belongs only to self-uninstall.
-        --url and --name belong only to download.
+        --url, --name, and --html belong only to download.
         --page-name and --port belong only to serve.
         """
         parser = argparse.ArgumentParser(
@@ -160,7 +160,11 @@ class Cli:
                 "version-check, self-update, self-uninstall.\n"
                 "help prints this usage. version prints the installed version.\n"
                 "about prints a page. download saves the page and does not\n"
-                "draw the menu. It needs --url and --name.\n"
+                "draw the menu. It needs --url. --name is the page folder.\n"
+                "Omit --name when the URL ends with .html, .htm, or a folder\n"
+                "name such as xxx. That saves guide/guide.html or xxx/index.html.\n"
+                "--html names the HTML file. An empty --html keeps a stored name,\n"
+                "or the name recommended from the URL.\n"
                 "serve serves one saved page on 127.0.0.1 and does not draw the\n"
                 "menu. It needs --page-name. --port defaults to {1}.\n"
                 "Menu row 1 download lists saved pages or accepts a URL.\n"
@@ -170,7 +174,8 @@ class Cli:
                 "is set. A tool that is not installed is left off that menu.\n"
                 "Menu row 3 serve lists saved page names, then asks for a port.\n"
                 "An empty port uses {1}. Menu row 4 System Log opens the log list.\n"
-                "Each page is ~/.app/{0}/output/<name>/index.html.\n"
+                "Each page is ~/.app/{0}/output/<name>/<html file>.\n"
+                "The HTML file defaults to index.html.\n"
                 "This program does not join media or list files in this folder.\n"
                 "version-check runs: python -m pip index versions {0}\n"
                 "self-update runs: python -m pip install --upgrade {0}\n"
@@ -208,7 +213,19 @@ class Cli:
         parser.add_argument(
             "--name",
             default="",
-            help="Page name for download. The HTML file is output/<name>/index.html.",
+            help=(
+                "Page folder under output/. Omit it to use the folder "
+                "recommended from the URL. Used only with download."
+            ),
+        )
+        parser.add_argument(
+            "--html",
+            default="",
+            help=(
+                "HTML file name inside the page folder. "
+                "Omit it to keep a stored name, or to use the .html or .htm "
+                "name from the URL, or index.html. Used only with download."
+            ),
         )
         parser.add_argument(
             "--page-name",
@@ -228,16 +245,20 @@ class Cli:
         print(text)
         return 0
 
-    def _verb_download(self, url, name):
-        """Save one page. Does not draw the menu. Needs --url and --name."""
-        if not (url or "").strip() or not (name or "").strip():
+    def _verb_download(self, url, name, html):
+        """Save one page. Does not draw the menu. Needs --url.
+
+        --name and --html may be empty. The page folder and HTML file then
+        come from the URL, or from the url map when that URL was saved before.
+        """
+        if not (url or "").strip():
             return self.report_error(
-                "download needs --url and --name.",
-                "{0} download --url URL --name PAGENAME".format(Cli.CONSOLE_NAME),
+                "download needs --url.",
+                "{0} download --url URL".format(Cli.CONSOLE_NAME),
             )
         worker = PageDownload(Cli.APP_NAME, logger=self.logger)
         try:
-            text = worker.download(url, name)
+            text = worker.download(url, name, html)
         except PageDownloadError as exc:
             return self.report_error(
                 str(exc),
@@ -279,9 +300,9 @@ class Cli:
                 "--force is only for self-uninstall.",
                 "{0} self-uninstall --force".format(Cli.CONSOLE_NAME),
             )
-        if (args.url or args.name) and verb != "download":
+        if (args.url or args.name or args.html) and verb != "download":
             return self.report_error(
-                "--url and --name are only for download.",
+                "--url, --name, and --html are only for download.",
                 "{0} download --url URL --name PAGENAME".format(Cli.CONSOLE_NAME),
             )
         if (args.page_name or args.port is not None) and verb != "serve":
@@ -295,7 +316,7 @@ class Cli:
                 return result
             return self._page(result)
         if verb == "download":
-            return self._verb_download(args.url, args.name)
+            return self._verb_download(args.url, args.name, args.html)
         if verb == "serve":
             return self._verb_serve(args.page_name, args.port)
         if verb == "version":

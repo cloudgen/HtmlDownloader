@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-class-software-dev.md
-**Status**: Active (Version 1.2.0 – HtmlDownloader software-development class law + residual stack)
+**Status**: Active (Version 1.2.2 – HtmlDownloader software-development class law + residual stack)
 **Area**: class
 **Key**: `requirement-class-software-dev`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -18,7 +18,7 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 |-----|---------|---------|
 | You / this login | Maintainer checking which file owns a topic | The menu picture is the TUI requirement. The language row stays here |
 | The other role | Peer requirements | CLI, TUI, logging, domain, packaging |
-| Not this file | The join steps, the frame glyphs, and the pip command strings | Their own requirements. This file only points |
+| Not this file | The page save, the frame glyphs, and the pip command strings | Their own requirements. This file only points |
 
 | Includes | Excludes |
 |----------|----------|
@@ -110,7 +110,7 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 | **Architectures supported** | any architecture with CPython |
 | **Git surface** | used — remote `https://github.com/cloudgen/HtmlDownloader` |
 | **Ship surface** | installable Python package `HtmlDownloader`; console script `html-downloader`; module form `python -m HtmlDownloader` |
-| **Product version SSOT** | `src/HtmlDownloader/__init__.py` → `__version__` and `pyproject.toml` `[project].version` stay equal when either is bumped (current: **1.0.0**) |
+| **Product version SSOT** | `src/HtmlDownloader/__init__.py` → `__version__` and `pyproject.toml` `[project].version` stay equal when either is bumped (current: **1.1.0**) |
 | **Install mode** | pip / local package. Not a shell online-install product |
 | **Type 1 elevation** | intentionally absent. No root or sudo product surface |
 | **Actor / role / subject / approver** | **Considered — no dest approver.** The human operator of `html-downloader` is the only actor. No dest approval machine. **None** is valid. Do not add an actor requirement file |
@@ -130,9 +130,9 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 | Text menu | `requirement-python-tui` | Front board and the picture |
 | Menu language | `requirement-python-cli-language` | Front row 7, codes 71–83, and the language leaf |
 | Status logger | `requirement-python-cli-logging` | Construct in `def main` |
-| Domain surface | `requirement-domain-videojoin` | Four pillars. The about page uses the domain sentence |
+| Domain surface | `requirement-domain-htmldownloader` | Download, list, and serve. The about page uses the domain sentence |
 | About page | `requirement-python-about` | Identity, host check, and the star box |
-| Encoder | `requirement-video-ffmpeg-pipeline` | Retired. This program does not call an encoder |
+| No encoder | `requirement-domain-htmldownloader` and `requirement-runtime-prerequisites` | This program does not call an encoder |
 | Python coding style / temps / `shutil.move` | `requirement-python-coding-style` | Publish. StateLogic stays unordered |
 | Error / fail-closed user messaging | `requirement-python-error-handling` | Console sentences |
 | Host runtime deps | `requirement-runtime-prerequisites` | ChronicleLogger. No encoder |
@@ -197,8 +197,7 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 | `requirement-python-cli-interface` | Typed verbs and empty argv |
 | `requirement-python-tui` | Text menu |
 | `requirement-python-cli-logging` | Logger construct |
-| `requirement-domain-videojoin` | Domain four pillars |
-| `requirement-video-ffmpeg-pipeline` | Retired |
+| `requirement-domain-htmldownloader` | Download, list, and serve |
 | `requirement-python-coding-style` | Temps and `shutil.move` |
 | `requirement-python-error-handling` | Console errors |
 | `requirement-runtime-prerequisites` | Host tools and the logger floor |
@@ -226,9 +225,11 @@ On Termux, Git Bash, Windows cmd, or the same class, HtmlDownloader runs as the 
 | 2026-10-04 | Active 1.1.1 | Menu language points at `requirement-python-cli-language`. No new actor file |
 | 2026-10-04 | Active 1.1.2 | Residual row for the about page. Product version **1.0.5** |
 | 2026-10-16 | Active 1.2.0 | Product version **1.0.0**. No FFmpeg dependency. Menu language is front row 7 |
+| 2026-10-28 | Active 1.2.1 | Residual points at the page save. The domain file owns download, list, and serve |
+| 2026-10-28 | Active 1.2.2 | Product version **1.1.0** |
 
 ---
 
-**Last Updated**: 2026-10-16
+**Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

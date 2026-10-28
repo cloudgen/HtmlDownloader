@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-oop.md
-**Status**: Active (Version 1.1.0)
+**Status**: Active (Version 1.1.1)
 **Area**: python
 **Key**: `requirement-python-oop`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -8,7 +8,7 @@
 
 Define when HtmlDownloader uses a class, and name the file that holds each class. One class lives in one module. `def main` stays in `src/HtmlDownloader/cli.py`. Every class in the map accepts the one status logger as an `__init__` parameter so that class can log. The line text stays on `requirement-python-cli-logging`.
 
-The menu picture stays on `requirement-python-tui`. The about page stays on `requirement-python-about`. The domain sentence stays on `requirement-domain-videojoin`. `shutil.move` stays on `requirement-python-coding-style`. The encoder file is Retired. This file decides the class and the file. It does not invent a second picture or a second about page.
+The menu picture stays on `requirement-python-tui`. The about page stays on `requirement-python-about`. The domain sentence stays on `requirement-domain-htmldownloader`. `shutil.move` stays on `requirement-python-coding-style`. This program does not call an encoder. This file decides the class and the file. It does not invent a second picture or a second about page.
 
 The target is an ordinary multi-class split. A StateLogic + `Attr` rewrite stays unordered. This file does not claim that rewrite. The classes in the map are on disk, including `PageDownload`, `PageServe`, and `PageOpen`. `TP-OOP-*` stay todo.
 
@@ -19,7 +19,7 @@ The target is an ordinary multi-class split. A StateLogic + `Attr` rewrite stays
 | Box | Meaning | Example |
 |-----|---------|---------|
 | You / this login | Maintainer adding a prompt, a log action, or a download step | Put it on the class that already owns that job |
-| The other role | The menu picture, the about facts, and the concat order | Their own requirements |
+| The other role | The menu picture, the about facts, and the page folder | Their own requirements |
 | Not this file | A StateLogic rewrite of `main` | `requirement-python-coding-style` leaves that rewrite unordered |
 
 | Includes | Excludes |
@@ -84,7 +84,7 @@ The target is an ordinary multi-class split. A StateLogic + `Attr` rewrite stays
 
 ### 2.4 About page
 
-18. Class `AboutPage` in `src/HtmlDownloader/about_page.py` owns `framework_about`, `about_box_lines`, `install_kind`, `install_sentence`, and `_is_source_checkout`. `framework_about` composes the page in `requirement-python-about`. The domain sentence stays on `requirement-domain-videojoin`. `install_sentence` names GLOBAL, LOCAL, or UNINSTALLED. It **MUST NOT** name `python -m pip install HtmlDownloader` and **MUST NOT** name a downloaded-script installer. Class `CheckSystem` in `src/HtmlDownloader/check_system.py` owns the host-check reads, including the pyenv and conda paths. `Cli` writes `CheckSystem(...)` and then `AboutPage(...)`. `AboutPage` calls that object. It **MUST NOT** construct `CheckSystem`. Row 62 and the `about` verb call `framework_about`.
+18. Class `AboutPage` in `src/HtmlDownloader/about_page.py` owns `framework_about`, `about_box_lines`, `install_kind`, `install_sentence`, and `_is_source_checkout`. `framework_about` composes the page in `requirement-python-about`. The domain sentence stays on `requirement-domain-htmldownloader`. `install_sentence` names GLOBAL, LOCAL, or UNINSTALLED. It **MUST NOT** name `python -m pip install HtmlDownloader` and **MUST NOT** name a downloaded-script installer. Class `CheckSystem` in `src/HtmlDownloader/check_system.py` owns the host-check reads, including the pyenv and conda paths. `Cli` writes `CheckSystem(...)` and then `AboutPage(...)`. `AboutPage` calls that object. It **MUST NOT** construct `CheckSystem`. Row 62 and the `about` verb call `framework_about`.
 19. This product has no class `Join` and no `src/HtmlDownloader/join.py`. **MUST NOT** add an encoder class, a file-listing class, or a media-scan class. Download stays on `PageDownload`. Serve stays on `PageServe`. Opening a saved page stays on `PageOpen`.
 
 ### 2.5 The other jobs
@@ -118,13 +118,13 @@ The target is an ordinary multi-class split. A StateLogic + `Attr` rewrite stays
 | **Running tree** | The classes in the map, under `src/HtmlDownloader/`. Identity constants live on `Cli`. There is no second version literal |
 | **Landed** | The map is on disk. `TP-OOP-01` through `TP-OOP-04` stay todo until a suite names them |
 | **Logger** | Every class `__init__` in the map accepts `logger` and stores it. `def main` writes `ChronicleLogger(...)` and then `Cli(logger)`. Collaborators are `OtherClass(...)` at the site that needs them |
-| **Not this split** | Menu rows, about line facts, concat order, version string, the wording of the instantiation line |
+| **Not this split** | Menu rows, about line facts, the page folder, version string, the wording of the instantiation line |
 
 ### 2.7 Why This Requirement Exists (CIAO)
 
 - **Principle 2 – Intentional**: Each job has one class and one file. That class receives the logger in `__init__`.
 - **Principle 5 – SSOT**: `cli.py` does not keep a second copy of another class's methods. `main` has one home.
-- **Principle 1 – Caution**: The picture, the about facts, and the concat order stay where their requirements already put them. The running tree is not declared illegal before the split lands.
+- **Principle 1 – Caution**: The picture, the about facts, and the page folder stay where their requirements already put them. The running tree is not declared illegal before the split lands.
 
 ## Under command line for normal user only
 
@@ -196,8 +196,7 @@ class Cli:
 | `requirement-python-tui` | Picture the classes draw |
 | `requirement-python-cli-interface` | Verb names `Cli` dispatches |
 | `requirement-python-about` | About page line text. This file names `AboutPage` and `CheckSystem` |
-| `requirement-domain-videojoin` | Domain sentence and download, list, and serve |
-| `requirement-video-ffmpeg-pipeline` | Retired |
+| `requirement-domain-htmldownloader` | Domain sentence and download, list, and serve |
 | `requirement-python-coding-style` | `shutil.move`. StateLogic stays unordered. Factory ban |
 | `requirement-python-project-structure` | Running tree versus this map |
 | `requirement-python-packaging` | Console script and `__version__` |
@@ -226,9 +225,10 @@ class Cli:
 | 2026-10-04 | Active 1.0.3 | `display_width`, `clip_columns`, and `clip_columns_right` are methods of `MenuPainter`. `TP-OOP-*` stay todo |
 | 2026-10-04 | Active 1.0.4 | `CheckSystem` owns the host check. `AboutPage` owns `framework_about`. No second version triple. `TP-OOP-*` stay todo |
 | 2026-10-16 | Active 1.1.0 | `PageDownload`, `PageServe`, and `PageOpen` are on the map. No `Join`. No welcome line. About is row 62 |
+| 2026-10-28 | Active 1.1.1 | The other role is the page folder. No concat order |
 
 ---
 
-**Last Updated**: 2026-10-16
+**Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

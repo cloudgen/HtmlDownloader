@@ -25,7 +25,7 @@ class PageOpenError(Exception):
 
 
 class PageOpen:
-    """Open one saved index.html in Visual Studio Code or the default browser.
+    """Open one saved HTML file in Visual Studio Code or the default browser.
 
     Edit is available when `code` is on PATH, or when a Visual Studio Code
     desktop entry can run. View is available when the default browser is set.
@@ -87,7 +87,7 @@ class PageOpen:
         return tuple(found)
 
     def edit(self, path) -> None:
-        """General Purpose: Open index.html in Visual Studio Code."""
+        """General Purpose: Open the saved HTML file in Visual Studio Code."""
         if not os.path.isfile(path):
             raise PageOpenError("The saved page is not on disk.")
         target = os.path.abspath(path)
@@ -105,7 +105,7 @@ class PageOpen:
         self._launch(argv, "edit {0}".format(target))
 
     def view(self, path) -> None:
-        """General Purpose: Open index.html in the default browser."""
+        """General Purpose: Open the saved HTML file in the default browser."""
         if not os.path.isfile(path):
             raise PageOpenError("The saved page is not on disk.")
         target = os.path.abspath(path)

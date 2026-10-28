@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-about.md
-**Status**: Active (Version 1.1.0)
+**Status**: Active (Version 1.1.1)
 **Area**: python
 **Key**: `requirement-python-about`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -8,7 +8,7 @@
 
 This file is the about page for HtmlDownloader. Menu action **about** returns one text page: the product identity lines, a host check, and a star-bordered box. This file names every line and the read that fills it.
 
-The screen that shows the page stays on `requirement-python-tui`. The domain sentence stays on `requirement-domain-videojoin`. The version string stays the single `__version__` on `requirement-python-packaging`. `--version` stays a one-line human string on `requirement-python-cli-interface`. This product does not claim `--json`. This file does not open the menu, download a page, or write a JSON object.
+The screen that shows the page stays on `requirement-python-tui`. The domain sentence stays on `requirement-domain-htmldownloader`. The version string stays the single `__version__` on `requirement-python-packaging`. `--version` stays a one-line human string on `requirement-python-cli-interface`. This product does not claim `--json`. This file does not open the menu, download a page, or write a JSON object.
 
 Pyenv and conda path reads for this page stay in this file. This product does not add `requirement-python-pyenv` or `requirement-python-conda`.
 
@@ -48,7 +48,7 @@ Pyenv and conda path reads for this page stay in this file. This product does no
 ## 2. Core Rules (Mandatory)
 
 1. **One page.** Menu action **about** and the verb `html-downloader about` **MUST** show one result page whose body is this file. The verb **MUST NOT** ask for a folder or a file. The page **MUST** be three blocks in this order: identity, host check, star box. A blank line **MUST** separate the blocks. The page **MUST NOT** be `--version`. Without a terminal, that page **MUST** be the whole of standard output. This product does not claim `--json`. The page **MUST NOT** gain a JSON stream.
-2. **Identity block.** The first four lines **MUST** be, in order: `{APP_NAME} {version}`, `Domain: Download a page and its stylesheets, scripts, and images`, `Runtime tools: none`, `Entry points: html-downloader, python -m HtmlDownloader`. `{version}` **MUST** be the package version string `__version__`. The domain sentence **MUST** stay the sentence on `requirement-domain-videojoin`. The runtime-tools line is static. It **MUST NOT** name FFmpeg. The page **MUST NOT** name `py-tui`. It **MUST NOT** print `python -m pip install` or an author email.
+2. **Identity block.** The first four lines **MUST** be, in order: `{APP_NAME} {version}`, `Domain: Download a page and its stylesheets, scripts, and images`, `Runtime tools: none`, `Entry points: html-downloader, python -m HtmlDownloader`. `{version}` **MUST** be the package version string `__version__`. The domain sentence **MUST** stay the sentence on `requirement-domain-htmldownloader`. The runtime-tools line is static. It **MUST NOT** name FFmpeg. The page **MUST NOT** name `py-tui`. It **MUST NOT** print `python -m pip install` or an author email.
 3. **Host-check header.** The check **MUST** start with `{local stamp} {APP_NAME}(v{version})  [CHECK SYSTEM]:` and the next line **MUST** be two spaces then `Now checking your operation system!`. The stamp **MUST** be local time `YYYY-MM-DD HH:MM:SS.ffffff` from `datetime.datetime.now()`. There are two spaces before `[CHECK SYSTEM]:`.
 4. **Host-check fields.** After the header, the page **MUST** print these labels in this order, each starting with four spaces, then the label, a colon, a space, and the value. A missing value **MUST** leave the line in place. The check **MUST NOT** spawn `python2`, `python3`, `conda`, `pyenv`, or `id`.
 
@@ -112,12 +112,12 @@ Pyenv and conda path reads for this page stay in this file. This product does no
 Values in angle brackets are the live read. They are not a frozen login or home path.
 
 ```text
-HtmlDownloader 1.0.0
+HtmlDownloader 1.1.0
 Domain: Download a page and its stylesheets, scripts, and images
 Runtime tools: none
 Entry points: html-downloader, python -m HtmlDownloader
 
-2026-10-04 11:16:23.700590 HtmlDownloader(v1.0.0)  [CHECK SYSTEM]:
+2026-10-04 11:16:23.700590 HtmlDownloader(v1.1.0)  [CHECK SYSTEM]:
   Now checking your operation system!
     Python: 3.12.3
     C Library: GCC 13.3.0
@@ -144,7 +144,7 @@ Entry points: html-downloader, python -m HtmlDownloader
 
 ***************************************************
 *                                                 *
-* HtmlDownloader (1.0.0) by Wilgat Wong on 2026-10-04  *
+* HtmlDownloader (1.1.0) by Wilgat Wong on 2026-10-04  *
 *                                                 *
 * You are using an UNINSTALLED version, location: *
 *     <program path>                              *
@@ -188,7 +188,7 @@ Invocation: `html-downloader` on a terminal, then `6`, then `62`. The same page 
 | **TTY / Interactive** | `yes` or `no` from `sys.stdout.isatty()` |
 | **JSON** | Not claimed. No `--json` stream |
 | **Privilege** | normal user privilege |
-| **Product version** | `1.0.0` |
+| **Product version** | `1.1.0` |
 
 ### 2.3 Why This Requirement Exists (Direct CIAO Alignment)
 
@@ -265,7 +265,7 @@ TP-ABOUT-01 asserts the identity line, every host-check label, the star-box titl
 | Artifact | Role |
 |----------|------|
 | `docs/requirements/index.md` | Registry |
-| `docs/requirements/requirement-domain-videojoin.md` | Domain sentence on the identity block |
+| `docs/requirements/requirement-domain-htmldownloader.md` | Domain sentence on the identity block |
 | `docs/requirements/requirement-python-tui.md` | Result page; scroll; row 83 |
 | `docs/requirements/requirement-python-oop.md` | Class `CheckSystem` owns the host-check reads. Class `AboutPage` owns the composer |
 | `docs/requirements/requirement-python-cli-logging.md` | `in_venv`, `in_pyenv`, and `in_conda` read the one logger. They are not printed |
@@ -284,7 +284,8 @@ TP-ABOUT-01 asserts the identity line, every host-check label, the star-box titl
 |------|--------|------|
 | 2026-10-04 | Active 1.0.0 | About page: identity, host check, star box. Pyenv and conda reads stay here. No `--json`. Product version **1.0.5**. `./tests/run.sh` — 23 tests, OK. `TP-ABOUT-01` through `TP-ABOUT-14` and `TP-ABOUT-16` are have. There is no `TP-ABOUT-15` |
 | 2026-10-16 | Active 1.1.0 | Domain sentence is the download line. Runtime tools are `none`. Menu about is row **62**. Usage line is `download --url URL --name PAGENAME`. Product version **1.0.0** |
+| 2026-10-28 | Active 1.1.1 | The sample version token is **1.1.0**. A later package version still replaces it |
 
-**Last Updated**: 2026-10-16
+**Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-cli-interface.md
-**Status**: Active (Version 1.2.0)
+**Status**: Active (Version 1.2.5)
 **Area**: python
 **Key**: `requirement-python-cli-interface`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -8,7 +8,7 @@
 
 Define the official command-line entry points, empty-argv behavior, and typed verbs for the HtmlDownloader Python package.
 
-The text-menu picture is `requirement-python-tui`. Download, list, and serve are `requirement-domain-videojoin`. The about page is `requirement-python-about`. The domain sentence stays on the domain file. The logger construct is `requirement-python-cli-logging`. Class homes are `requirement-python-oop`. The encoder file is Retired.
+The text-menu picture is `requirement-python-tui`. Download, list, and serve are `requirement-domain-htmldownloader`. The page folder, resume, and caps are `requirement-html-page-download`. The about page is `requirement-python-about`. The domain sentence stays on the domain file. The logger construct is `requirement-python-cli-logging`. Class homes are `requirement-python-oop`. This program does not call an encoder.
 
 `def main` writes `ChronicleLogger(...)` and then constructs `Cli`. The argument parser runs after that construct and after the debug block. The running `src/HtmlDownloader/cli.py` still starts the prompt session. The allowed end state is this file. This pass does not change `src/`.
 
@@ -19,7 +19,7 @@ The text-menu picture is `requirement-python-tui`. Download, list, and serve are
 | Box | Meaning | Example |
 |-----|---------|---------|
 | You / this login | Person at the keyboard or in a script | `html-downloader` or `html-downloader download --url URL --name PAGENAME` |
-| The other role | The menu picture and the page facts | `requirement-python-tui`, `requirement-domain-videojoin` |
+| The other role | The menu picture and the page facts | `requirement-python-tui`, `requirement-domain-htmldownloader` |
 | Not this file | How the frame is drawn, and where the page is saved | TUI and domain requirements |
 
 | Includes | Excludes |
@@ -39,7 +39,7 @@ The text-menu picture is `requirement-python-tui`. Download, list, and serve are
 |---------|---------------|---------------|
 | Start on a terminal | The front board opens. Pip does not run. | `html-downloader` |
 | Start in a script | Help text, exit 0. | `html-downloader` |
-| Save a page | Needs `--url` and `--name`. The menu does not open. | `html-downloader download --url URL --name PAGENAME` |
+| Save a page | Needs `--url`. `--name` is the page folder. Omit it when the URL ends with `.html`, `.htm`, or a folder name such as `xxx`. `--html` chooses the HTML file. An empty value keeps a stored name, or the name recommended from the URL. The menu does not open. | `html-downloader download --url URL` |
 | Serve a saved page | Needs `--page-name`. `--port` defaults to 5000. Listens on `127.0.0.1`. | `html-downloader serve --page-name PAGENAME` |
 | Check or change the install | Pip runs only when you ask. Empty argv does not. | `html-downloader version-check` |
 
@@ -62,10 +62,10 @@ The text-menu picture is `requirement-python-tui`. Download, list, and serve are
 
 8. `ArgumentParser.parse_args` **MUST** run after `ChronicleLogger(...)` and after the debug block.
 9. The typed verbs are `help`, `version`, `about`, `download`, `serve`, `self-install`, `version-check`, `self-update`, and `self-uninstall`. Each one is operational. **MUST NOT** add a verb whose only purpose is a test. **MUST NOT** add `hello`, `join`, or `list-videos`. `language` is not a typed verb. Menu row 7 owns it (`requirement-python-cli-language`). **MUST NOT** add `language` to `PRODUCT_VERBS`.
-10. **MUST NOT** invent flags that scan the working directory. `download` accepts `--url` and `--name` only. `serve` accepts `--page-name` and `--port` only. `--force` belongs only to `self-uninstall`.
+10. **MUST NOT** invent flags that scan the working directory. `download` accepts `--url`, `--name`, and `--html` only. `--url` is required. `--name` and `--html` may be omitted. The omitted names come from the URL, as `requirement-html-page-download` states. An empty `--html` keeps the stored HTML file name when the page is already saved. `serve` accepts `--page-name` and `--port` only. `--force` belongs only to `self-uninstall`. **MUST NOT** add `crawl`, `--depth`, or `--max-pages` on this product.
 11. On a terminal, `download` and `serve` **MUST NOT** draw the text screen. `about` **MUST** open the about page.
 12. With no terminal, `about` **MUST** print the about page and return 0. It does not draw the text screen. `download` and `serve` still run. They do not need a terminal.
-13. `help` **MUST NOT** draw the text screen and returns 0. `download` needs `--url` and `--name`. `serve` needs `--page-name`. `--port` defaults to 5000. Menu row 1 is download. It is not a welcome line.
+13. `help` **MUST NOT** draw the text screen and returns 0. `download` needs `--url`. `--name` is the page folder and may be omitted when the URL recommends one. `--html` names the HTML file inside the page folder. `serve` needs `--page-name`. `--port` defaults to 5000. Menu row 1 is download. It is not a welcome line.
 14. `version` **MUST** print `__version__` and **MUST NOT** call pip and **MUST NOT** draw the text screen.
 15. `version-check`, `self-update`, `self-install`, and `self-uninstall` **MUST NOT** open the text screen. The commands are:
 
@@ -83,8 +83,8 @@ Every typed verb is named again by its topic owner. Help text is not that second
 | Verb | Second mention |
 |------|----------------|
 | `help`, `version` | This file for `help`. `version` is also row 61 on `requirement-python-tui` |
-| `about` | `requirement-python-about` and row 62. The domain sentence stays on `requirement-domain-videojoin` |
-| `download`, `serve` | `requirement-domain-videojoin`. Menu rows 1 and 3 |
+| `about` | `requirement-python-about` and row 62. The domain sentence stays on `requirement-domain-htmldownloader` |
+| `download`, `serve` | `requirement-domain-htmldownloader` for the verb. `requirement-html-page-download` for the save. Menu rows 1 and 3 |
 | `self-install`, `version-check`, `self-update`, `self-uninstall` | Rows 63–66 on `requirement-python-tui` |
 
 `language` is not in this table. The second mention of that ban is `requirement-python-cli-language`.
@@ -109,7 +109,7 @@ python -m HtmlDownloader
 
 These rules are the `download` and `serve` verbs. The text screen draws the menu forms (`requirement-python-tui`). The domain file owns the page folder. They are not what empty argv does.
 
-16. `download` **MUST** require `--url` and `--name`. A missing flag exits non-zero and names the gap. It **MUST NOT** scan the working directory.
+16. `download` **MUST** require `--url`. A missing `--url` exits non-zero and names the gap. `--name` may be omitted when the URL recommends the page folder, as `requirement-html-page-download` states. Otherwise a missing `--name` exits non-zero and names the gap. `--html` may be omitted. It **MUST NOT** scan the working directory. The save **MUST** obey `requirement-html-page-download`.
 17. `serve` **MUST** require `--page-name`. `--port` defaults to **5000**. It **MUST** listen on `127.0.0.1` only.
 18. A URL that does not start with `http://` or `https://`, or a page name that is not one file name, **MUST** fail with a message and **MUST NOT** claim success.
 19. A `--page-name` that is not a saved page **MUST** fail with a message. It **MUST NOT** delete a folder.
@@ -152,7 +152,7 @@ Esc on a menu question returns to the previous board and does not download.
 | **Quiet / JSON** | Text screen sets `is_quiet=True` on the logger construct. No `--json` |
 | **Privilege** | user-level only |
 | **Running tree** | `cli.py` dispatches `download` and `serve`. It does not call `ffmpeg` |
-| **Product version** | `1.0.0` |
+| **Product version** | `1.1.0` |
 | **User docs** | Root `README.md` matches this contract |
 
 ### 2.9 Why This Requirement Exists (CIAO)
@@ -186,6 +186,8 @@ On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-downl
 7. Add file-operand flags, `--json`, or `--debug` in this file.
 8. Treat help text as the second mention of a verb.
 9. Add `language` as an argv verb. Row 7 is the menu language.
+10. Add `crawl` to the typed verbs. This product saves one page.
+11. Keep a Retired requirement on disk because an older line says the key stays. Suggest removal of that file and its registry row, and ask the user to confirm before deleting either one.
 
 **Violating this rule is a critical CLI regression.**
 
@@ -197,7 +199,7 @@ On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-downl
 | AC-2 | `python -m HtmlDownloader` reaches `main` |
 | AC-3 | Empty argv on a terminal opens the front board and does not download and does not run pip |
 | AC-4 | Empty argv with no terminal prints help and returns 0 |
-| AC-5 | `download` without `--url` or `--name` exits non-zero. `serve` without `--page-name` exits non-zero |
+| AC-5 | `download` without `--url` exits non-zero. Without `--name`, the URL must recommend the folder, or the command exits non-zero. `serve` without `--page-name` exits non-zero |
 | AC-6 | A URL that is not http or https does not save a page. An unlisted menu number asks again |
 | AC-7 | Pip verbs match the command table and do not use sudo or curl |
 
@@ -207,11 +209,11 @@ On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-downl
 |-----|----------------|
 | `requirement-python-tui` | Menu picture and numbered rows |
 | `requirement-python-cli-language` | `language` is not an argv verb. Menu row 7 |
-| `requirement-domain-videojoin` | Download, list, serve, and the about domain sentence |
+| `requirement-domain-htmldownloader` | Download, list, serve, and the about domain sentence |
+| `requirement-html-page-download` | Page folder, assets, resume, and caps for `download` |
 | `requirement-python-about` | The about page |
 | `requirement-python-cli-logging` | Construct before the parser |
 | `requirement-python-oop` | `Cli` and `def main` |
-| `requirement-video-ffmpeg-pipeline` | Retired. No encoder check |
 | `requirement-python-packaging` | Console script name |
 | `requirement-python-error-handling` | Fail messaging |
 | `requirement-runtime-prerequisites` | ChronicleLogger. No encoder |
@@ -230,6 +232,16 @@ On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-downl
 **Matrix:** `docs/reviews/requirement-test-matrix.md`
 **Map:** `docs/reviews/test-plan.md`
 
+## Terminologies
+
+**CLI routed-verb.** A command word the dispatcher accepts and hands to a handler. A word the dispatcher rejects is not a routed verb.
+
+**Daily-life example:** If saying “toast” at the counter really gets you toast, toast is a routed verb. A word only printed on a poster is not.
+
+**Project requirements.** Product law is the finished must/should rules for this product. They are not blank forms and not agent procedures.
+
+**Daily-life example:** “This household must lock the door by 10” is law for this house. A blank curfew form is not.
+
 ## 7. Status history
 
 | Date | Status | Note |
@@ -239,9 +251,14 @@ On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-downl
 | 2026-10-04 | Active 1.1.1 | `language` is not an argv verb. Menu row 4 owns it |
 | 2026-10-04 | Active 1.1.2 | Verb `about` is `requirement-python-about`. Rule 33 no longer claims a live ffmpeg probe. Product version **1.0.5** |
 | 2026-10-16 | Active 1.2.0 | Verbs are help, version, about, download, serve, and the pip verbs. No `hello`. Product version **1.0.0** |
+| 2026-10-28 | Active 1.2.1 | `download` still takes `--url` and `--name` only. The save is `requirement-html-page-download`. `crawl` stays off this verb list |
+| 2026-10-28 | Active 1.2.2 | `download` also accepts `--html`. An empty value keeps the stored HTML file name, or `index.html` |
+| 2026-10-28 | Active 1.2.3 | `--name` may be omitted. The URL recommends the folder and the HTML file |
+| 2026-10-28 | Active 1.2.4 | Rule 16 and AC-5 match rule 10. A Retired requirement is a suggestion for removal. Ask the user to confirm before deleting it |
+| 2026-10-28 | Active 1.2.5 | Product version **1.1.0** |
 
 ---
 
-**Last Updated**: 2026-10-16
+**Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

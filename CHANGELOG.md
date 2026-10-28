@@ -3,6 +3,17 @@
 All notable changes to **HtmlDownloader** are documented here.  
 Version SSOT: `pyproject.toml` + `src/HtmlDownloader/__init__.__version__`.
 
+## [1.1.0] - 2026-10-28
+
+### Added
+
+- `download` accepts `--html FILENAME`. The HTML file defaults to `index.html`. Menu row 1 asks for that file name after the page name. An empty answer keeps the stored name. A different name moves the saved HTML file and does not fetch the page URL again. `serve` uses that file as `/`. Edit and view open that file.
+- `download` can omit `--name`. A URL that ends with `.html` or `.htm` saves that file under a folder of the same name without the extension, such as `guide/guide.html`. A URL that ends with a folder name such as `xxx` saves `xxx/index.html`. Menu row 1 offers the same names. An explicit `--name` or `--html`, and a page already stored, keep those names.
+
+### Changed
+
+- Product version is **1.1.0**. `download --url URL --name PAGENAME` still saves a page. A host-only URL still needs `--name`.
+
 ## [1.0.0] - 2026-10-16
 
 ### Removed

@@ -1,6 +1,6 @@
 # HtmlDownloader - Download a page from the command line and from the text menu
 
-![Version](https://img.shields.io/badge/Version-1.0.0-blue?style=flat-square)
+![Version](https://img.shields.io/badge/Version-1.1.0-blue?style=flat-square)
 ![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
 [![CIAO](https://img.shields.io/badge/Philosophy-CIAO%20(Caution%20%E2%80%A2%20Intentional%20%E2%80%A2%20Anti--fragile%20%E2%80%A2%20Over--engineered)-purple.svg)](https://github.com/cloudgen/ciao)
 [![Stars](https://img.shields.io/github/stars/cloudgen/HtmlDownloader?style=flat-square)](https://github.com/cloudgen/HtmlDownloader)
@@ -16,10 +16,10 @@ On a terminal, starting it with no arguments opens a text menu. The menu does no
 - Text menu on a terminal: **download**, **list downloaded**, **serve**, **System Log**, **self-management**, **language**, and **Exit**
 - The first row shows the current folder and a local clock (`HH:MM:SS`) when the row has room
 - Numbered rows line up. A rounded input box sits along the bottom, as wide as the terminal, with the name and version on the status line under the box
-- **download** (1) lists saved `page name: URL` pairs, or accepts a URL and a page name. The typed verb `download --url URL --name PAGENAME` saves the page and does not draw the menu. A later run keeps `index.html` and fills in files that are still missing
-- **list downloaded** (2) lists saved page names by number. After a page is chosen, **21 edit** opens `index.html` in Visual Studio Code when the `code` command or the Visual Studio Code desktop entry is installed, and **22 view** opens it in the default browser when one is set. A missing tool is left off that menu. **0** returns to the page list, then to the main menu
-- **serve** (3) lists saved page names by number, then asks for a port. An empty port uses **5000**. The page folder is served at `http://127.0.0.1:<port>/` until Ctrl+C. The typed verb `serve --page-name PAGENAME` does the same without the menu. `--port` changes the port
-- The page is `~/.app/HtmlDownloader/output/<pagename>/index.html`. Linked stylesheets go in `output/<pagename>/assets/css/`. Linked scripts go in `output/<pagename>/assets/js/`. Linked images go in `output/<pagename>/assets/img/`. Those three folders stay flat, with no subfolders. Font files sit in `assets/css/`. When `index.html` is already there, the page is not downloaded again. Missing stylesheets, scripts, and images are fetched. Files already saved are kept.
+- **download** (1) lists saved `page name: URL` pairs, or accepts a URL, a page name, and an HTML file name. Press Enter to keep the name in brackets. A URL that ends with `guide.html` offers `guide/guide.html`. A URL that ends with a folder name such as `xxx` offers `xxx/index.html`. The typed verb `download --url URL` does the same and does not draw the menu. `--name` and `--html` override those names. A later run keeps the stored file and fills in files that are still missing
+- **list downloaded** (2) lists saved page names by number. After a page is chosen, **21 edit** opens the saved HTML file in Visual Studio Code when the `code` command or the Visual Studio Code desktop entry is installed, and **22 view** opens it in the default browser when one is set. That file defaults to `index.html`. A missing tool is left off that menu. **0** returns to the page list, then to the main menu
+- **serve** (3) lists saved page names by number, then asks for a port. An empty port uses **5000**. The page folder is served at `http://127.0.0.1:<port>/` until Ctrl+C. `/` is the saved HTML file. The typed verb `serve --page-name PAGENAME` does the same without the menu. `--port` changes the port
+- The page is `~/.app/HtmlDownloader/output/<pagename>/<html file>`. The HTML file defaults to `index.html`. Linked stylesheets go in `output/<pagename>/assets/css/`. Linked scripts go in `output/<pagename>/assets/js/`. Linked images go in `output/<pagename>/assets/img/`. Those three folders stay flat, with no subfolders. Font files sit in `assets/css/`. When that HTML file is already there, the page is not downloaded again. A different name moves the existing file. Missing stylesheets, scripts, and images are fetched. Files already saved are kept.
 - **System Log** (4) opens view-log, clear-log, and log-folder. **self-management** (6) opens version, about, and the pip lifecycle rows. **language** (7) picks the menu language
 - Console script `html-downloader` and module entry `python -m HtmlDownloader`
 - Typed verbs: `help`, `version`, `about`, `download`, `serve`, `self-install`, `version-check`, `self-update`, `self-uninstall`
@@ -40,7 +40,7 @@ On a terminal, starting it with no arguments opens a text menu. The menu does no
 pip install HtmlDownloader
 ```
 
-This installs the console entry **`html-downloader`** and the package **`HtmlDownloader`**. Packaging name SSOT is `pyproject.toml` `[project].name` = `HtmlDownloader`. This tree is **1.0.0**. The PyPI badge above shows the live index.
+This installs the console entry **`html-downloader`** and the package **`HtmlDownloader`**. Packaging name SSOT is `pyproject.toml` `[project].name` = `HtmlDownloader`. This tree is **1.1.0**. The PyPI badge above shows the live index.
 
 ### Local install (checkout)
 
@@ -157,15 +157,18 @@ python -m HtmlDownloader
 
 On a terminal, that opens the main menu above. It does not download a page yet, and it does not call pip. With no terminal, the same command prints help and returns 0.
 
-**download** (1) stays on the menu. It lists saved `page name: URL` rows. Type a number to download that pair again, or type an `http://` or `https://` URL and then a page name. The typed verb does not draw the menu:
+**download** (1) stays on the menu. It lists saved `page name: URL` rows. Type a number to download that pair again, or type an `http://` or `https://` URL, then a page name, then an HTML file name. Press Enter on either question to keep the name in brackets. The brackets show the saved name, or the name taken from the URL. The typed verb does not draw the menu:
 
 ```bash
+html-downloader download --url https://example.com/guide.html
+html-downloader download --url https://example.com/xxx
 html-downloader download --url https://example.com/ --name example
+html-downloader download --url https://example.com/guide.html --name docs --html page.html
 ```
 
-That writes `~/.app/HtmlDownloader/output/example/index.html`, puts linked stylesheets in `output/example/assets/css/`, linked scripts in `output/example/assets/js/`, and linked images in `output/example/assets/img/`. Each of those folders is a single layer. The saved page points at those local files. A `<base>` tag or an `xml:base` attribute is removed so local links stay on the saved page. A canonical link and HTML comments are removed too. The pair is remembered in `~/.app/HtmlDownloader/output/url-map.json`. Running the same command again leaves `index.html` in place and downloads only the stylesheets, scripts, and images that are not already in the page folder.
+`guide.html` writes `~/.app/HtmlDownloader/output/guide/guide.html`. A URL that ends with a folder name, such as `xxx` or `xxx/`, writes `output/xxx/index.html`. `--name example` writes `output/example/index.html` when the URL does not name a file. `--html page.html` writes that file name instead. Linked stylesheets go in `output/example/assets/css/`, linked scripts in `output/example/assets/js/`, and linked images in `output/example/assets/img/`. Each of those folders is a single layer. The saved page points at those local files. A `<base>` tag or an `xml:base` attribute is removed so local links stay on the saved page. A canonical link and HTML comments are removed too. The URL, the page name, and the HTML file name are remembered in `~/.app/HtmlDownloader/output/url-map.json`. Running the same command again leaves that HTML file in place and downloads only the stylesheets, scripts, and images that are not already in the page folder. A different `--html` name moves the existing file and does not fetch the page URL again.
 
-**list downloaded** (2) lists those page names by number. Choose one, then **21 edit** opens `index.html` in Visual Studio Code when `code` is installed, and **22 view** opens it in the default browser when a default browser is set. If either tool is missing, that row is not shown. **0** goes back.
+**list downloaded** (2) lists those page names by number. Choose one, then **21 edit** opens the saved HTML file in Visual Studio Code when `code` is installed, and **22 view** opens it in the default browser when a default browser is set. If either tool is missing, that row is not shown. **0** goes back.
 
 **serve** (3) lists those page names by number. Choose one, then type a port. Press Enter with an empty box to use **5000**. The server listens on `127.0.0.1` and stops on Ctrl+C. The menu then shows `Stopped <name>.` The typed verb does not draw the menu:
 
@@ -174,7 +177,7 @@ html-downloader serve --page-name example
 html-downloader serve --page-name example --port 8080
 ```
 
-That serves `~/.app/HtmlDownloader/output/example/` so `http://127.0.0.1:5000/` is `index.html` and `assets/` stays beside it.
+That serves `~/.app/HtmlDownloader/output/example/` so `http://127.0.0.1:5000/` is the saved HTML file, `index.html` unless `--html` chose another name, and `assets/` stays beside it.
 
 ```bash
 html-downloader help
@@ -360,4 +363,4 @@ MIT — see [`LICENSE.md`](./LICENSE.md). Also declared in `pyproject.toml`.
 
 ## Last Update
 
-2026-10-16 — **1.0.0**. Public source is https://github.com/cloudgen/HtmlDownloader. The console script is `html-downloader`. `download --url URL --name PAGENAME` saves the page under `~/.app/HtmlDownloader/output/`. Menu row 1 **download** lists saved pages or accepts a URL. Menu pictures show this board: language **71**–**83**, one main menu for each language, self-management **61**–**66**, about, and System Log **41**–**43**. Product law under `docs/requirements/` names this version and this menu. Version badge matches `pyproject.toml` and `__version__`. `ChronicleLogger>=1.3.1` is required.
+2026-10-28 — **1.1.0**. `download` can omit `--name` when the URL ends with `.html`, `.htm`, or a folder name such as `xxx`. `--html` names the saved HTML file. Serve, edit, and view use that file. Public source is https://github.com/cloudgen/HtmlDownloader. Menu pictures still show the **1.0.0** board: language **71**–**83**, one main menu for each language, self-management **61**–**66**, about, and System Log **41**–**43**. Version badge matches `pyproject.toml` and `__version__`. `ChronicleLogger>=1.3.1` is required.

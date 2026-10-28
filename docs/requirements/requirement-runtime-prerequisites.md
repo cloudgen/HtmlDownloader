@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-runtime-prerequisites.md
-**Status**: Active (Version 1.2.0)
+**Status**: Active (Version 1.2.1)
 **Area**: runtime
 **Key**: `requirement-runtime-prerequisites`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -76,7 +76,7 @@ No encoder, no FFmpeg binary, and no media library are required. A missing `ffmp
 | **System binary** | none. `ffmpeg` is not required |
 | **Auto install command** | none. The product does not run a root install |
 | **Platform notes** | Linux primary. macOS and Windows when CPython is available |
-| **Product version** | 1.0.0 |
+| **Product version** | 1.1.0 |
 | **Startup check** | ChronicleLogger import. No encoder check |
 | **User docs** | Root `README.md` states no external media tool is required |
 
@@ -126,9 +126,8 @@ On Termux, Git Bash, Windows cmd, or the same class, the normal user installs th
 |-----|----------------|
 | `requirement-python-packaging` | Floor owner for the pip dependency |
 | `requirement-python-cli-logging` | Construct. Missing-import sentence |
-| `requirement-video-ffmpeg-pipeline` | Retired. Does not use FFmpeg |
 | `requirement-python-error-handling` | Missing-tool messages |
-| `requirement-domain-videojoin` | About runtime tools are `none` |
+| `requirement-domain-htmldownloader` | About runtime tools are `none` |
 | `docs/requirements/index.md` | Registry |
 
 ## Design-time verification
@@ -150,9 +149,10 @@ On Termux, Git Bash, Windows cmd, or the same class, the normal user installs th
 | 2026-10-04 | Active 1.1.1 | Product version **1.0.4**. Manifest floor is `ChronicleLogger>=1.3.1` |
 | 2026-10-04 | Active 1.1.2 | The about page names FFmpeg and does not probe PATH. Product version **1.0.5** |
 | 2026-10-16 | Active 1.2.0 | No encoder is required. Product version **1.0.0**. The about page says `Runtime tools: none` |
+| 2026-10-28 | Active 1.2.1 | Product version **1.1.0**. No encoder is required |
 
 ---
 
-**Last Updated**: 2026-10-16
+**Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

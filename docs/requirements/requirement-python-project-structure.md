@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-project-structure.md
-**Status**: Active (Version 1.2.0)
+**Status**: Active (Version 1.2.1)
 **Area**: python
 **Key**: `requirement-python-project-structure`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -70,7 +70,7 @@ Define the repository layout and the package structure for HtmlDownloader: where
 | Path | Role |
 |------|------|
 | `src/HtmlDownloader/` | Installable package |
-| `src/HtmlDownloader/__init__.py` | `__version__` (`1.0.0`) |
+| `src/HtmlDownloader/__init__.py` | `__version__` (`1.1.0`) |
 | `src/HtmlDownloader/__main__.py` | Module entry. Imports `main` from `cli` |
 | `src/HtmlDownloader/cli.py` | Class `Cli` and `def main` |
 | `pyproject.toml` | Packaging SSOT |
@@ -154,9 +154,10 @@ On Termux, Git Bash, Windows cmd, or the same class, the package is the normal u
 | 2026-10-04 | Active 1.1.1 | Sections, badges, and pictures in root `README.md` are `requirement-python-readme` |
 | 2026-10-04 | Active 1.1.2 | Allowed end state names `check_system.py`. `__version__` is **1.0.5** |
 | 2026-10-16 | Active 1.2.0 | The class modules are on disk, including page download, open, and serve. Version **1.0.0** |
+| 2026-10-28 | Active 1.2.1 | Product version **1.1.0** |
 
 ---
 
-**Last Updated**: 2026-10-16
+**Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

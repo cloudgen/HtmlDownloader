@@ -25,8 +25,9 @@ class PageServeError(Exception):
 class PageServe:
     """Serve one saved page on this computer. One class in this file.
 
-    The page folder is the site root, so index.html is / and assets stay
-    under that folder. The server listens on 127.0.0.1. An empty port uses 5000.
+    The page folder is the site root. The stored HTML file is /. That file
+    defaults to index.html. Assets stay under that folder. The server listens
+    on 127.0.0.1. An empty port uses 5000.
     """
 
     DEFAULT_PORT = 5000
@@ -73,8 +74,8 @@ class PageServe:
 
         Returns the server, the URL, the page name, and the page folder.
         """
-        clean, directory, number = self._ready(name, port)
-        handler = self._handler_class(directory)
+        clean, directory, number, html_name = self._ready(name, port)
+        handler = self._handler_class(directory, html_name)
         try:
             httpd = self._Server((self.BIND, number), handler)
         except OSError as exc:
@@ -92,7 +93,7 @@ class PageServe:
         """
         httpd, url, clean, directory = self.listen(name, port)
         print("Serving {0}".format(clean))
-        print("Page: {0}".format(os.path.join(directory, "index.html")))
+        print("Page: {0}".format(os.path.join(directory, self.pages.html_name_for(clean))))
         print("URL: {0}".format(url))
         print("Press Ctrl+C to stop.")
         try:
@@ -109,7 +110,8 @@ class PageServe:
             directory = self.pages._page_dir(clean)
         except PageDownloadError as exc:
             raise PageServeError(str(exc))
-        index = os.path.join(directory, "index.html")
+        html_name = self.pages.html_name_for(clean)
+        index = os.path.join(directory, html_name)
         if not os.path.isfile(index):
             raise PageServeError("{0} is not a saved page.".format(clean))
         try:
@@ -118,12 +120,32 @@ class PageServe:
             raise PageServeError("{0} is not a saved page.".format(clean))
         if size <= 0:
             raise PageServeError("{0} is not a saved page.".format(clean))
-        return clean, directory, self.parse_port(port)
+        return clean, directory, self.parse_port(port), html_name
 
-    def _handler_class(self, directory):
+    def _handler_class(self, directory, html_name):
+        index_name = html_name
+
         class Handler(http.server.SimpleHTTPRequestHandler):
             def __init__(self, *args, **kwargs):
                 super().__init__(*args, directory=directory, **kwargs)
+
+            def _point_at_page(self):
+                """/ is the stored HTML file. The file name itself stays reachable."""
+                raw = self.path
+                query = ""
+                if "?" in raw:
+                    raw, query = raw.split("?", 1)
+                    query = "?" + query
+                if raw in ("", "/"):
+                    self.path = "/" + index_name + query
+
+            def do_GET(self):
+                self._point_at_page()
+                return super().do_GET()
+
+            def do_HEAD(self):
+                self._point_at_page()
+                return super().do_HEAD()
 
             def log_message(self, fmt, *args):
                 return

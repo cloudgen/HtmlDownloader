@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-packaging.md
-**Status**: Active (Version 1.3.0)
+**Status**: Active (Version 1.3.1)
 **Area**: python
 **Key**: `requirement-python-packaging`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -12,7 +12,7 @@ This file owns the ChronicleLogger floor together with `requirement-runtime-prer
 
 ### 1.1 Human-facing
 
-**In one sentence:** HtmlDownloader is a pip package named HtmlDownloader, version 1.0.0, and the status library is a required dependency.
+**In one sentence:** HtmlDownloader is a pip package named HtmlDownloader, version 1.1.0, and the status library is a required dependency.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
@@ -51,7 +51,7 @@ This file owns the ChronicleLogger floor together with `requirement-runtime-prer
 
 5. The package version in `pyproject.toml` and `src/HtmlDownloader/__init__.py` (`__version__`) **MUST** match when a release is claimed.
 6. Bumping either **MUST** update both in the same change.
-7. **MUST NOT** invent a third version constant. Display code **MUST NOT** keep a second literal, including a fallback `"1.0.0"` (`requirement-python-oop`). The current release string is `1.0.0`. A version bump is a user order, not a side effect of editing this file.
+7. **MUST NOT** invent a third version constant. Display code **MUST NOT** keep a second literal, including a fallback `"1.0.0"` (`requirement-python-oop`). The current release string is `1.1.0`. A version bump is a user order, not a side effect of editing this file.
 
 ### 2.3 Dependencies
 
@@ -78,7 +78,7 @@ This file owns the ChronicleLogger floor together with `requirement-runtime-prer
 |------|--------|
 | **Manifest** | `pyproject.toml` |
 | **Project name** | `HtmlDownloader` |
-| **Version** | `1.0.0` |
+| **Version** | `1.1.0` |
 | **requires-python** | `>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*` (as declared — re-verify support claims before marketing) |
 | **Dependencies (law)** | `ChronicleLogger>=1.3.1`, required |
 | **Dependencies (live manifest)** | `ChronicleLogger>=1.3.1`. Matches the law floor |
@@ -89,7 +89,7 @@ This file owns the ChronicleLogger floor together with `requirement-runtime-prer
 | **License** | MIT |
 | **Public package exports** | `__version__`, `main` only. **MUST NOT** re-export `ChronicleLogger` |
 | **User docs** | Root `README.md` Quick Installation documents pip and does not require an encoder |
-| **README version badge** | Must match packaging version when README claims complete (`1.0.0`) |
+| **README version badge** | Must match packaging version when README claims complete (`1.1.0`) |
 
 ### 2.7 Why This Requirement Exists (CIAO)
 
@@ -130,7 +130,7 @@ On Termux, Git Bash, Windows cmd, or the same class, install and upgrade use pip
 | AC-1 | `pyproject.toml` names HtmlDownloader |
 | AC-2 | Console script `html-downloader` is declared |
 | AC-3 | Law and the live manifest both require `ChronicleLogger>=1.3.1` |
-| AC-4 | Version matches `__init__.py` when a release is claimed (`1.0.0`) |
+| AC-4 | Version matches `__init__.py` when a release is claimed (`1.1.0`) |
 | AC-5 | No encoder is a pip dependency |
 | AC-6 | Public exports are `__version__` and `main` only |
 
@@ -167,9 +167,10 @@ On Termux, Git Bash, Windows cmd, or the same class, install and upgrade use pip
 | 2026-10-04 | Active 1.2.1 | Product version **1.0.4**. Manifest floor is `ChronicleLogger>=1.3.1` |
 | 2026-10-04 | Active 1.2.2 | Product version **1.0.5**. Floor stays `ChronicleLogger>=1.3.1` |
 | 2026-10-16 | Active 1.3.0 | Product version **1.0.0**. Floor stays `ChronicleLogger>=1.3.1`. No encoder dependency |
+| 2026-10-28 | Active 1.3.1 | Product version **1.1.0**. The user ordered the bump. Floor stays `ChronicleLogger>=1.3.1` |
 
 ---
 
-**Last Updated**: 2026-10-16
+**Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

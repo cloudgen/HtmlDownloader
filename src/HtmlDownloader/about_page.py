@@ -2,7 +2,7 @@
 # About page composer.
 # requirement-python-oop — class AboutPage.
 # requirement-python-about — identity lines, host check, and the star box.
-# requirement-domain-videojoin — the domain sentence on the identity block.
+# requirement-domain-htmldownloader — the domain sentence on the identity block.
 # =============================================================================
 from __future__ import print_function, unicode_literals
 

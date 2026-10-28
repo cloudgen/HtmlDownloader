@@ -1,12 +1,12 @@
 **file**: docs/requirements/requirement-python-readme.md
-**Status**: Active (Version 1.1.0)
+**Status**: Active (Version 1.1.2)
 **Area**: python
 **Key**: `requirement-python-readme`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
 
 ## 1. Purpose
 
-This file owns the product user document at the repository root: which sections it has, which pictures it embeds, and the rule that a sentence in that document matches the requirement that owns the behavior. Project nature is a program a person builds and runs from a terminal. The menu picture stays on `requirement-python-tui`. The thirteen languages stay on `requirement-python-cli-language`. The verbs stay on `requirement-python-cli-interface`. Download, list, and serve stay on `requirement-domain-videojoin`. The encoder file is Retired. The prerequisite sentences stay on `requirement-runtime-prerequisites`. The package name and the console script stay on `requirement-python-packaging`. The version string is `__version__`. This file does not restate those bodies.
+This file owns the product user document at the repository root: which sections it has, which pictures it embeds, and the rule that a sentence in that document matches the requirement that owns the behavior. Project nature is a program a person builds and runs from a terminal. The menu picture stays on `requirement-python-tui`. The thirteen languages stay on `requirement-python-cli-language`. The verbs stay on `requirement-python-cli-interface`. Download, list, and serve stay on `requirement-domain-htmldownloader`. This program does not call an encoder. The prerequisite sentences stay on `requirement-runtime-prerequisites`. The package name and the console script stay on `requirement-python-packaging`. The version string is `__version__`. This file does not restate those bodies.
 
 ### 1.1 Human-facing
 
@@ -54,8 +54,8 @@ Each behavioral sentence **MUST** match its owner and **MUST NOT** restate that 
 
 | Claim in the document | Owner |
 |-----------------------|--------|
-| Download, list downloaded, and serve | `requirement-domain-videojoin` |
-| No encoder | `requirement-video-ffmpeg-pipeline` is Retired |
+| Download, list downloaded, and serve | `requirement-domain-htmldownloader` |
+| No encoder | `requirement-domain-htmldownloader` and `requirement-runtime-prerequisites` |
 | Menu picture, path row, clock, row numbers | `requirement-python-tui` |
 | Thirteen languages and what stays English | `requirement-python-cli-language` |
 | Product verbs and pip lifecycle commands | `requirement-python-cli-interface` |
@@ -94,7 +94,7 @@ The first-row sentence in the user document **MUST** name the current directory 
 | **Pictures** | `screenshots/` |
 | **Package** | `HtmlDownloader` |
 | **Console script** | `html-downloader` |
-| **Version** | `1.0.0` from `src/HtmlDownloader/__init__.py` (`__version__`). `pyproject.toml` copies that string |
+| **Version** | `1.1.0` from `src/HtmlDownloader/__init__.py` (`__version__`). `pyproject.toml` copies that string |
 | **Python** | `>=2.7`, excluding 3.0 through 3.4. The badge says 2.7+ (3.x recommended) |
 | **License file** | `LICENSE.md` (MIT). The file is present. The document link stays relative |
 | **Homes** | `https://github.com/cloudgen/HtmlDownloader` and `https://pypi.org/project/HtmlDownloader/` |
@@ -115,14 +115,14 @@ The first-row sentence in the user document **MUST** name the current directory 
 | Features | Text menu: download, list downloaded, serve, System Log, self-management, language, Exit. Path and a local clock on the first row. System Log is **4**. language is **7**. self-management is **6**. Page folder under `~/.app/HtmlDownloader/output/`. Verbs `help`, `version`, `about`, `download`, `serve`, `self-install`, `version-check`, `self-update`, `self-uninstall` | Peers in §2.2. The path-row sentence is the clock rule in §2.2 |
 | Advantages | The three parts below. No comparison table | This file. Peers in §2.2 for the behavior |
 | Quick Installation | `ChronicleLogger>=1.3.1`. No external media tool. `pip install HtmlDownloader`. Checkout uses a venv and `pip install -e .`. The fenced text menu stays in this section | `requirement-runtime-prerequisites`, `requirement-python-packaging`, `requirement-python-tui` |
-| Usage | Menu versus typed verbs. `download` needs `--url` and `--name`. `serve` needs `--page-name` and defaults `--port` to 5000. No terminal: empty argv prints help and returns 0. `self-uninstall` needs `--force`. No sudo | `requirement-python-cli-interface`, `requirement-domain-videojoin`, `requirement-python-tui` |
+| Usage | Menu versus typed verbs. `download` needs `--url`. `--name` may be omitted when the URL recommends the folder. `--html` is optional. `serve` needs `--page-name` and defaults `--port` to 5000. No terminal: empty argv prints help and returns 0. `self-uninstall` needs `--force`. No sudo | `requirement-python-cli-interface`, `requirement-domain-htmldownloader`, `requirement-python-tui` |
 | Screenshots | Lead: each heading is the file name, and the paragraph is what that picture shows. Package **1.0.0**. The paragraph and the image alt are the catalog below | This file |
-| Examples | `html-downloader`, then `html-downloader version`, then `html-downloader download --url URL --name PAGENAME` | `requirement-domain-videojoin` |
+| Examples | `html-downloader`, then `html-downloader version`, then `html-downloader download --url URL --name PAGENAME` | `requirement-domain-htmldownloader` |
 | Platform Compatibility | Linux primary. macOS and Windows when CPython is on PATH. The text menu needs a terminal | `requirement-runtime-prerequisites` |
 | Related Projects | The eight lines below, in that order, each with one sentence | This file |
 | Contributing | Keep product law in sync. Do not strip `shutil.move`. Version strings stay together | `requirement-python-coding-style`, `requirement-python-packaging` |
 | License | MIT, link `LICENSE.md`, and that file exists | `requirement-python-packaging` |
-| Last Update | Names package **1.0.0**, the public source, and the picture catalog. A version bump is not required for pictures that did not change | This file for the line. `__version__` for the string |
+| Last Update | Names package **1.1.0**, the public source, and the picture catalog. The pictures still show **1.0.0**. A version bump is not required for pictures that did not change | This file for the line. `__version__` for the string |
 
 **Related projects, in this order.** The first two are this program. Each line is one sentence. Do not add an install recipe.
 
@@ -172,7 +172,7 @@ The first-row sentence in the user document **MUST** name the current directory 
 
 - **CIAO Principle 2 – Intentional** (https://github.com/cloudgen/ciao): The sections and every PNG in `screenshots/` are a named catalog. A later edit cannot drop the language list, leave a PNG unlinked, or swap in a drawing for a menu row.
 - **CIAO Principle 5 – SSOT** (https://github.com/cloudgen/ciao): This file owns the document. Behavior stays on the peer that already owns it.
-- **CIAO Principle 16 – Interactive** (https://github.com/cloudgen/ciao): The pictures show the text menu a person actually drives, including row **4**, the two-file join, self-management, about, and system-log.
+- **CIAO Principle 16 – Interactive** (https://github.com/cloudgen/ciao): The pictures show the text menu a person actually drives, including row **4**, self-management, about, and system-log.
 - **CIAO Principle 21 – Dual policies** (https://github.com/cloudgen/ciao): The portable rule is “the document matches its owner.” The HtmlDownloader headings and file names live in §2.5.
 - **CIAO Principle 4 – Over-protect** (https://github.com/cloudgen/ciao): Do not publish a setup script that is not on disk, or a success line the program did not print.
 
@@ -183,16 +183,16 @@ The documented install is for this login. **This requirement:** the user documen
 ## 3. Design Principles (CIAO / CIAO-Lite)
 
 - **Caution:** An install sentence that names a missing script is a defect.
-- **Intentional:** An Advantages section, twenty-two pictures, one pictured join, one section order. Each picture paragraph is the catalog cell for that file.
+- **Intentional:** An Advantages section, seventeen pictures, one section order. Each picture paragraph is the catalog cell for that file.
 - **Anti-fragile:** A new PNG in `screenshots/` becomes a required link in the same change. A non-menu file stays labeled as itself.
-- **Over-protect (Principle 20):** Do not let the user document become a second menu, a second verb list, or a second encode procedure.
+- **Over-protect (Principle 20):** Do not let the user document become a second menu, a second verb list, or a second save procedure.
 
 ## 4. Protection Rule (Sacred)
 
 **Future AI assistants or maintainers MUST NOT**:
 
-- Restate encode order, verb lists, menu numbers, language codes, or the prerequisite table in this file as a second procedure.
-- Turn the Advantages section into an encoder recipe. The document does not describe a concat graph.
+- Restate the save steps, verb lists, menu numbers, language codes, or the prerequisite table in this file as a second procedure.
+- Turn the Advantages section into an encoder recipe. The document does not describe an encoder.
 - Claim that intermediate files never use the system temporary directory.
 - Replace a capture with a drawing that invents row text.
 - Leave any PNG in `screenshots/` out of `README.md`.
@@ -202,7 +202,7 @@ The documented install is for this login. **This requirement:** the user documen
 - Describe the path row’s right side as `Current` or a login.
 - Name `./setup.sh` while that file is absent.
 - Add `./build.sh` verbs, a shell online install, `sudo pip`, or `sudo curl | sh` to the user document.
-- Add `--json`, a length percent, a boomerang, or a folder prompt.
+- Add `--json` or a folder prompt.
 - Freeze a session login or a `/home/<login>/` path in this file.
 - Mark `TP-DOC-03` have before the suite asserts that each catalog paragraph and alt equals the cell in §2.5.
 - Treat `./build.sh` verbs as `html-downloader` verbs.
@@ -230,8 +230,7 @@ The documented install is for this login. **This requirement:** the user documen
 |-----|----------------|
 | `docs/requirements/index.md` | Registry |
 | `requirement-python-project-structure` | Root `README.md` exists. Sections and pictures are this file |
-| `requirement-domain-videojoin` | Domain rows inside the user document |
-| `requirement-video-ffmpeg-pipeline` | Retired. The user document does not require an encoder |
+| `requirement-domain-htmldownloader` | Domain rows inside the user document |
 | `requirement-runtime-prerequisites` | ChronicleLogger. No encoder. No root auto-install |
 | `requirement-python-packaging` | Package name, console script, pip install, `ChronicleLogger>=1.3.1` |
 | `requirement-python-tui` | Menu picture and the clock |
@@ -251,9 +250,11 @@ The documented install is for this login. **This requirement:** the user documen
 | 2026-10-04 | Active 1.0.0 | User-document sections, Advantages, eight related projects, and twenty-two pictures. Image destinations are absolute `https`. `TP-DOC-01` have. `TP-DOC-03` todo |
 | 2026-10-04 | Active 1.0.1 | About and self-management pictures match the new page. Other menu pictures still show **1.0.4**. Package string is **1.0.5** |
 | 2026-10-16 | Active 1.1.0 | The user document is the download, list, and serve board. Version **1.0.0**. Seventeen menu pictures. No comparison table |
+| 2026-10-28 | Active 1.1.1 | The picture count in the design line is seventeen. No join picture |
+| 2026-10-28 | Active 1.1.2 | Usage matches optional `--name` and `--html`. The package string is **1.1.0**. The pictures stay **1.0.0** |
 
 ---
 
-**Last Updated**: 2026-10-16
+**Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).
