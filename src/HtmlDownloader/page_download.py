@@ -89,6 +89,8 @@ class PageDownload:
             home = os.environ.get("HOME", "")
         self.home = home
         self.opener = opener
+        self.user_agent = None
+        self.gate = None
 
     def output_root(self) -> str:
         """General Purpose: The folder that holds pages, assets, and the url map."""
@@ -279,6 +281,58 @@ class PageDownload:
             lines.extend(failures)
         return "\n".join(lines)
 
+    def save_document(self, url, relative):
+        """General Purpose: Save one HTML document under output/<relative>/index.html.
+
+        relative may contain folders. It may not leave output/.
+        This method does not write url-map.json.
+        Returns the index path, the HTML before local rewriting, and the final URL.
+        """
+        url = self.validate_url(url)
+        page_dir = self._document_dir(relative)
+        index_path = os.path.join(page_dir, self.INDEX_NAME)
+        if self.logger is not None:
+            self.logger.log_message(
+                "download {0} as {1}".format(url, relative),
+                component="PageDownload",
+            )
+        body, content_type, final_url = self._get(url)
+        html = self._decode(body, content_type)
+        css_dir, js_dir, img_dir = self._ensure_dirs(page_dir)
+        self._publish(html.encode("utf-8"), index_path)
+        failures = []
+        try:
+            styles, scripts, images, fonts = self._collect(html, final_url or url, page_dir)
+        except Exception as exc:
+            styles, scripts, images, fonts = [], [], [], []
+            failures.append("The page links could not be read. {0}".format(exc))
+        names = {}
+        used = {"css": set(), "js": set(), "img": set()}
+        documents, order, css_raws, binaries, css_failures = self._gather_css(
+            styles, css_dir, final_url or url, names, used
+        )
+        binaries.extend(self._html_binary_jobs(images, "img"))
+        binaries.extend(self._html_binary_jobs(fonts, "font"))
+        bin_pairs, _img_files, _font_files, bin_failures = self._store_binaries(
+            binaries, css_dir, img_dir, names, used
+        )
+        self._rewrite_css(documents, order, css_raws, bin_pairs, css_dir)
+        _js_count, js_pairs, js_failures = self._save_scripts(scripts, js_dir, names, used)
+        css_pairs = self._html_css_pairs(css_raws, documents, names)
+        failures.extend(css_failures)
+        failures.extend(js_failures)
+        failures.extend(bin_failures)
+        rewritten = self._clean_saved_html(
+            self._replace_urls(html, css_pairs + js_pairs + bin_pairs.get("html", []))
+        )
+        self._publish(rewritten.encode("utf-8"), index_path)
+        if failures and self.logger is not None:
+            self.logger.log_message(
+                "Not saved: {0}".format("; ".join(failures)),
+                component="PageDownload",
+            )
+        return index_path, html, final_url or url
+
     def _looks_like_url(self, text) -> bool:
         if not text or any(char.isspace() for char in text):
             return False
@@ -303,6 +357,40 @@ class PageDownload:
         if not self._inside(root, dest) or os.path.dirname(os.path.normpath(dest)) != os.path.normpath(root):
             raise PageDownloadError("The page name must be one file name, without a folder.")
         return dest
+
+    def _document_dir(self, relative) -> str:
+        """A folder under output/. Slashes stay inside that root. .. does not."""
+        root = self.output_root()
+        text = (relative or "").strip().replace("\\", "/").strip("/")
+        if text == "" or "\x00" in text:
+            raise PageDownloadError("The page folder is not valid.")
+        parts = text.split("/")
+        if any(part in ("", ".", "..") for part in parts):
+            raise PageDownloadError("The page folder must stay under output.")
+        dest = root
+        for part in parts:
+            dest = os.path.join(dest, part)
+        if not self._inside(root, dest):
+            raise PageDownloadError("The page folder must stay under output.")
+        return dest
+
+    def _ensure_dirs(self, page_dir):
+        """Create page_dir/assets/{css,js,img}. Return the three flat folders."""
+        self._require_home()
+        cursor = self.home
+        for part in (self.APP_PARENT, self.app_name, self.OUTPUT_DIR):
+            cursor = os.path.join(cursor, part)
+            self._mkdir(cursor)
+        assets = os.path.join(page_dir, self.ASSETS_DIR)
+        css_dir = os.path.join(assets, self.CSS_DIR)
+        js_dir = os.path.join(assets, self.JS_DIR)
+        img_dir = os.path.join(assets, self.IMG_DIR)
+        self._mkdir(page_dir)
+        self._mkdir(assets)
+        self._mkdir(css_dir)
+        self._mkdir(js_dir)
+        self._mkdir(img_dir)
+        return css_dir, js_dir, img_dir
 
     def _index_path(self, name) -> str:
         return os.path.join(self._page_dir(name), self.INDEX_NAME)
@@ -452,12 +540,21 @@ class PageDownload:
 
     def _get(self, url):
         self.validate_url(url)
+        if self.gate is not None:
+            self.gate(url)
         if self.opener is not None:
             loaded = self.opener(url)
-            body, content_type = loaded
+            hinted = url
+            if isinstance(loaded, (tuple, list)) and len(loaded) >= 3:
+                body, content_type, hinted = loaded[0], loaded[1], loaded[2] or url
+            elif isinstance(loaded, (tuple, list)) and len(loaded) >= 2:
+                body, content_type = loaded[0], loaded[1]
+            else:
+                body, content_type = None, ""
             if not isinstance(body, (bytes, bytearray)):
                 raise PageDownloadError("The response for {0} was empty.".format(url))
             payload = bytes(body)
+            self.validate_url(hinted)
         else:
             payload, content_type, final_url = self._fetch(url)
             self.validate_url(final_url)
@@ -470,7 +567,7 @@ class PageDownload:
             raise PageDownloadError(
                 "The response for {0} is larger than {1} bytes.".format(url, self.MAX_BYTES)
             )
-        return payload, content_type or "", url
+        return payload, content_type or "", hinted
 
     def _fetch(self, url):
         import socket
@@ -520,6 +617,8 @@ class PageDownload:
             response.close()
 
     def _user_agent(self) -> str:
+        if self.user_agent:
+            return self.user_agent
         from . import __version__
 
         return "{0}/{1}".format(self.app_name, __version__)

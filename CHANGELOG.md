@@ -3,6 +3,21 @@
 All notable changes to **HtmlDownloader** are documented here.  
 Version SSOT: `pyproject.toml` + `src/HtmlDownloader/__init__.__version__`.
 
+## [1.0.1] - 2026-10-28
+
+### Added
+
+- Typed verb `crawl`. It needs `--url`, `--name`, `--depth`, and `--max-pages`. It saves HTML pages on the start host under `~/.app/HtmlDownloader/output/<sitename>/`. A start path of `/` writes `<sitename>/index.html` and remembers the site in `url-map.json`. Any other path writes `<sitename>/<path>/index.html`. Each directory keeps its own `assets/css`, `assets/js`, and `assets/img`.
+- The walk reads `robots.txt` before any HTML page. A failed robots fetch saves no page. A path disallowed for `*` or for a user agent that starts with `HtmlCrawler` is skipped. The user agent is `HtmlCrawler/` plus the package version. Requests to one host wait 1 second after the first request to that host.
+- The walk says which bound stopped it: `Stopped by --max-pages.`, `Stopped by --depth.`, `Stopped by --max-pages and --depth.`, or `Finished.`
+- The about page domain line is `Crawl a same-site set of pages, and save one page on its own.`
+
+### Changed
+
+- Version is **1.0.1**. Menu pictures were captured again. The status line says `HtmlDownloader 1.0.1`. The about picture shows the new domain sentence, Python 3.12.3, and the stamp `2026-10-28 16:54:37.204930`.
+- `--depth` and `--max-pages` are refused on `download`. Crawl is not a menu row. Empty arguments do not crawl.
+- Package name stays **HtmlDownloader**. Console script stays `html-downloader`.
+
 ## [1.0.0] - 2026-10-16
 
 ### Removed

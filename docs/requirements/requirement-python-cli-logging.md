@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-python-cli-logging.md
-**Status**: Active (Version 1.1.0)
+**Status**: Active (Version 1.1.4)
 **Area**: python
 **Key**: `requirement-python-cli-logging`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -8,7 +8,9 @@
 
 `def main` instantiates ChronicleLogger. The instantiation is the statement `ChronicleLogger(...)` written in that function, before the argument parser and before any product object.
 
-HtmlDownloader records system status through that one ChronicleLogger instance: process start, debug identity, menu steps, download and serve steps, and failures. User-visible failure sentences stay on `requirement-python-error-handling`. The text menu stays on `requirement-python-tui`. Class homes stay on `requirement-python-oop`. The pip name and the version floor stay on `requirement-python-packaging` and `requirement-runtime-prerequisites`. `shutil.move` stays on `requirement-python-coding-style`. The encoder file is Retired.
+The four lines printed when debug mode is on live on `requirement-python-cli-debug`. This file still writes `ChronicleLogger(...)` inside `def main` and still calls `isDebug()` and `log_message` for that list. The sample below is that call.
+
+HtmlCrawler records system status through that one ChronicleLogger instance: process start, debug identity, menu steps, download and serve steps, and failures. User-visible failure sentences stay on `requirement-python-error-handling`. The text menu stays on `requirement-python-tui`. Class homes stay on `requirement-python-oop`. The pip name and the version floor stay on `requirement-python-packaging` and `requirement-runtime-prerequisites`. `shutil.move` stays on `requirement-python-coding-style`.
 
 This product creates no threads. This file does not name a thread-wait timeout. Control-C stop, an exit code for that stop, and the decision not to publish are not confirmed law in this file. Row 9 Exit returns 0 with no confirm question (`requirement-python-tui`).
 
@@ -16,13 +18,13 @@ The running `src/HtmlDownloader/cli.py` writes `ChronicleLogger(...)` in `def ma
 
 ### 1.1 Human-facing
 
-**In one sentence:** `def main` writes `ChronicleLogger(...)`, HtmlDownloader keeps a dated status file through that object, and those lines stay off the text menu.
+**In one sentence:** `def main` writes `ChronicleLogger(...)`, HtmlCrawler keeps a dated status file through that object, and those lines stay off the text menu.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
-| You / this login | Person running `html-downloader` | A failed download is still explained on the console, and the same fact is in the log file |
-| The other role | The logger library | `ChronicleLogger(logname="HtmlDownloader")` resolves the folder and the line shape |
-| Not this file | How the menu is drawn, and how the page is saved | `requirement-python-tui`, `requirement-domain-videojoin` |
+| You / this login | Person running `html-crawler` | A failed download is still explained on the console, and the same fact is in the log file |
+| The other role | The logger library | `ChronicleLogger(logname="HtmlCrawler")` resolves the folder and the line shape |
+| Not this file | How the menu is drawn, and how the page is saved | `requirement-python-tui`, `requirement-domain-htmlcrawler` |
 
 | Includes | Excludes |
 |----------|----------|
@@ -33,14 +35,14 @@ The running `src/HtmlDownloader/cli.py` writes `ChronicleLogger(...)` in `def ma
 | Surface | What you open | What for |
 |---------|---------------|----------|
 | `src/HtmlDownloader/cli.py` | `def main` | Writes `ChronicleLogger(...)`, then passes that one instance |
-| `html-downloader` | console script | Writes status while it runs |
+| `html-crawler` | console script | Writes status while it runs |
 | Resolved `logDir()` | daily `.log` file | History after the process exits |
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
-| Start the program | `def main` writes one `ChronicleLogger(...)` with logname `HtmlDownloader`, reads the resolved name and folders back, and logs status with a component tag. | `html-downloader version` |
-| Ask for the debug lines | Set `DEBUG` before the process starts. On a run that does not open the text screen, `main` displays the resolved name, the package version, `ChronicleLogger.class_version()`, and a line that says `debug mode`, before the argument parser. The text screen keeps that mirror off the console. The daily file still receives the lines. When debug mode is off, those lines stay off. | `DEBUG=1 html-downloader version` |
-| Open the menu | The constructor is quiet, so log lines do not paint over the frame. The menu is still the text screen. | `html-downloader` |
+| Start the program | `def main` writes one `ChronicleLogger(...)` with logname `HtmlCrawler`, reads the resolved name and folders back, and logs status with a component tag. | `html-crawler version` |
+| Ask for the debug lines | Set `DEBUG` before the process starts. The four messages are `requirement-python-cli-debug`. This file still asks `isDebug()` and calls `log_message` before the argument parser. The text screen keeps that mirror off the console. The daily file still receives the lines. When debug mode is off, those lines stay off. | `DEBUG=1 html-crawler version` |
+| Open the menu | The constructor is quiet, so log lines do not paint over the frame. The menu is still the text screen. | `html-crawler` |
 
 ## 2. Core Rules (Mandatory)
 
@@ -55,16 +57,16 @@ The running `src/HtmlDownloader/cli.py` writes `ChronicleLogger(...)` in `def ma
 ### 2.1 One logger
 
 4. **MUST** import `ChronicleLogger` from `ChronicleLogger` at the use site inside `def main`. **MUST NOT** import `_Suroot`. A test that freezes the clock **MUST** define its own `TimeProvider` subclass in the test module. **MUST NOT** import `FakeTimeProvider` from the package.
-5. **MUST** construct **one** instance per process by writing `ChronicleLogger(...)` inside `def main`, with `logname` set to the product name `HtmlDownloader`. That statement is the construct. **MUST NOT** put the construct in a function or a method. **MUST NOT** call `Cli.__new__` in order to build the logger. Helpers receive that instance. **MUST NOT** construct a second logger.
-6. **MUST** read `logName()`, `baseDir()`, and `logDir()` immediately after construct, and again after any path setter, before the first `log_message`. The constructor string is not the resolved name. `HtmlDownloader` resolves to `html-downloader`.
-7. **MUST NOT** re-export `ChronicleLogger` from the `HtmlDownloader` package. Public exports stay `__version__` and `main` (`requirement-python-packaging`).
-8. If the import fails, **MUST** fail closed on the console with the pip next step for the floor named by `requirement-python-packaging`, and **MUST** return non-zero. That line cannot go through `log_message`. Importing the `HtmlDownloader` package **MUST** still succeed when ChronicleLogger is absent, because the construct is not at import time.
+5. **MUST** construct **one** instance per process by writing `ChronicleLogger(...)` inside `def main`, with `logname` set to the product name `HtmlCrawler`. That statement is the construct. **MUST NOT** put the construct in a function or a method. **MUST NOT** call `Cli.__new__` in order to build the logger. Helpers receive that instance. **MUST NOT** construct a second logger.
+6. **MUST** read `logName()`, `baseDir()`, and `logDir()` immediately after construct, and again after any path setter, before the first `log_message`. The constructor string is not the resolved name. `HtmlCrawler` resolves to `html-crawler`.
+7. **MUST NOT** re-export `ChronicleLogger` from the `HtmlCrawler` package. Public exports stay `__version__` and `main` (`requirement-python-packaging`).
+8. If the import fails, **MUST** fail closed on the console with the pip next step for the floor named by `requirement-python-packaging`, and **MUST** return non-zero. That line cannot go through `log_message`. Importing the `HtmlCrawler` package **MUST** still succeed when ChronicleLogger is absent, because the construct is not at import time.
 
 ### 2.2 Debug
 
-9. **MUST** ask `logger.isDebug()` for whether debug status is on. **MUST NOT** read `DEBUG` again in product code. **MUST NOT** add a `--debug` flag.
+9. **MUST** ask `logger.isDebug()` for whether debug status is on. **MUST NOT** read `DEBUG` again in product code. **MUST NOT** add a `--debug` flag. The four messages that gate owns are `requirement-python-cli-debug`.
 10. `isDebug()` remembers the first answer. `DEBUG` or `debug` **MUST** already be `1`, `true`, or `show` (any letter case) **before** `ChronicleLogger(...)`.
-11. The startup identity lines **MUST** run only inside `if logger.isDebug():`, and `main` **MUST** run that block before the argument parser. The block is four `log_message` calls, each with `component="main"`: the resolved app name, the package version, and this file’s path; `Using` plus `ChronicleLogger.class_version()`; the `baseDir()` value; a line whose message is `debug mode`. **MUST NOT** type the library version by hand. When `isDebug()` is false, those lines **MUST NOT** be displayed.
+11. The startup identity lines **MUST** run only inside `if logger.isDebug():`, and `main` **MUST** run that block before the argument parser. The block is four `log_message` calls, each with `component="main"`. The wording of those four messages is `requirement-python-cli-debug`. This file still shows the call: construct `ChronicleLogger(...)`, ask `isDebug()`, then `log_message`. **MUST NOT** type the library version by hand. **MUST NOT** add a fifth line. When `isDebug()` is false, those lines **MUST NOT** be displayed.
 11a. **Console mirror.** When this run will open the text screen, and that fact is known before construct, `main` **MUST** pass `is_quiet=True` into `ChronicleLogger(...)`. The runs that open the text screen are: empty argv on a terminal, and `about` on a terminal. `download`, `serve`, `help`, `version`, and the pip verbs do not open it. A small argv peek may decide `is_quiet` before the constructor. `ArgumentParser.parse_args` runs after the constructor and after the debug block. The library stores that flag before it resolves the name and the folders and before it creates the log directory. That constructor can print `Created directory:`. A call to `quiet(True)` after the constructor returns **MUST NOT** be the only quiet for those runs. A run that does not open the text screen **MUST** leave `is_quiet` false, so the operator sees `debug mode` on the console. The text screen **MUST** keep that mirror off the console. The same lines still go to the daily file. This product does not claim `--json`. `logger.quiet(True)` remains the setter when a screen opens later and was not known at construct.
 11b. **Version string.** The identity line and the `version` verb read the same package version: the single string `__version__` in `src/HtmlDownloader/__init__.py`, which matches `pyproject.toml` (`requirement-python-packaging`). The current string is `1.0.0`. **MUST NOT** add `MAJOR` / `MINOR` / `PATCH` integers. **MUST NOT** keep a second version literal for display. A suite assertion may compare the displayed string with `__version__` and with `pyproject.toml`. `main` **MUST NOT** raise because those strings differ.
 11c. **Environment checks.** `CheckSystem.in_venv`, `in_pyenv`, and `in_conda` **MUST** call `inVenv()`, `inPyenv()`, and `inConda()` on the one logger. When the logger is absent, each method **MUST** return false. Those three results **MUST NOT** be printed on the about page and **MUST NOT** choose `python2 location`, `python3 location`, `conda location`, or `pyenv location`. The path reads stay on `requirement-python-about`. The proof is `TP-ABOUT-16`.
@@ -83,7 +85,7 @@ The running `src/HtmlDownloader/cli.py` writes `ChronicleLogger(...)` in `def ma
 | `PageOpen` | Edit or view a saved page |
 | Class name | That object was constructed, and later status recorded by that object |
 
-The class-name components are `Cli`, `Tui`, `MenuPainter`, `MenuModel`, `MenuSession`, `MenuScreenError`, `SystemLog`, `SelfManage`, `CheckSystem`, `AboutPage`, `PageDownload`, `PageServe`, and `PageOpen`. There is no `Join`.
+The class-name components are `Cli`, `Tui`, `MenuPainter`, `MenuModel`, `MenuSession`, `MenuScreenError`, `SystemLog`, `SelfManage`, `CheckSystem`, `AboutPage`, `PageDownload`, `PageServe`, and `PageOpen`.
 
 ### 2.3a Pass the logger into every class
 
@@ -122,9 +124,9 @@ The class-name components are `Cli`, `Tui`, `MenuPainter`, `MenuModel`, `MenuSes
 
 ### 2.5 Folder and line
 
-21. **MUST** use the folders from `baseDir()` and `logDir()`. **MUST NOT** copy the library’s environment ladder into this program. **MUST NOT** hard-code `~/.app/HtmlDownloader`, `/var/HtmlDownloader`, or `/var/log/HtmlDownloader`.
-22. When the process is root and it is not under conda, pyenv, or a virtualenv, the library’s `baseDir()` is `/var/html-downloader` and `logDir()` is `/var/html-downloader/log`. It is not `/var/log/html-downloader`. Product code reads those values. It does not assemble them. This sentence does not require HtmlDownloader to install conda, pyenv, or a virtualenv.
-23. The daily file basename **MUST** stay the library’s `{kebab-app}-{YYYYMMDD}.log` under `logDir()`. For this product the kebab name is `html-downloader`.
+21. **MUST** use the folders from `baseDir()` and `logDir()`. **MUST NOT** copy the library’s environment ladder into this program. **MUST NOT** hard-code `~/.app/HtmlCrawler`, `/var/HtmlCrawler`, or `/var/log/HtmlCrawler`.
+22. When the process is root and it is not under conda, pyenv, or a virtualenv, the library’s `baseDir()` is `/var/html-crawler` and `logDir()` is `/var/html-crawler/log`. It is not `/var/log/html-crawler`. Product code reads those values. It does not assemble them. This sentence does not require HtmlCrawler to install conda, pyenv, or a virtualenv.
+23. The daily file basename **MUST** stay the library’s `{kebab-app}-{YYYYMMDD}.log` under `logDir()`. For this product the kebab name is `html-crawler`.
 24. A file line has this shape (the library writes it; this product does not format it by hand):
 
 ```text
@@ -140,15 +142,15 @@ The class-name components are `Cli`, `Tui`, `MenuPainter`, `MenuModel`, `MenuSes
 | **Library** | ChronicleLogger |
 | **Floor** | Required `ChronicleLogger>=1.3.1`, owned by `requirement-python-packaging` and `requirement-runtime-prerequisites`. The live `pyproject.toml` declares that floor. |
 | **Construct site** | `def main` in `src/HtmlDownloader/cli.py` writes `ChronicleLogger(...)`. |
-| **logname** | `HtmlDownloader` (product name, not a path, not the console-script name) |
-| **Resolved name** | `html-downloader` from `logName()` |
-| **Call order** | Inside `def main`: peek argv for the text screen, write `ChronicleLogger(...)` with `logname` and `is_quiet` when that screen is already known, read `logName()`, `baseDir()`, and `logDir()`, run the `isDebug()` block including `debug mode`, then parse arguments, then `Cli(logger)`. |
-| **Quiet** | `is_quiet=True` for empty argv on a terminal and for `about` on a terminal. `download` and `serve` leave it false. `quiet(True)` after return does not hide `Created directory:`. |
-| **Version** | Identity and `version` use `__version__` (`1.0.0`). No second integer triple. `cli.py` reads `__version__` and does not keep a second literal. |
+| **logname** | `HtmlCrawler` (product name, not a path, not the console-script name) |
+| **Resolved name** | `html-crawler` from `logName()` |
+| **Call order** | Inside `def main`: peek argv for the text screen, write `ChronicleLogger(...)` with `logname` and `is_quiet` when that screen is already known, read `logName()`, `baseDir()`, and `logDir()`, run the `isDebug()` block whose four messages are `requirement-python-cli-debug`, then parse arguments, then `Cli(logger)`. |
+| **Quiet** | `is_quiet=True` for empty argv on a terminal and for `about` on a terminal. `download`, `crawl`, and `serve` leave it false. `quiet(True)` after return does not hide `Created directory:`. |
+| **Version** | Identity and `version` use `__version__` (`1.0.1`). No second integer triple. `cli.py` reads `__version__` and does not keep a second literal. |
 | **Threads** | None in the running product. No timeout is named. |
 | **Control-C** | Not confirmed law here. |
-| **Debug switch** | Environment `DEBUG` or `debug` already set to `1`, `true`, or `show`. No `--debug` flag. |
-| **Proof** | `TP-LOG-01`, `TP-LOG-02`, `TP-LOG-03`, `TP-LOG-04`, `TP-LOG-05` stay todo. The ship unit does not pass this law. |
+| **Debug switch** | Environment `DEBUG` or `debug` already set to `1`, `true`, or `show`. No `--debug` flag. The four messages are `requirement-python-cli-debug`. The sample in this file is the ChronicleLogger call. |
+| **Proof** | `TP-LOG-01`, `TP-LOG-03`, `TP-LOG-04`, and `TP-LOG-05` stay todo on this file. `TP-LOG-02` is the quiet mirror and stays todo. `TP-DEBUG-01` owns the four messages and stays todo. Its primary owner is `requirement-python-cli-debug`. The suite `tests/test_logging.py` is not on disk. |
 
 ### Sample code
 
@@ -165,11 +167,11 @@ def main(argv=None, basedir="", logdir=""):
         )
         return 1
 
-    from HtmlDownloader import __version__
+    from HtmlCrawler import __version__
 
     screen = opens_text_screen(argv)
     logger = ChronicleLogger(
-        logname="HtmlDownloader",
+        logname="HtmlCrawler",
         is_quiet=screen,
         basedir=basedir,
         logdir=logdir,
@@ -206,14 +208,14 @@ Before a temp write, a publish, or a discard:
 logger.log_message(
     "write temp path={0}".format(temp_path),
     level="INFO",
-    component="join",
+    component="PageDownload",
 )
 ```
 
 ### 2.7 Why This Requirement Exists (CIAO)
 
 - **Principle 5 – SSOT of output**: status history has one writer.
-- **Principle 1 – Caution**: a missing library or an unwritable log folder does not wipe the source videos or smash the menu.
+- **Principle 1 – Caution**: a missing library or an unwritable log folder does not wipe a saved page or smash the menu.
 - **Principle 2 – Intentional**: level and component are named on every status line.
 - **Principle 12 – Traceability**: the daily file still receives lines while the text screen is quiet.
 
@@ -224,7 +226,7 @@ On Termux, Git Bash, Windows cmd, or the same class, status files stay in the fo
 ## 3. Design Principles (CIAO / CIAO-Lite)
 
 - **Caution:** Quiet the console mirror before the text menu. Do not crash when the log folder is unwritable.
-- **Intentional:** One instance. Components stay `main`, `menu`, `join`, and the class name.
+- **Intentional:** One instance. Components stay `main`, `menu`, and the class name.
 - **Anti-fragile:** Folder choice stays inside ChronicleLogger. Product code reads `logDir()`.
 - **Over-protect:** No second logger and no package re-export of ChronicleLogger.
 
@@ -233,8 +235,8 @@ On Termux, Git Bash, Windows cmd, or the same class, status files stay in the fo
 **Future AI assistants or maintainers MUST NOT:**
 
 1. Construct ChronicleLogger outside `def main`, or construct a second logger.
-2. Re-export ChronicleLogger from the HtmlDownloader package.
-3. Hard-code `~/.app/HtmlDownloader`, `/var/HtmlDownloader`, or `/var/log/HtmlDownloader`, or copy the library folder ladder into product code.
+2. Re-export ChronicleLogger from the HtmlCrawler package.
+3. Hard-code `~/.app/HtmlCrawler`, `/var/HtmlCrawler`, or `/var/log/HtmlCrawler`, or copy the library folder ladder into product code.
 4. Treat `quiet(True)` after the constructor returns as a substitute for `is_quiet=True` on a text-screen run.
 5. Put the identity lines outside `logger.isDebug()`, or add a `--debug` flag.
 6. Add a second version literal, or raise at import or in `main` because version strings differ.
@@ -242,6 +244,7 @@ On Termux, Git Bash, Windows cmd, or the same class, status files stay in the fo
 8. Invent a thread, a timeout, a Control-C protocol, or exit 130 in order to satisfy this file.
 9. Drop the console failure sentence because a log line exists.
 10. Print `in_venv`, `in_pyenv`, or `in_conda` on the about page, or use those booleans to choose a location line.
+11. Delete the ChronicleLogger debug sample, stop pointing at `requirement-python-cli-debug`, or grow a second list of the four messages that disagrees with that file.
 
 **Violating this rule is a critical logging regression.**
 
@@ -251,15 +254,16 @@ On Termux, Git Bash, Windows cmd, or the same class, status files stay in the fo
 |----|-----------|
 | AC-1 | The construct is the statement `ChronicleLogger(...)` inside `def main`, before the parser and before `Cli` |
 | AC-2 | `logName()`, `baseDir()`, and `logDir()` are read before the first `log_message` |
-| AC-3 | Identity lines and `debug mode` appear only inside `isDebug()`, and the text screen does not mirror them |
+| AC-3 | The debug block runs after read-back, only inside `isDebug()`, and does not add a fifth line. The text screen does not mirror those lines |
 | AC-4 | Missing ChronicleLogger prints the pip next step and returns non-zero |
-| AC-5 | Temp write, `shutil.move` publish, and discard of an unfinished temp are logged before the operation, component `join` |
+| AC-5 | Temp write, `shutil.move` publish, and discard of an unfinished temp are logged before the operation, component the class that does the work |
 | AC-6 | Floor `ChronicleLogger>=1.3.1` is required in law. The live manifest lag is stated. The package does not re-export the library |
 
 ## 6. Related requirements (peer keys only)
 
 | Key | Relationship |
 |-----|----------------|
+| `requirement-python-cli-debug` | Owns the four messages. This file calls `isDebug()` and `log_message` for that list |
 | `requirement-python-packaging` | Floor owner. Live manifest lags |
 | `requirement-runtime-prerequisites` | Floor and the missing-import next step |
 | `requirement-python-cli-interface` | When the text screen opens. Parser order |
@@ -267,7 +271,6 @@ On Termux, Git Bash, Windows cmd, or the same class, status files stay in the fo
 | `requirement-python-oop` | Logger parameter on every class |
 | `requirement-python-error-handling` | Console failure sentences |
 | `requirement-python-coding-style` | `shutil.move` and temps |
-| `requirement-video-ffmpeg-pipeline` | Retired. It does not write temps |
 | `requirement-python-about` | Host-check path reads. `TP-ABOUT-16` proves the three logger booleans |
 | `requirement-class-software-dev` | Residual pointer |
 | `docs/requirements/index.md` | Registry |
@@ -276,8 +279,8 @@ On Termux, Git Bash, Windows cmd, or the same class, status files stay in the fo
 
 | TP family / ID | Suite | Status | Note |
 |----------------|-------|--------|------|
-| **TP-LOG-01** | `tests/test_logging.py` | todo | One construct in `main`. `logName` / `baseDir` / `logDir` read back. Resolved name is `html-downloader` |
-| **TP-LOG-02** | `tests/test_logging.py` | todo | `DEBUG` already on shows identity lines and `debug mode` on a non-screen run. Unset shows neither. A text-screen run does not mirror those lines. The daily file still receives them |
+| **TP-LOG-01** | `tests/test_logging.py` | todo | One construct in `main`. `logName` / `baseDir` / `logDir` read back. Resolved name is `html-crawler` |
+| **TP-LOG-02** | `tests/test_logging.py` | todo | Quiet mirror. A text-screen run does not mirror the four lines. The daily file still receives them. `TP-DEBUG-01` owns the four messages. Primary of that id is `requirement-python-cli-debug` |
 | **TP-LOG-03** | `tests/test_logging.py` | todo | The product creates no threads. A later thread logs create, start, join, wait, lock, and pool before the blocking call, and does not call `log_message` under a work lock |
 | **TP-LOG-04** | `tests/test_logging.py` | todo | Each class `__init__` logs `instantiated` at INFO, component the class name, outside `isDebug()` |
 | **TP-LOG-05** | `tests/test_logging.py` | todo | Temp write, publish, and discard are logged before the operation, component the class that does the work |
@@ -286,17 +289,35 @@ On Termux, Git Bash, Windows cmd, or the same class, status files stay in the fo
 **Matrix:** `docs/reviews/requirement-test-matrix.md`
 **Map:** `docs/reviews/test-plan.md`
 
+## Terminologies
+
+**Debug mode.** A gate inside the logger. `isDebug()` is that gate. The four identity lines, including the message `debug mode`, run only inside it. The `instantiated` line, a major file operation, and a thread line do not.
+
+**Daily-life example:** You open the notebook’s extra page only when the kitchen light labeled DEBUG was already on before you started. That page has four lines: the appliance name with its edition and the recipe card’s place, which notebook brand you are holding, which cupboard is the base, and the words “debug mode.” When the light is off, that page stays blank. “Kettle arrived” is still written on the ordinary page.
+
+**Chronicle logger.** The one process status logger. `def main` instantiates it by writing `ChronicleLogger(...)` before any product object. Debug mode asks that object `isDebug()` and then `log_message`. The log folder is the one `logDir()` returns. Product code does not copy that ladder and does not type the path. Not a second logger.
+
+**Daily-life example:** You buy a kettle and write “kettle arrived” in the household book. The guests in the dining room do not hear that line. The book still has it. The shelf for the book is the one the notebook already chose. You ask where that shelf is. You do not nail a second address into the recipe.
+
+**Project requirements.** Product law is the finished must/should rules for this product. They are not blank forms and not agent procedures.
+
+**Daily-life example:** “This household must lock the door by 10” is law for this house. A blank curfew form is not.
+
 ## 7. Status history
 
 | Date | Status | Note |
 |------|--------|------|
-| 2026-10-04 | Active 1.0.0 | ChronicleLogger construct for HtmlDownloader. Ship unit does not construct it yet. Floor target `ChronicleLogger>=1.3.1`. Live manifest remains `ChronicleLogger>=1.2.3` |
+| 2026-10-04 | Active 1.0.0 | ChronicleLogger construct for HtmlCrawler. Ship unit does not construct it yet. Floor target `ChronicleLogger>=1.3.1`. Live manifest remains `ChronicleLogger>=1.2.3` |
 | 2026-10-04 | Active 1.0.1 | Product version **1.0.4**. Manifest floor is `ChronicleLogger>=1.3.1`. `cli.py` reads `__version__` only |
 | 2026-10-04 | Active 1.0.2 | Rule 11c: environment checks read the one logger. Current version string is **1.0.5**. `TP-LOG-*` stay todo. `TP-ABOUT-16` is have. Primary owner is `requirement-python-about` |
-| 2026-10-16 | Active 1.1.0 | Quiet runs are empty argv and `about` on a terminal. Version string is **1.0.0**. No `join` component |
+| 2026-10-16 | Active 1.1.0 | Quiet runs are empty argv and `about` on a terminal. Version string is **1.0.0** |
+| 2026-10-28 | Active 1.1.1 | Publish sample uses component `PageDownload` |
+| 2026-10-28 | Active 1.1.2 | A denial of a class this product does not have was removed |
+| 2026-10-28 | Active 1.1.3 | The four printed values move to `requirement-python-cli-debug`. This file still shows the ChronicleLogger `isDebug()` / `log_message` call |
+| 2026-10-28 | Active 1.1.4 | Product version string in the notes is **1.0.1**. `crawl` leaves `is_quiet` false |
 
 ---
 
-**Last Updated**: 2026-10-16
+**Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

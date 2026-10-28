@@ -1,24 +1,24 @@
 **file**: docs/requirements/requirement-python-error-handling.md
-**Status**: Active (Version 1.3.0)
+**Status**: Active (Version 1.3.1)
 **Area**: python
 **Key**: `requirement-python-error-handling`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
 
 ## 1. Purpose
 
-Define how HtmlDownloader detects, reports, and recovers from errors during the text menu, download, and serve without deleting a saved page that already exists.
+Define how HtmlCrawler detects, reports, and recovers from errors during the text menu, download, and serve without deleting a saved page that already exists.
 
 Console sentences in this file stay required. Durable status, once the logger exists, is `requirement-python-cli-logging`. ChronicleLogger is required. It is not optional.
 
 ### 1.1 Human-facing
 
-**In one sentence:** When a download or a serve cannot finish, HtmlDownloader tells you why and leaves saved pages in place.
+**In one sentence:** When a download or a serve cannot finish, HtmlCrawler tells you why and leaves saved pages in place.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
 | You / this login | Person who typed a bad URL or a missing page | You see the reason and can try again or stop |
 | The other role | The status file | The same fact is written by ChronicleLogger after `main` has constructed it |
-| Not this file | The menu frame, and the page folder | `requirement-python-tui`, `requirement-domain-videojoin` |
+| Not this file | The menu frame, and the page folder | `requirement-python-tui`, `requirement-domain-htmlcrawler` |
 
 | Includes | Excludes |
 |----------|----------|
@@ -29,14 +29,14 @@ Console sentences in this file stay required. Durable status, once the logger ex
 | Surface | What you open | What for |
 |---------|---------------|----------|
 | Download and serve questions | Menu region above the box | The reason, without leaving the board when the board is already open |
-| `html-downloader download` without `--url` | Message, non-zero exit | Nothing new is claimed as saved |
+| `html-crawler download` without `--url` | Message, non-zero exit | Nothing new is claimed as saved |
 | Console before the logger exists | Missing ChronicleLogger | The pip next step |
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
 | Pick a number that is not in the list | The question stays. | A bad number, then a listed one |
-| Serve a name that was not saved | You see why. No server starts. | `html-downloader serve --page-name missing` |
-| Run without the logger library | The console names the pip next step and the program returns non-zero. | `html-downloader` |
+| Serve a name that was not saved | You see why. No server starts. | `html-crawler serve --page-name missing` |
+| Run without the logger library | The console names the pip next step and the program returns non-zero. | `html-crawler` |
 
 ## 2. Core Rules (Mandatory)
 
@@ -93,7 +93,7 @@ Console sentences in this file stay required. Durable status, once the logger ex
 
 ## Under command line for normal user only
 
-On Termux, Git Bash, Windows cmd, or the same class, failure sentences are for the normal user who started `html-downloader`. **This requirement:** do not use administrator privilege, `sudo`, `apt`, or a dedicated system user to report an error or to clean a temp. Do not pipe a downloaded script into a shell. Type 1 and Type 2 are unused on Termux, Git Bash, and Windows cmd. Git Bash and Windows cmd do not call Termux `pkg`.
+On Termux, Git Bash, Windows cmd, or the same class, failure sentences are for the normal user who started `html-crawler`. **This requirement:** do not use administrator privilege, `sudo`, `apt`, or a dedicated system user to report an error or to clean a temp. Do not pipe a downloaded script into a shell. Type 1 and Type 2 are unused on Termux, Git Bash, and Windows cmd. Git Bash and Windows cmd do not call Termux `pkg`.
 
 ## 3. Design Principles (CIAO / CIAO-Lite)
 
@@ -132,12 +132,11 @@ On Termux, Git Bash, Windows cmd, or the same class, failure sentences are for t
 
 | Key | Relationship |
 |-----|----------------|
-| `requirement-video-ffmpeg-pipeline` | Retired |
 | `requirement-python-cli-interface` | Verb exits |
 | `requirement-python-tui` | Where the sentence sits on the screen |
 | `requirement-python-cli-logging` | Durable status after the construct |
-| `requirement-runtime-prerequisites` | The logger floor. No encoder |
-| `requirement-domain-videojoin` | Session outcomes |
+| `requirement-runtime-prerequisites` | The logger floor |
+| `requirement-domain-htmlcrawler` | Session outcomes |
 | `docs/requirements/index.md` | Registry |
 
 ## Design-time verification
@@ -155,13 +154,14 @@ On Termux, Git Bash, Windows cmd, or the same class, failure sentences are for t
 
 | Date | Status | Note |
 |------|--------|------|
-| 2026-08-09 | Active 1.0.0 | Initial error-handling law for HtmlDownloader |
+| 2026-08-09 | Active 1.0.0 | Initial error-handling law for HtmlCrawler |
 | 2026-08-09 | Active 1.1.0 | Fail-closed fallback and unique temp cleanup notes |
 | 2026-10-04 | Active 1.2.0 | ChronicleLogger is required for durable status. Console sentences stay. Missing library is a console line. Empty argv off a terminal is help, return 0 |
-| 2026-10-16 | Active 1.3.0 | Failures are download and serve. No encoder errors. An existing page stays |
+| 2026-10-16 | Active 1.3.0 | Failures are download and serve. An existing page stays |
+| 2026-10-28 | Active 1.3.1 | Domain owner is `requirement-domain-htmlcrawler` |
 
 ---
 
-**Last Updated**: 2026-10-16
+**Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

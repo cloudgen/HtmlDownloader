@@ -225,7 +225,6 @@ class TestDownload(unittest.TestCase):
             self.assertIn("download", help_text)
             self.assertIn("--url", help_text)
             self.assertIn("--name", help_text)
-            self.assertNotIn("list-videos", help_text)
         finally:
             shutil.rmtree(home, ignore_errors=True)
             if previous_home is None:

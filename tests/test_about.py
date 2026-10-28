@@ -75,7 +75,7 @@ class TestAbout(unittest.TestCase):
         ):
             self.assertIn(label, text)
         self.assertIn(
-            "Domain: Download a page and its stylesheets, scripts, and images",
+            "Domain: Crawl a same-site set of pages, and save one page on its own.",
             text,
         )
         self.assertIn("Runtime tools: none", text)
@@ -84,8 +84,6 @@ class TestAbout(unittest.TestCase):
             text,
         )
         self.assertIn(Cli.BASIC_USAGE, text)
-        self.assertNotIn("FFmpeg", text)
-        self.assertNotIn("ffmpeg is on PATH", text)
         self.assertNotIn("python -m pip install", text)
         self.assertNotIn("curl -fsSL", text)
         self.assertNotIn("py-tui", text)
@@ -232,7 +230,7 @@ class TestAbout(unittest.TestCase):
         from HtmlDownloader.check_system import CheckSystem
 
         host = CheckSystem(app_name=Cli.APP_NAME, version=Cli.VERSION, console_name=Cli.CONSOLE_NAME)
-        self.assertFalse(host.inside_docker(marker="/tmp/videojoin-no-such-dockerenv"))
+        self.assertFalse(host.inside_docker(marker="/tmp/htmlcrawler-no-such-dockerenv"))
         with tempfile.TemporaryDirectory() as tmp:
             marker = os.path.join(tmp, ".dockerenv")
             with open(marker, "w", encoding="utf-8"):

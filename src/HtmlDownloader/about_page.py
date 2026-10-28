@@ -2,7 +2,7 @@
 # About page composer.
 # requirement-python-oop — class AboutPage.
 # requirement-python-about — identity lines, host check, and the star box.
-# requirement-domain-videojoin — the domain sentence on the identity block.
+# requirement-domain-htmlcrawler — the domain sentence on the identity block.
 # =============================================================================
 from __future__ import print_function, unicode_literals
 
@@ -189,7 +189,7 @@ class AboutPage:
         """
         lines = [
             "{} {}".format(self.app_name, self.version),
-            "Domain: Download a page and its stylesheets, scripts, and images",
+            "Domain: Crawl a same-site set of pages, and save one page on its own.",
             "Runtime tools: none",
             "Entry points: {}, python -m {}".format(self.console_name, self.app_name),
             "",

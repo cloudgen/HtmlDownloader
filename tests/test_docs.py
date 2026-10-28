@@ -65,7 +65,6 @@ class TestReadmeStructure(unittest.TestCase):
         urls = re.findall(r"\((https://[^)]+)\)", related)
         self.assertEqual(tuple(urls), RELATED)
         self.assertNotIn("Wilgat/HtmlDownloader", README)
-        self.assertNotIn("### `video.png`", README)
 
 
 if __name__ == "__main__":

@@ -1,14 +1,14 @@
 **file**: docs/requirements/requirement-python-coding-style.md
-**Status**: Active (Version 1.2.0)
+**Status**: Active (Version 1.2.3)
 **Area**: python
 **Key**: `requirement-python-coding-style`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
 
 ## 1. Purpose
 
-Define Python coding style and defensive file I/O conventions for HtmlDownloader: how agents and maintainers write Python so path, temp, and publish behavior stays safe across mounts, including USB, without duplicating the domain tables. The encoder file is Retired.
+Define Python coding style and defensive file I/O conventions for HtmlCrawler: how agents and maintainers write Python so path, temp, and publish behavior stays safe across mounts, including USB, without duplicating the domain tables.
 
-Publish with `shutil.move` stays here. The encoder file is Retired. The class map is owned by `requirement-python-oop`. The logger construct is owned by `requirement-python-cli-logging`.
+Publish with `shutil.move` stays here. The class map is owned by `requirement-python-oop`. The logger construct is owned by `requirement-python-cli-logging`.
 
 ### 1.1 Human-facing
 
@@ -18,7 +18,7 @@ Publish with `shutil.move` stays here. The encoder file is Retired. The class ma
 |-----|---------|---------|
 | You / this login | Maintainer changing a download or the menu | Keep the publish call as `shutil.move`. Put new behavior on the class that owns that job |
 | The other role | The class map and the status logger | `requirement-python-oop`, `requirement-python-cli-logging` |
-| Not this file | The menu picture and the concat filter graph | TUI and pipeline requirements |
+| Not this file | The menu picture and the page folder | TUI and domain requirements |
 
 | Includes | Excludes |
 |----------|----------|
@@ -34,9 +34,9 @@ Publish with `shutil.move` stays here. The encoder file is Retired. The class ma
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
-| Publish the finished file | Call `shutil.move`. Log that publish before the call, once the logger exists. | The join output name |
+| Publish the finished file | Call `shutil.move`. Log that publish before the call, once the logger exists. | The saved file name |
 | Add a behavior | Put it on the class in the map. Do not add a module-level function beside that class. | Edit that class file |
-| Import HtmlDownloader | The import succeeds even when you only need `__version__`. It does not construct the logger. | `python -c "import HtmlDownloader"` |
+| Import HtmlCrawler | The import succeeds even when you only need `__version__`. It does not construct the logger. | `python -c "import HtmlCrawler"` |
 
 ## 2. Core Rules (Mandatory)
 
@@ -46,7 +46,7 @@ Publish with `shutil.move` stays here. The encoder file is Retired. The class ma
 2. **MUST** cite only live `docs/requirements/requirement-*.md` keys in product-source law comments.
 3. **SHOULD** use a clear General Purpose docstring on each public method.
 4. **MUST** fail closed with a user-visible message on expected errors (a bad URL, a missing saved page, a failed download).
-5. Importing the HtmlDownloader package **MUST NOT** construct ChronicleLogger. The construct stays inside `def main` (`requirement-python-cli-logging`). **MUST NOT** re-export `ChronicleLogger`.
+5. Importing the HtmlCrawler package **MUST NOT** construct ChronicleLogger. The construct stays inside `def main` (`requirement-python-cli-logging`). **MUST NOT** re-export `ChronicleLogger`.
 6. The class map in `requirement-python-oop` is the layout on disk. **MUST NOT** collapse those classes back into one procedural module. **MUST NOT** order a StateLogic + `Attr` rewrite. This file does not move the code.
 6a. The site that needs an object **MUST** write `ClassName(...)`. A function or a method whose job is to instantiate a class in that map is forbidden.
 
@@ -80,17 +80,16 @@ Log the temp write, the publish, and the discard of an unfinished temp before th
 
 | Item | Value |
 |------|--------|
-| **Package** | `HtmlDownloader` |
+| **Package** | `HtmlCrawler` |
 | **Running modules** | The modules named by `requirement-python-project-structure` |
 | **Class modules** | Named by `requirement-python-oop`. They are on disk |
 | **Page classes** | `PageDownload`, `PageServe`, and `PageOpen` |
 | **Publish helper** | `shutil.move` |
-| **Encoder file** | Retired. This file still owns `shutil.move` |
 | **Gate checklist (cite ID)** | `CL-PYTHON-SHUTIL-MOVE-PUBLISH` — run when auditing promote and staging publish paths |
 | **Architecture** | One class per file. StateLogic + `Attr` stays unordered |
 | **Logger** | Package import does not construct ChronicleLogger |
-| **Version** | `1.0.0` |
-| **User docs** | Root `README.md` Features must not claim a Cython-required runtime or a fixed `filelist.txt`-only strategy |
+| **Version** | `1.0.1` |
+| **User docs** | Root `README.md` Features must not claim a Cython-required runtime |
 
 ### 2.6 Why This Requirement Exists (CIAO)
 
@@ -119,8 +118,7 @@ On Termux, Git Bash, Windows cmd, or the same class, temps and the published fil
 3. Cite a template or a skill from product source as behavioral authority.
 4. Treat the procedural session in `cli.py` as the allowed end state. Do not start the class split inside a style-only edit. Do not order a StateLogic rewrite.
 5. Store secrets in style docs or in code.
-6. Reintroduce a fixed-name cwd `filelist.txt` as the only concat-list strategy.
-7. Construct ChronicleLogger at import time, or add a factory whose job is to instantiate a mapped class.
+6. Construct ChronicleLogger at import time, or add a factory whose job is to instantiate a mapped class.
 
 **Violating this rule is a critical regression.**
 
@@ -131,11 +129,10 @@ On Termux, Git Bash, Windows cmd, or the same class, temps and the published fil
 | AC-1 | Publish of intermediates uses `shutil.move` (or a thin wrapper) |
 | AC-2 | A bare cross-mount rename is forbidden as the sole publish |
 | AC-3 | Same-filesystem staging is preferred when the destination is known |
-| AC-4 | The pipeline requirement remains the concat SSOT |
-| AC-5 | Registered in the index |
-| AC-6 | Package import does not construct ChronicleLogger and does not re-export it |
-| AC-7 | A promote-path audit uses `CL-PYTHON-SHUTIL-MOVE-PUBLISH` when ship publish code changes |
-| AC-8 | The allowed end state points at `requirement-python-oop`. StateLogic stays unordered |
+| AC-4 | Registered in the index |
+| AC-5 | Package import does not construct ChronicleLogger and does not re-export it |
+| AC-6 | A promote-path audit uses `CL-PYTHON-SHUTIL-MOVE-PUBLISH` when ship publish code changes |
+| AC-7 | The allowed end state points at `requirement-python-oop`. StateLogic stays unordered |
 
 ## 6. Related requirements (peer keys only)
 
@@ -143,7 +140,6 @@ On Termux, Git Bash, Windows cmd, or the same class, temps and the published fil
 |-----|----------------|
 | `requirement-python-oop` | Allowed class map |
 | `requirement-python-cli-logging` | Log temp, publish, and discard. Construct stays in `main` |
-| `requirement-video-ffmpeg-pipeline` | Retired |
 | `requirement-python-project-structure` | Running layout versus the map |
 | `requirement-python-error-handling` | Failure messages |
 | `requirement-python-cli-interface` | Entry |
@@ -157,7 +153,7 @@ On Termux, Git Bash, Windows cmd, or the same class, temps and the published fil
 |----------------|-------|--------|------|
 | **TP-FS-01** | `tests/test_fs_publish.py` | todo | Publish uses `shutil.move` |
 | **TP-FS-02** | `tests/test_fs_publish.py` | todo | Staging prefers the destination parent when it is writable |
-| **TP-PKG-01** | `tests/test_packaging.py` | todo | `import HtmlDownloader` succeeds and does not construct ChronicleLogger |
+| **TP-PKG-01** | `tests/test_packaging.py` | todo | `import HtmlCrawler` succeeds and does not construct ChronicleLogger |
 | **TP-OOP-01** | `tests/test_oop.py` | todo | Peer: class map. Not landed |
 
 **Matrix:** `docs/reviews/requirement-test-matrix.md`
@@ -167,13 +163,16 @@ On Termux, Git Bash, Windows cmd, or the same class, temps and the published fil
 
 | Date | Status | Note |
 |------|--------|------|
-| 2026-08-09 | Active 1.0.0 | Coding style, `shutil.move`, and multi-mount file I/O for HtmlDownloader |
+| 2026-08-09 | Active 1.0.0 | Coding style, `shutil.move`, and multi-mount file I/O for HtmlCrawler |
 | 2026-10-04 | Active 1.1.0 | Procedural `cli.py` is the running tree, not the allowed end state. The end state is `requirement-python-oop`. StateLogic stays unordered. Rules 7–15 are unchanged |
 | 2026-10-04 | Active 1.1.1 | Current version string is **1.0.5** |
-| 2026-10-16 | Active 1.2.0 | Version **1.0.0**. No encoder in the style rules. The class map is on disk |
+| 2026-10-16 | Active 1.2.0 | Version **1.0.0**. The class map is on disk |
+| 2026-10-28 | Active 1.2.1 | Publish example is the saved file name |
+| 2026-10-28 | Active 1.2.2 | Notes for a feature this product does not have were removed. Publish stays `shutil.move` |
+| 2026-10-28 | Active 1.2.3 | Product version in the notes is **1.0.1** |
 
 ---
 
-**Last Updated**: 2026-10-16
+**Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

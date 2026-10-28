@@ -3,10 +3,10 @@
 # HtmlDownloader CLI — text menu and typed verbs.
 # Law keys: requirement-python-cli-interface, requirement-python-cli-logging,
 #           requirement-python-tui, requirement-python-oop,
-#           requirement-python-about, requirement-domain-videojoin,
+#           requirement-python-about, requirement-domain-htmlcrawler,
 #           requirement-python-error-handling, requirement-python-coding-style,
-#           requirement-runtime-prerequisites
-# Video join, FFmpeg, and file listing are not part of this program.
+#           requirement-runtime-prerequisites, requirement-html-site-crawl,
+#           requirement-html-page-download
 # CIAO-Lite: Caution • Intentional • Anti-fragile • Over-protect
 # def main writes ChronicleLogger(...). This module does not construct it
 # at import time and does not re-export it.
@@ -20,6 +20,7 @@ from .about_page import AboutPage
 from .check_system import CheckSystem
 from .page_download import PageDownload, PageDownloadError
 from .page_serve import PageServe, PageServeError
+from .site_crawl import SiteCrawl
 from .self_management import SelfManage
 from .tui import Tui
 
@@ -40,6 +41,7 @@ class Cli:
         "version",
         "about",
         "download",
+        "crawl",
         "serve",
         "self-install",
         "version-check",
@@ -100,9 +102,10 @@ class Cli:
         General Purpose: Whether this argv draws the text screen.
 
         The real parser has not run yet. This walk only decides is_quiet.
-        Help, version, download, serve, and the pip verbs do not draw the screen.
+        Help, version, download, crawl, serve, and the pip verbs do not draw the screen.
         Empty argv and about do, when stdout is a terminal.
         download saves a page and does not draw the screen.
+        crawl walks one site and does not draw the screen.
         serve serves a saved page and does not draw the screen.
         """
         if argv is None:
@@ -130,6 +133,28 @@ class Cli:
             return True
         return verb is None
 
+    @staticmethod
+    def _depth_value(text):
+        return Cli._bounded_flag("--depth", text, 0)
+
+    @staticmethod
+    def _max_pages_value(text):
+        return Cli._bounded_flag("--max-pages", text, 1)
+
+    @staticmethod
+    def _bounded_flag(label, text, minimum):
+        try:
+            value = int(text, 10)
+        except (TypeError, ValueError):
+            raise argparse.ArgumentTypeError(
+                "{0} must be an integer >= {1}.".format(label, minimum)
+            )
+        if value < minimum:
+            raise argparse.ArgumentTypeError(
+                "{0} must be an integer >= {1}.".format(label, minimum)
+            )
+        return value
+
     def report_error(self, message, nxt):
         """User-visible failure plus the same fact on the logger when one exists."""
         if self.logger is not None:
@@ -146,7 +171,8 @@ class Cli:
         """
         General Purpose: One optional product verb.
         help is also --help. --force belongs only to self-uninstall.
-        --url and --name belong only to download.
+        --url and --name belong to download and crawl.
+        --depth and --max-pages belong only to crawl.
         --page-name and --port belong only to serve.
         """
         parser = argparse.ArgumentParser(
@@ -156,11 +182,13 @@ class Cli:
                 "{0} — download one HTML page and its stylesheets, scripts, and images.\n"
                 "With no arguments on a terminal, opens the text menu.\n"
                 "With no arguments and no terminal, prints this help and stops.\n"
-                "Product verbs: help, version, about, download, serve, self-install,\n"
+                "Product verbs: help, version, about, download, crawl, serve, self-install,\n"
                 "version-check, self-update, self-uninstall.\n"
                 "help prints this usage. version prints the installed version.\n"
                 "about prints a page. download saves the page and does not\n"
                 "draw the menu. It needs --url and --name.\n"
+                "crawl saves pages on one host and does not draw the menu.\n"
+                "It needs --url, --name, --depth, and --max-pages.\n"
                 "serve serves one saved page on 127.0.0.1 and does not draw the\n"
                 "menu. It needs --page-name. --port defaults to {1}.\n"
                 "Menu row 1 download lists saved pages or accepts a URL.\n"
@@ -186,7 +214,7 @@ class Cli:
             default=None,
             metavar="verb",
             help=(
-                "Product verb: help, version, about, download, serve, "
+                "Product verb: help, version, about, download, crawl, serve, "
                 "self-install, version-check, self-update, or self-uninstall"
             ),
         )
@@ -203,12 +231,24 @@ class Cli:
         parser.add_argument(
             "--url",
             default="",
-            help="Page URL for download. Used only with the download verb.",
+            help="Page URL for download, or start URL for crawl.",
         )
         parser.add_argument(
             "--name",
             default="",
-            help="Page name for download. The HTML file is output/<name>/index.html.",
+            help="Page name for download, or site name for crawl.",
+        )
+        parser.add_argument(
+            "--depth",
+            type=Cli._depth_value,
+            default=None,
+            help="Crawl depth. 0 is the start page. Used only with crawl.",
+        )
+        parser.add_argument(
+            "--max-pages",
+            type=Cli._max_pages_value,
+            default=None,
+            help="Maximum HTML pages. Used only with crawl.",
         )
         parser.add_argument(
             "--page-name",
@@ -246,6 +286,30 @@ class Cli:
         print(text)
         return 0
 
+    def _verb_crawl(self, url, name, depth, max_pages):
+        """Walk one site. Does not draw the menu. Needs all four flags."""
+        missing = []
+        if not (url or "").strip():
+            missing.append("--url")
+        if not (name or "").strip():
+            missing.append("--name")
+        if depth is None:
+            missing.append("--depth")
+        if max_pages is None:
+            missing.append("--max-pages")
+        usage = "{0} crawl --url URL --name SITENAME --depth N --max-pages N".format(
+            Cli.CONSOLE_NAME
+        )
+        if missing:
+            return self.report_error("crawl needs {0}.".format(", ".join(missing)), usage)
+        worker = SiteCrawl(Cli.APP_NAME, logger=self.logger)
+        try:
+            text = worker.crawl(url, name, depth, max_pages)
+        except PageDownloadError as exc:
+            return self.report_error(str(exc), usage)
+        print(text)
+        return 0
+
     def _verb_serve(self, name, port):
         """Serve one saved page. Does not draw the menu. Needs --page-name."""
         if not (name or "").strip():
@@ -279,9 +343,16 @@ class Cli:
                 "--force is only for self-uninstall.",
                 "{0} self-uninstall --force".format(Cli.CONSOLE_NAME),
             )
-        if (args.url or args.name) and verb != "download":
+        if (args.depth is not None or args.max_pages is not None) and verb != "crawl":
             return self.report_error(
-                "--url and --name are only for download.",
+                "--depth and --max-pages are only for crawl.",
+                "{0} crawl --url URL --name SITENAME --depth N --max-pages N".format(
+                    Cli.CONSOLE_NAME
+                ),
+            )
+        if (args.url or args.name) and verb not in ("download", "crawl"):
+            return self.report_error(
+                "--url and --name are only for download and crawl.",
                 "{0} download --url URL --name PAGENAME".format(Cli.CONSOLE_NAME),
             )
         if (args.page_name or args.port is not None) and verb != "serve":
@@ -296,6 +367,8 @@ class Cli:
             return self._page(result)
         if verb == "download":
             return self._verb_download(args.url, args.name)
+        if verb == "crawl":
+            return self._verb_crawl(args.url, args.name, args.depth, args.max_pages)
         if verb == "serve":
             return self._verb_serve(args.page_name, args.port)
         if verb == "version":

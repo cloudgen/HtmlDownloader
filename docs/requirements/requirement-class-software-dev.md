@@ -1,5 +1,5 @@
 **file**: docs/requirements/requirement-class-software-dev.md
-**Status**: Active (Version 1.2.0 – HtmlDownloader software-development class law + residual stack)
+**Status**: Active (Version 1.2.2 – HtmlCrawler software-development class law + residual stack)
 **Area**: class
 **Key**: `requirement-class-software-dev`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
@@ -12,13 +12,13 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 
 ### 1.1 Human-facing
 
-**In one sentence:** This file records that HtmlDownloader is Python, built with setuptools, and it points at the requirement that owns each other topic.
+**In one sentence:** This file records that HtmlCrawler is Python, built with setuptools, and it points at the requirement that owns each other topic.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
 | You / this login | Maintainer checking which file owns a topic | The menu picture is the TUI requirement. The language row stays here |
 | The other role | Peer requirements | CLI, TUI, logging, domain, packaging |
-| Not this file | The join steps, the frame glyphs, and the pip command strings | Their own requirements. This file only points |
+| Not this file | The frame glyphs and the pip command strings | Their own requirements. This file only points |
 
 | Includes | Excludes |
 |----------|----------|
@@ -30,13 +30,13 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 |---------|---------------|----------|
 | This file | Residual table | Which requirement owns the topic |
 | `pyproject.toml` | Package tool facts | The concrete manifest. Packaging owns the tables |
-| `html-downloader` | The program | You run it as the normal user |
+| `html-crawler` | The program | You run it as the normal user |
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
-| Find the menu law | Open the TUI requirement. Do not expect the picture in this file. | `html-downloader` |
-| Find the logger law | Open the logging requirement. The floor is packaging and runtime. | `html-downloader version` |
-| Install | Use pip. There is no shell installer. | `python -m pip install HtmlDownloader` |
+| Find the menu law | Open the TUI requirement. Do not expect the picture in this file. | `html-crawler` |
+| Find the logger law | Open the logging requirement. The floor is packaging and runtime. | `html-crawler version` |
+| Install | Use pip. There is no shell installer. | `python -m pip install HtmlCrawler` |
 
 ## 2. Core Rules (Mandatory)
 
@@ -91,9 +91,9 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 
 ### 2.7 Implementation Notes (this project)
 
-| Field | Value (HtmlDownloader) |
+| Field | Value (HtmlCrawler) |
 |-------|---------------------|
-| **Project display name** | HtmlDownloader |
+| **Project display name** | HtmlCrawler |
 | **Project class** | software-development |
 | **Class requirement basename** | `requirement-class-software-dev.md` |
 | **Primary language(s)** | Python |
@@ -109,11 +109,11 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 | **Primary runtime / OS family** | multi-OS where CPython runs (documented focus: Linux; macOS and Windows when Python is present) |
 | **Architectures supported** | any architecture with CPython |
 | **Git surface** | used — remote `https://github.com/cloudgen/HtmlDownloader` |
-| **Ship surface** | installable Python package `HtmlDownloader`; console script `html-downloader`; module form `python -m HtmlDownloader` |
-| **Product version SSOT** | `src/HtmlDownloader/__init__.py` → `__version__` and `pyproject.toml` `[project].version` stay equal when either is bumped (current: **1.0.0**) |
+| **Ship surface** | installable Python package `HtmlCrawler`; console script `html-crawler`; module form `python -m HtmlCrawler` |
+| **Product version SSOT** | `src/HtmlDownloader/__init__.py` → `__version__` and `pyproject.toml` `[project].version` stay equal when either is bumped (current: **1.0.1**) |
 | **Install mode** | pip / local package. Not a shell online-install product |
 | **Type 1 elevation** | intentionally absent. No root or sudo product surface |
-| **Actor / role / subject / approver** | **Considered — no dest approver.** The human operator of `html-downloader` is the only actor. No dest approval machine. **None** is valid. Do not add an actor requirement file |
+| **Actor / role / subject / approver** | **Considered — no dest approver.** The human operator of `html-crawler` is the only actor. No dest approval machine. **None** is valid. Do not add an actor requirement file |
 | **Dest fence conditions** | **Considered — no dest fence conditions.** No dest inbound, approve, or reject queue |
 | **Author contact (non-secret)** | Wilgat Wong · `wilgat.wong@gmail.com` |
 
@@ -130,12 +130,11 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 | Text menu | `requirement-python-tui` | Front board and the picture |
 | Menu language | `requirement-python-cli-language` | Front row 7, codes 71–83, and the language leaf |
 | Status logger | `requirement-python-cli-logging` | Construct in `def main` |
-| Domain surface | `requirement-domain-videojoin` | Four pillars. The about page uses the domain sentence |
+| Domain surface | `requirement-domain-htmlcrawler` | Crawl, list, serve, and the about domain sentence |
 | About page | `requirement-python-about` | Identity, host check, and the star box |
-| Encoder | `requirement-video-ffmpeg-pipeline` | Retired. This program does not call an encoder |
 | Python coding style / temps / `shutil.move` | `requirement-python-coding-style` | Publish. StateLogic stays unordered |
 | Error / fail-closed user messaging | `requirement-python-error-handling` | Console sentences |
-| Host runtime deps | `requirement-runtime-prerequisites` | ChronicleLogger. No encoder |
+| Host runtime deps | `requirement-runtime-prerequisites` | ChronicleLogger |
 | Shell online install / shell self-update / Type O | **intentionally absent** | Not a shell channel |
 | Pip lifecycle (`version-check`, `self-update`, `self-install`, `self-uninstall`) | `requirement-python-cli-interface` and `requirement-python-tui` | `python -m pip` only. Not a shell channel |
 | Type 1 sudoers / root elevation | **intentionally absent** | No elevation law |
@@ -152,7 +151,7 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 
 ## 4. Design Principles (CIAO / CIAO-Lite)
 
-- **Caution**: This file does not install an encoder. None is required.
+- **Caution**: This file does not install packages.
 - **Intentional**: The residual table points. It does not copy peer bodies.
 - **Anti-fragile**: Packaging identity stays in `pyproject.toml`.
 - **Over-protect**: Shell Type O stays absent while pip lifecycle is claimed on the CLI and the TUI.
@@ -197,8 +196,7 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 | `requirement-python-cli-interface` | Typed verbs and empty argv |
 | `requirement-python-tui` | Text menu |
 | `requirement-python-cli-logging` | Logger construct |
-| `requirement-domain-videojoin` | Domain four pillars |
-| `requirement-video-ffmpeg-pipeline` | Retired |
+| `requirement-domain-htmlcrawler` | Domain surface |
 | `requirement-python-coding-style` | Temps and `shutil.move` |
 | `requirement-python-error-handling` | Console errors |
 | `requirement-runtime-prerequisites` | Host tools and the logger floor |
@@ -215,20 +213,22 @@ This file is class law plus the residual SSOT. It is not a second copy of the do
 
 ## Under command line for normal user only
 
-On Termux, Git Bash, Windows cmd, or the same class, HtmlDownloader runs as the normal user. **This requirement:** do not use administrator privilege, `sudo`, `apt`, or a dedicated system user. Do not pipe a downloaded script into a shell. Type 1 and Type 2 are unused on Termux, Git Bash, and Windows cmd. Git Bash and Windows cmd do not call Termux `pkg`. Pip lifecycle, when the operator asks for it, is `python -m pip` from the CLI and TUI requirements.
+On Termux, Git Bash, Windows cmd, or the same class, HtmlCrawler runs as the normal user. **This requirement:** do not use administrator privilege, `sudo`, `apt`, or a dedicated system user. Do not pipe a downloaded script into a shell. Type 1 and Type 2 are unused on Termux, Git Bash, and Windows cmd. Git Bash and Windows cmd do not call Termux `pkg`. Pip lifecycle, when the operator asks for it, is `python -m pip` from the CLI and TUI requirements.
 
 ## 8. Status history
 
 | Date | Status | Note |
 |------|--------|------|
-| 2026-08-09 | Active 1.0.0 | Initial software-dev class law for HtmlDownloader |
+| 2026-08-09 | Active 1.0.0 | Initial software-dev class law for HtmlCrawler |
 | 2026-10-04 | Active 1.1.0 | Residual pointers for the text menu, the logger, the class map, and pip lifecycle. Shell Type O stays absent |
 | 2026-10-04 | Active 1.1.1 | Menu language points at `requirement-python-cli-language`. No new actor file |
 | 2026-10-04 | Active 1.1.2 | Residual row for the about page. Product version **1.0.5** |
-| 2026-10-16 | Active 1.2.0 | Product version **1.0.0**. No FFmpeg dependency. Menu language is front row 7 |
+| 2026-10-16 | Active 1.2.0 | Product version **1.0.0**. Menu language is front row 7 |
+| 2026-10-28 | Active 1.2.1 | Domain pointer is `requirement-domain-htmlcrawler` |
+| 2026-10-28 | Active 1.2.2 | Product version **1.0.1** |
 
 ---
 
-**Last Updated**: 2026-10-16
+**Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

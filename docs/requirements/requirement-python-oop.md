@@ -1,16 +1,16 @@
 **file**: docs/requirements/requirement-python-oop.md
-**Status**: Active (Version 1.1.0)
+**Status**: Active (Version 1.1.3)
 **Area**: python
 **Key**: `requirement-python-oop`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
 
 ## 1. Purpose
 
-Define when HtmlDownloader uses a class, and name the file that holds each class. One class lives in one module. `def main` stays in `src/HtmlDownloader/cli.py`. Every class in the map accepts the one status logger as an `__init__` parameter so that class can log. The line text stays on `requirement-python-cli-logging`.
+Define when HtmlCrawler uses a class, and name the file that holds each class. One class lives in one module. `def main` stays in `src/HtmlDownloader/cli.py`. Every class in the map accepts the one status logger as an `__init__` parameter so that class can log. The line text stays on `requirement-python-cli-logging`.
 
-The menu picture stays on `requirement-python-tui`. The about page stays on `requirement-python-about`. The domain sentence stays on `requirement-domain-videojoin`. `shutil.move` stays on `requirement-python-coding-style`. The encoder file is Retired. This file decides the class and the file. It does not invent a second picture or a second about page.
+The menu picture stays on `requirement-python-tui`. The about page stays on `requirement-python-about`. The domain sentence stays on `requirement-domain-htmlcrawler`. `shutil.move` stays on `requirement-python-coding-style`. This file decides the class and the file. It does not invent a second picture or a second about page.
 
-The target is an ordinary multi-class split. A StateLogic + `Attr` rewrite stays unordered. This file does not claim that rewrite. The classes in the map are on disk, including `PageDownload`, `PageServe`, and `PageOpen`. `TP-OOP-*` stay todo.
+The target is an ordinary multi-class split. A StateLogic + `Attr` rewrite stays unordered. This file does not claim that rewrite. The classes in the map are on disk, including `PageDownload`, `SiteCrawl`, `PageServe`, and `PageOpen`. `TP-OOP-*` stay todo.
 
 ### 1.1 Human-facing
 
@@ -19,7 +19,7 @@ The target is an ordinary multi-class split. A StateLogic + `Attr` rewrite stays
 | Box | Meaning | Example |
 |-----|---------|---------|
 | You / this login | Maintainer adding a prompt, a log action, or a download step | Put it on the class that already owns that job |
-| The other role | The menu picture, the about facts, and the concat order | Their own requirements |
+| The other role | The menu picture and the about facts | Their own requirements |
 | Not this file | A StateLogic rewrite of `main` | `requirement-python-coding-style` leaves that rewrite unordered |
 
 | Includes | Excludes |
@@ -34,12 +34,13 @@ The target is an ordinary multi-class split. A StateLogic + `Attr` rewrite stays
 | `src/HtmlDownloader/cli.py` | `def main` and class `Cli` | Entry. Builds the other objects and runs one job |
 | `src/HtmlDownloader/tui.py` | class `Tui` | Text-menu session |
 | `src/HtmlDownloader/page_download.py` | class `PageDownload` | Save one page and the URL map |
+| `src/HtmlDownloader/site_crawl.py` | class `SiteCrawl` | Same-host walk. Constructed in `_verb_crawl`, not in `Cli.__init__` |
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
 | Add a menu prompt | It is a method on `Tui`. The frame is `MenuPainter`. | Edit the class file this requirement names |
 | Change the page folder | It is `PageDownload`. Menu row 1 and the `download` verb both use it. | Edit `src/HtmlDownloader/page_download.py` |
-| Start the program | The console script calls `HtmlDownloader.cli:main`. | `html-downloader` |
+| Start the program | The console script calls `HtmlCrawler.cli:main`. | `html-crawler` |
 | Name a constant the program uses | It is an attribute of the class that owns it. `Cli` owns identity and the verb lists. | `Cli.APP_NAME` |
 
 ## 2. Core Rules (Mandatory)
@@ -57,10 +58,10 @@ The target is an ordinary multi-class split. A StateLogic + `Attr` rewrite stays
 
 7. `src/HtmlDownloader/cli.py` **MUST** define class `Cli` and **MUST NOT** define another class.
 8. `def main` **MUST** stay in `src/HtmlDownloader/cli.py`. The signature stays `main(argv=None, basedir="", logdir="")`. `main` writes `ChronicleLogger(...)` (`requirement-python-cli-logging`), builds `Cli`, and runs one job. Empty `basedir` and `logdir` leave folder resolution to the library.
-9. The console script **MUST** stay `html-downloader = HtmlDownloader.cli:main`. `src/HtmlDownloader/__main__.py` **MUST** keep `from .cli import main`.
-10. `cli.py` **MUST NOT** define another class's methods. `Cli` owns `build_parser`, `run`, `report_error`, `opens_text_screen`, and `stdout_is_tty`. `Cli` does not own the ChronicleLogger construct. Pip argument lists stay on `SelfManage`. The about body stays on `AboutPage`. The page save stays on `PageDownload`. The server stays on `PageServe`. The frame stays on `MenuPainter`.
+9. The console script **MUST** stay `html-crawler = HtmlCrawler.cli:main`. `src/HtmlDownloader/__main__.py` **MUST** keep `from .cli import main`.
+10. `cli.py` **MUST NOT** define another class's methods. `Cli` owns `build_parser`, `run`, `report_error`, `opens_text_screen`, and `stdout_is_tty`. `Cli` does not own the ChronicleLogger construct. Pip argument lists stay on `SelfManage`. The about body stays on `AboutPage`. The page save stays on `PageDownload`. The same-host walk stays on `SiteCrawl`. The server stays on `PageServe`. The frame stays on `MenuPainter`.
 11. `Cli` constructs the other classes and calls them. Each class receives its collaborators through its constructor.
-11f. A constant or variable that class `Cli` or `def main` owns is an attribute of class `Cli`, or a name assigned inside `main()`. It is not a module-level assignment in `cli.py`. That set is `APP_NAME` (`HtmlDownloader`), `CONSOLE_NAME` (`html-downloader`), `PRODUCT_VERBS`, `LIFECYCLE_VERBS`, `AUTHOR_NAME`, `AUTHOR_EMAIL`, `HOMEPAGE`, `LAST_UPDATE`, `DOWNLOAD_URL`, and `BASIC_USAGE`. The about page prints the author name, the homepage, the box date, and the usage line. It does not print the email. The email stays on `Cli`. `Cli` reads the package version from `__version__` only and **MUST NOT** keep a second literal, including a fallback `"1.0.0"`. `Cli` **MUST NOT** keep `MAJOR`, `MINOR`, or `PATCH` integers. `Cli` passes the values other classes print. Those classes do not import the names from the `cli` module.
+11f. A constant or variable that class `Cli` or `def main` owns is an attribute of class `Cli`, or a name assigned inside `main()`. It is not a module-level assignment in `cli.py`. That set is `APP_NAME` (`HtmlCrawler`), `CONSOLE_NAME` (`html-crawler`), `PRODUCT_VERBS`, `LIFECYCLE_VERBS`, `AUTHOR_NAME`, `AUTHOR_EMAIL`, `HOMEPAGE`, `LAST_UPDATE`, `DOWNLOAD_URL`, and `BASIC_USAGE`. The about page prints the author name, the homepage, the box date, and the usage line. It does not print the email. The email stays on `Cli`. `Cli` reads the package version from `__version__` only and **MUST NOT** keep a second literal, including a fallback `"1.0.0"`. `Cli` **MUST NOT** keep `MAJOR`, `MINOR`, or `PATCH` integers. `Cli` passes the values other classes print. Those classes do not import the names from the `cli` module.
 11g. Another class keeps its own constants. The frame glyphs, `MENU_ROWS`, `SELF_ROWS`, `LOG_ROWS`, `PATH_LABEL_EN`, and `PATH_LABEL_ZH_HANT` stay on `MenuPainter`. `Cli` does not own those names.
 
 ### 2.2a The logger arrives through `__init__`
@@ -84,8 +85,8 @@ The target is an ordinary multi-class split. A StateLogic + `Attr` rewrite stays
 
 ### 2.4 About page
 
-18. Class `AboutPage` in `src/HtmlDownloader/about_page.py` owns `framework_about`, `about_box_lines`, `install_kind`, `install_sentence`, and `_is_source_checkout`. `framework_about` composes the page in `requirement-python-about`. The domain sentence stays on `requirement-domain-videojoin`. `install_sentence` names GLOBAL, LOCAL, or UNINSTALLED. It **MUST NOT** name `python -m pip install HtmlDownloader` and **MUST NOT** name a downloaded-script installer. Class `CheckSystem` in `src/HtmlDownloader/check_system.py` owns the host-check reads, including the pyenv and conda paths. `Cli` writes `CheckSystem(...)` and then `AboutPage(...)`. `AboutPage` calls that object. It **MUST NOT** construct `CheckSystem`. Row 62 and the `about` verb call `framework_about`.
-19. This product has no class `Join` and no `src/HtmlDownloader/join.py`. **MUST NOT** add an encoder class, a file-listing class, or a media-scan class. Download stays on `PageDownload`. Serve stays on `PageServe`. Opening a saved page stays on `PageOpen`.
+18. Class `AboutPage` in `src/HtmlDownloader/about_page.py` owns `framework_about`, `about_box_lines`, `install_kind`, `install_sentence`, and `_is_source_checkout`. `framework_about` composes the page in `requirement-python-about`. The domain sentence stays on `requirement-domain-htmlcrawler`. `install_sentence` names GLOBAL, LOCAL, or UNINSTALLED. It **MUST NOT** name `python -m pip install HtmlCrawler` and **MUST NOT** name a downloaded-script installer. Class `CheckSystem` in `src/HtmlDownloader/check_system.py` owns the host-check reads, including the pyenv and conda paths. `Cli` writes `CheckSystem(...)` and then `AboutPage(...)`. `AboutPage` calls that object. It **MUST NOT** construct `CheckSystem`. Row 62 and the `about` verb call `framework_about`.
+19. Download stays on `PageDownload`. The same-host walk stays on `SiteCrawl` in `src/HtmlDownloader/site_crawl.py`. `Cli._verb_crawl` writes `SiteCrawl(Cli.APP_NAME, logger=self.logger)`. `SiteCrawl` is not built in `Cli.__init__`. It reuses `PageDownloadError`. It does not define `SiteCrawlError`. Serve stays on `PageServe`. Opening a saved page stays on `PageOpen`.
 
 ### 2.5 The other jobs
 
@@ -108,23 +109,24 @@ The target is an ordinary multi-class split. A StateLogic + `Attr` rewrite stays
 | `CheckSystem` | `src/HtmlDownloader/check_system.py` | Host-check reads for the about page. Does not draw the star box |
 | `AboutPage` | `src/HtmlDownloader/about_page.py` | `framework_about`, the star box, and the install kind. Calls `CheckSystem` |
 | `PageDownload` | `src/HtmlDownloader/page_download.py` | Save one page, resume, and `url-map.json`. Shares the file with `PageDownloadError` |
+| `SiteCrawl` | `src/HtmlDownloader/site_crawl.py` | Same-host walk, robots, and the one-second gate. One class. Reuses `PageDownloadError` |
 | `PageServe` | `src/HtmlDownloader/page_serve.py` | Serve the page folder on `127.0.0.1`. Shares the file with `PageServeError` |
 | `PageOpen` | `src/HtmlDownloader/page_open.py` | Edit and view when the tool is installed. Shares the file with `PageOpenError` |
 
 | Item | Value |
 |------|--------|
-| **Console script** | `html-downloader = HtmlDownloader.cli:main` |
+| **Console script** | `html-crawler = HtmlCrawler.cli:main` |
 | **Module entry** | `src/HtmlDownloader/__main__.py` imports `main` from `.cli` |
 | **Running tree** | The classes in the map, under `src/HtmlDownloader/`. Identity constants live on `Cli`. There is no second version literal |
 | **Landed** | The map is on disk. `TP-OOP-01` through `TP-OOP-04` stay todo until a suite names them |
 | **Logger** | Every class `__init__` in the map accepts `logger` and stores it. `def main` writes `ChronicleLogger(...)` and then `Cli(logger)`. Collaborators are `OtherClass(...)` at the site that needs them |
-| **Not this split** | Menu rows, about line facts, concat order, version string, the wording of the instantiation line |
+| **Not this split** | Menu rows, about line facts, version string, the wording of the instantiation line |
 
 ### 2.7 Why This Requirement Exists (CIAO)
 
 - **Principle 2 – Intentional**: Each job has one class and one file. That class receives the logger in `__init__`.
 - **Principle 5 – SSOT**: `cli.py` does not keep a second copy of another class's methods. `main` has one home.
-- **Principle 1 – Caution**: The picture, the about facts, and the concat order stay where their requirements already put them. The running tree is not declared illegal before the split lands.
+- **Principle 1 – Caution**: The picture and the about facts stay where their requirements already put them. The running tree is not declared illegal before the split lands.
 
 ## Under command line for normal user only
 
@@ -136,13 +138,13 @@ StateLogic stays unordered. The site writes the class name. This sample is the a
 
 ```python
 def main(argv=None, basedir="", logdir=""):
-    logger = ChronicleLogger(logname="HtmlDownloader", is_quiet=opens_text_screen(argv))
+    logger = ChronicleLogger(logname="HtmlCrawler", is_quiet=opens_text_screen(argv))
     app = Cli(logger)
     return app.run(argv)
 
 class Cli:
-    APP_NAME = "HtmlDownloader"
-    CONSOLE_NAME = "html-downloader"
+    APP_NAME = "HtmlCrawler"
+    CONSOLE_NAME = "html-crawler"
 
     def __init__(self, logger=None):
         self.logger = logger
@@ -155,7 +157,7 @@ class Cli:
 ## 3. Design Principles (CIAO / CIAO-Lite)
 
 - **Caution:** Do not collapse the classes back into one module.
-- **Intentional:** One job, one class, one file. `PageDownload` saves the page. There is no `Join`.
+- **Intentional:** One job, one class, one file. `PageDownload` saves the page.
 - **Anti-fragile:** `def main` and the console script keep their addresses.
 - **Over-protect:** No factory, no second logger, no StateLogic rewrite hidden inside this map.
 
@@ -170,10 +172,9 @@ class Cli:
 5. Add a factory whose job is to instantiate a class in this map.
 6. Put `MENU_ROWS`, `SELF_ROWS`, `LOG_ROWS`, or frame glyphs on `Cli`.
 7. Keep a second version literal on `Cli`.
-8. Add an encoder class, a `Join` class, or a working-directory file list.
-9. Order a StateLogic + `Attr` rewrite from this file.
-10. Mark `TP-OOP-*` have before the proofs pass.
-11. Delete the running `cli.py` behavior in a requirement-only edit.
+8. Order a StateLogic + `Attr` rewrite from this file.
+9. Mark `TP-OOP-*` have before the proofs pass.
+10. Delete the running `cli.py` behavior in a requirement-only edit.
 
 **Violating this rule is a critical structure regression.**
 
@@ -181,11 +182,11 @@ class Cli:
 
 | ID | Criterion |
 |----|-----------|
-| AC-1 | The map names `Cli`, `Tui`, `MenuPainter`, `MenuLanguage`, `MenuModel`, `MenuSession`, `SystemLog`, `SelfManage`, `CheckSystem`, `AboutPage`, `PageDownload`, `PageServe`, and `PageOpen`, each in its own file |
-| AC-2 | `def main` stays in `cli.py`. The console script stays `HtmlDownloader.cli:main` |
+| AC-1 | The map names `Cli`, `Tui`, `MenuPainter`, `MenuLanguage`, `MenuModel`, `MenuSession`, `SystemLog`, `SelfManage`, `CheckSystem`, `AboutPage`, `PageDownload`, `SiteCrawl`, `PageServe`, and `PageOpen`, each in its own file |
+| AC-2 | `def main` stays in `cli.py`. The console script stays `HtmlCrawler.cli:main` |
 | AC-3 | Every class `__init__` accepts the logger. The site writes `ClassName(...)` |
 | AC-4 | `Cli` owns the identity constants. `MenuPainter` owns the row tuples and the glyphs |
-| AC-5 | `AboutPage` composes the about page. `PageDownload` saves the page. `PageServe` serves it. There is no `Join` |
+| AC-5 | `AboutPage` composes the about page. `PageDownload` saves the page. `PageServe` serves it |
 | AC-6 | The modules in the map are on disk. `TP-OOP-*` stay todo |
 
 ## 6. Related requirements (peer keys only)
@@ -196,8 +197,7 @@ class Cli:
 | `requirement-python-tui` | Picture the classes draw |
 | `requirement-python-cli-interface` | Verb names `Cli` dispatches |
 | `requirement-python-about` | About page line text. This file names `AboutPage` and `CheckSystem` |
-| `requirement-domain-videojoin` | Domain sentence and download, list, and serve |
-| `requirement-video-ffmpeg-pipeline` | Retired |
+| `requirement-domain-htmlcrawler` | Domain sentence and download, list, and serve |
 | `requirement-python-coding-style` | `shutil.move`. StateLogic stays unordered. Factory ban |
 | `requirement-python-project-structure` | Running tree versus this map |
 | `requirement-python-packaging` | Console script and `__version__` |
@@ -220,15 +220,18 @@ class Cli:
 
 | Date | Status | Note |
 |------|--------|------|
-| 2026-10-04 | Active 1.0.0 | L2 class map for HtmlDownloader. Running tree remains three modules. StateLogic unordered. Proofs todo |
+| 2026-10-04 | Active 1.0.0 | L2 class map for HtmlCrawler. Running tree remains three modules. StateLogic unordered. Proofs todo |
 | 2026-10-04 | Active 1.0.1 | `MenuPainter` owns `path_label`, `PATH_LABEL_EN`, and `PATH_LABEL_ZH_HANT`. Those methods do not detect a language. `TP-OOP-*` stay todo |
 | 2026-10-04 | Active 1.0.2 | Class `MenuLanguage` is the language home. `MenuPainter` writes `MenuLanguage(...)`. `TP-OOP-*` stay todo |
 | 2026-10-04 | Active 1.0.3 | `display_width`, `clip_columns`, and `clip_columns_right` are methods of `MenuPainter`. `TP-OOP-*` stay todo |
 | 2026-10-04 | Active 1.0.4 | `CheckSystem` owns the host check. `AboutPage` owns `framework_about`. No second version triple. `TP-OOP-*` stay todo |
-| 2026-10-16 | Active 1.1.0 | `PageDownload`, `PageServe`, and `PageOpen` are on the map. No `Join`. No welcome line. About is row 62 |
+| 2026-10-16 | Active 1.1.0 | `PageDownload`, `PageServe`, and `PageOpen` are on the map. No welcome line. About is row 62 |
+| 2026-10-28 | Active 1.1.1 | Domain owner is `requirement-domain-htmlcrawler` |
+| 2026-10-28 | Active 1.1.2 | Notes for a class this product does not have were removed |
+| 2026-10-28 | Active 1.1.3 | `SiteCrawl` is on the map. `_verb_crawl` constructs it |
 
 ---
 
-**Last Updated**: 2026-10-16
+**Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).

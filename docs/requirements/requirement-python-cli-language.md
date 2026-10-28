@@ -6,17 +6,17 @@
 
 ## 1. Purpose
 
-This file owns the menu language for HtmlDownloader. The text menu can show its boards in one of thirteen languages. English is the default. The person picks a language on front row **7**. The pick is saved for the next run. The picture of the menu stays on `requirement-python-tui`. Typed verbs stay on `requirement-python-cli-interface`. `language` is not one of those verbs.
+This file owns the menu language for HtmlCrawler. The text menu can show its boards in one of thirteen languages. English is the default. The person picks a language on front row **7**. The pick is saved for the next run. The picture of the menu stays on `requirement-python-tui`. Typed verbs stay on `requirement-python-cli-interface`. `language` is not one of those verbs.
 
 Class `MenuLanguage` in `src/HtmlDownloader/menu_language.py` holds the codes, the saved leaf, and the words. Class `MenuPainter` writes `MenuLanguage(...)` in its constructor and asks that object for the path word and the row text. A factory does not create it.
 
 ### 1.1 Human-facing
 
-**In one sentence:** On the HtmlDownloader menu, you type **7** to pick the language the menu uses, and the next time you open the menu it still uses that language.
+**In one sentence:** On the HtmlCrawler menu, you type **7** to pick the language the menu uses, and the next time you open the menu it still uses that language.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
-| You / this login | The person at the keyboard | `html-downloader`, then `7` |
+| You / this login | The person at the keyboard | `html-crawler`, then `7` |
 | The other role | The menu language object | class `MenuLanguage` in `menu_language.py` |
 | Not this file | Download questions, pip output, help, and the about page | Those stay English in this version |
 
@@ -28,8 +28,8 @@ Class `MenuLanguage` in `src/HtmlDownloader/menu_language.py` holds the codes, t
 
 | Surface | What you open | What for |
 |---------|---------------|----------|
-| `html-downloader` on a terminal | Front board | Row **7** is language. Row **4** is System Log. Row **6** is self-management |
-| `~/.local/HtmlDownloader/language` | One-line file in this login’s home | The code saved from the menu |
+| `html-crawler` on a terminal | Front board | Row **7** is language. Row **4** is System Log. Row **6** is self-management |
+| `~/.local/HtmlCrawler/language` | One-line file in this login’s home | The code saved from the menu |
 | `HTMLDOWNLOADER_LANG` | Environment value for this process | Wins over the file and does not write it |
 
 | You do… | What it means | What you type |
@@ -37,14 +37,14 @@ Class `MenuLanguage` in `src/HtmlDownloader/menu_language.py` holds the codes, t
 | Open the language board | The board lists thirteen language names in their own script, numbered 71 through 83, then Back. Numbers 84 through 98 are not printed. | `7` |
 | Save Traditional Chinese | The file stores `zh-Hant`. The front board comes back in Traditional Chinese, and the line above the box says the menu language is Traditional Chinese. | `73` |
 | Go back | The file is not written. The front board stays in the language you already had. | `0`, or Esc |
-| Start with no saved language | The menu is English. A Traditional Chinese locale does not switch it. | `html-downloader` |
+| Start with no saved language | The menu is English. A Traditional Chinese locale does not switch it. | `html-crawler` |
 
 ## 2. Core Rules (Mandatory)
 
 1. **One owner.** This file selects the menu language and owns the words the menu boards print. `requirement-python-tui` draws the path line and the rows. It does not detect a language. `language` **MUST NOT** be an argv verb. `requirement-python-cli-interface` states the same ban.
 2. **Default.** The code **MUST** be `en` when the leaf is missing, when the first line is empty, or when that line is not one of the thirteen codes. An invalid first line **MUST NOT** be rewritten. `LANG`, `LANGUAGE`, `LC_ALL`, and `LC_MESSAGES` **MUST NOT** select a code. This file does not use gettext.
 3. **Process override.** When `HTMLDOWNLOADER_LANG` is one of the thirteen codes, that code **MUST** win at process start. That start **MUST NOT** write the leaf. Any other value of `HTMLDOWNLOADER_LANG` is ignored and the leaf is read.
-4. **Leaf.** The leaf is `${HOME}/.local/HtmlDownloader/language`. The program reads only the first line, ignores a trailing carriage return, and ignores later lines. A menu pick **MUST** write the code, one newline, and nothing else. The directory **MUST** be mode `0700`. The file **MUST** be mode `0600`. The program creates that directory only when a pick is saved. A missing home, or a write that fails, **MUST** keep the code this process already had and **MUST** show the failed-write line in that previous language. The front board **MUST** still return.
+4. **Leaf.** The leaf is `${HOME}/.local/HtmlCrawler/language`. The program reads only the first line, ignores a trailing carriage return, and ignores later lines. A menu pick **MUST** write the code, one newline, and nothing else. The directory **MUST** be mode `0700`. The file **MUST** be mode `0600`. The program creates that directory only when a pick is saved. A missing home, or a write that fails, **MUST** keep the code this process already had and **MUST** show the failed-write line in that previous language. The front board **MUST** still return.
 5. **Front row 7.** On every host, including Termux, Git Bash, and Windows cmd, the front board **MUST** print row **7** `language`. That row **MUST** open the language board. It **MUST NOT** run a command and **MUST NOT** leave the program. Rows **1**, **2**, **3**, **4**, **6**, and **9** stay download, list downloaded, serve, System Log, self-management, and Exit. Rows **5** and **8** are not printed. System Log is front row **4**. Its children are **41** view-log, **42** clear-log, and **43** log-folder. Numbers **44**–**49** are not printed. Self-management is front row **6**. Its children are **61**–**66**. Numbers **67**–**70** are not printed. Those numbers are the picture on `requirement-python-tui`.
 6. **Language block.** The language board uses the numbers **71** through **98**. Assigned rows are **71** through **83**, in the order below. **84** through **98** are reserved. They **MUST NOT** be printed. Typing a reserved number **MUST** show the unknown-choice line and **MUST NOT** write the leaf. **0**, an empty Enter on Back, and Esc **MUST** return to the front board and **MUST NOT** write the leaf.
 7. **Names on the language board.** Each assigned row **MUST** show that language’s endonym as the short, in every UI language. The explain **MUST** be that UI language’s sentence with the endonym in the name slot. The English sentence is `use {name} for this menu`.
@@ -82,7 +82,7 @@ Class `MenuLanguage` in `src/HtmlDownloader/menu_language.py` holds the codes, t
 | **Front row** | **7** language. Children **71**–**83**. Reserved and not printed: **84**–**98**. Block **71**–**98** |
 | **System Log** | Front **4**. Children **41** view-log, **42** clear-log, **43** log-folder. Not printed: **44**–**49** |
 | **Self-management** | Front **6**. Children **61**–**66**. Not printed: **67**–**70** |
-| **Leaf** | `${HOME}/.local/HtmlDownloader/language`. Directory mode `0700`. File mode `0600`. Not the cache folder. Not `/var/HtmlDownloader` |
+| **Leaf** | `${HOME}/.local/HtmlCrawler/language`. Directory mode `0700`. File mode `0600`. Not the cache folder. Not `/var/HtmlCrawler` |
 | **Override** | `HTMLDOWNLOADER_LANG` at process start. Does not write |
 | **Back / Exit shorts** | en Back / Exit. zh-Hans 返回 / 离开. zh-Hant 返回 / 離開. es Atrás / Salir. ar رجوع / خروج. fr Retour / Quitter. pt Voltar / Sair. ru Назад / Выход. de Zurück / Beenden. ja 戻る / 終了. ko 뒤로 / 종료. nl Terug / Afsluiten. el Πίσω / Έξοδος |
 | **Category shorts** | language follows the code. English system-log short is `System Log`. English self-management short is `self-management`. The kind tokens stay `system-log` and `self-management` |
@@ -97,12 +97,12 @@ Worked leaf, this login, after choosing Traditional Chinese:
 zh-Hant
 ```
 
-The file is `~/.local/HtmlDownloader/language`. The line ends with a newline. A test passes its own home directory into `MenuLanguage(...)` and does not read the developer’s leaf.
+The file is `~/.local/HtmlCrawler/language`. The line ends with a newline. A test passes its own home directory into `MenuLanguage(...)` and does not read the developer’s leaf.
 
-Invocation sample for the row this file owns. There is no `html-downloader language` command. On the open menu:
+Invocation sample for the row this file owns. There is no `html-crawler language` command. On the open menu:
 
 ```text
-html-downloader
+html-crawler
 7
 73
 ```
@@ -118,7 +118,7 @@ That sequence opens the menu, opens the language board, and saves `zh-Hant`.
 
 ## Under command line for normal user only
 
-On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-downloader` as the normal user. **This requirement:** saving the language file is this login’s home. Do not use administrator privilege, `sudo`, `apt`, or a dedicated system user to write it. Do not pipe a downloaded script into a shell. Type 1 and Type 2 are unused on Termux, Git Bash, and Windows cmd. Git Bash and Windows cmd do not call Termux `pkg`. Row 7 is numbered on those hosts the same way it is numbered on Linux.
+On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-crawler` as the normal user. **This requirement:** saving the language file is this login’s home. Do not use administrator privilege, `sudo`, `apt`, or a dedicated system user to write it. Do not pipe a downloaded script into a shell. Type 1 and Type 2 are unused on Termux, Git Bash, and Windows cmd. Git Bash and Windows cmd do not call Termux `pkg`. Row 7 is numbered on those hosts the same way it is numbered on Linux.
 
 ## 3. Design Principles (CIAO / CIAO-Lite)
 
@@ -136,7 +136,7 @@ On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-downl
 - Print reserved numbers 84–98, or write the leaf when one of those numbers is typed.
 - Write the leaf on Back, on an empty Enter of Back, or on Esc.
 - Translate the folder path, the clock, or a leaf short such as `download`, `list downloaded`, or `serve`.
-- Put the language file in the cache folder or under `/var/HtmlDownloader`.
+- Put the language file in the cache folder or under `/var/HtmlCrawler`.
 - Move language off row 7, or move System Log off row 4, to make room.
 - Mark `TP-OOP-*` or `TP-TUI-01` through `TP-TUI-08` have from this file.
 
@@ -160,7 +160,7 @@ On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-downl
 |----|-----------|
 | AC-1 | Front row 7 opens the language board. Rows 71–83 show the endonyms. 84–98 are not printed |
 | AC-2 | System Log is front row 4. Its children are 41, 42, and 43. Self-management is front row 6. Its children are 61–66 |
-| AC-3 | A pick writes `${HOME}/.local/HtmlDownloader/language` mode `0600` and switches this process |
+| AC-3 | A pick writes `${HOME}/.local/HtmlCrawler/language` mode `0600` and switches this process |
 | AC-4 | Back, Esc, and a reserved number do not write. A failed write keeps the previous code |
 | AC-5 | A missing or invalid leaf is English and is not rewritten. `LANG` does not select a code. `HTMLDOWNLOADER_LANG` wins and does not write |
 | AC-6 | `language` is not an argv verb. Leaf shorts stay English. Typing 73 saves `zh-Hant` |
@@ -179,8 +179,8 @@ On Termux, Git Bash, Windows cmd, or the same class, the person runs `html-downl
 
 | Date | Status | Note |
 |------|--------|------|
-| 2026-10-04 | Active 1.0.0 | Menu language for HtmlDownloader. Front row 4. Thirteen codes. Leaf under this login’s home. `TP-LANG-01` has |
-| 2026-10-04 | Active 1.0.1 | English about explain is `version, FFmpeg, and this computer`. The about page stays English |
+| 2026-10-04 | Active 1.0.0 | Menu language for HtmlCrawler. Front row 4. Thirteen codes. Leaf under this login’s home. `TP-LANG-01` has |
+| 2026-10-04 | Active 1.0.1 | English about explain is `version and this computer`. The about page stays English |
 | 2026-10-16 | Active 1.1.0 | Front row **7**. Printed codes **71**–**83**. Unprinted **84**–**98**. `zh-Hant` is **73**. About explain is `version and this computer`. Override is `HTMLDOWNLOADER_LANG` |
 
 ---

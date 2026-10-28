@@ -4,7 +4,8 @@
 
 | Version | Supported |
 |---------|-----------|
-| 1.0.0 (current) | Yes |
+| 1.0.1 (current) | Yes |
+| 1.0.0 | Yes |
 | Older releases | Best-effort; prefer upgrading to current |
 
 ## Reporting a Vulnerability
@@ -25,7 +26,7 @@ This project follows **[CIAO](https://github.com/cloudgen/ciao)** / **CIAO-Lite*
 | Letter | Principle | Security application |
 |--------|-----------|----------------------|
 | **C** | **Caution** | Assume missing tools. Fail closed on an unknown verb and on a pip failure. Do not claim a welcome when the command did not run. |
-| **I** | **Intentional** | The welcome line is the same sentence on the terminal and on menu row 1. This program does not join media or list files in the folder. |
+| **I** | **Intentional** | Menu row 1 downloads one page. `crawl` is a typed verb with a required depth and page cap. This program does not join media or list files in the folder. |
 | **A** | **Anti-fragile** | Multi-mount publish (USB vs system temp) is designed via staging + `shutil.move`. Unique temps avoid fixed cwd race names. |
 | **O** | **Over-protect** | Protection Zones on staging/publish helpers; least privilege day-to-day (user-level CLI; no root elevation product surface). |
 

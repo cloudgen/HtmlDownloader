@@ -1,16 +1,16 @@
 **file**: docs/requirements/requirement-python-project-structure.md
-**Status**: Active (Version 1.2.0)
+**Status**: Active (Version 1.2.2)
 **Area**: python
 **Key**: `requirement-python-project-structure`
 **Philosophy**: CIAO **v2.10.2** / CIAO-Lite (Caution • Intentional • Anti-fragile • Over-engineered / Over-protect)
 
 ## 1. Purpose
 
-Define the repository layout and the package structure for HtmlDownloader: where source, packaging, and requirement law live, and which modules exist today versus which modules the class map names.
+Define the repository layout and the package structure for HtmlCrawler: where source, packaging, and requirement law live, and which modules exist today versus which modules the class map names.
 
 ### 1.1 Human-facing
 
-**In one sentence:** The installable code lives in `src/HtmlDownloader/`, and that folder holds the classes that download, list, and serve.
+**In one sentence:** The installable code lives in `src/HtmlDownloader/`, and that folder holds the classes that download, crawl, list, and serve.
 
 | Box | Meaning | Example |
 |-----|---------|---------|
@@ -21,7 +21,7 @@ Define the repository layout and the package structure for HtmlDownloader: where
 | Includes | Excludes |
 |----------|----------|
 | `src/HtmlDownloader/__init__.py`, `__main__.py`, and `cli.py` as the running package | A second installable package name |
-| The class files on disk, including `page_download.py`, `page_serve.py`, and `page_open.py` | A second installable package name |
+| The class files on disk, including `page_download.py`, `site_crawl.py`, `page_serve.py`, and `page_open.py` | A second installable package name |
 | Root `pyproject.toml`, root `README.md`, root `CHANGELOG.md`, and `docs/requirements/` | Deleted design notes listed as if they were still present |
 
 | Surface | What you open | What for |
@@ -32,7 +32,7 @@ Define the repository layout and the package structure for HtmlDownloader: where
 
 | You do… | What it means | What you type |
 |---------|---------------|---------------|
-| Run from a checkout | The module entry calls `main` in `cli.py`. | `python -m HtmlDownloader` |
+| Run from a checkout | The module entry calls `main` in `cli.py`. | `python -m HtmlCrawler` |
 | Look for the menu classes | They are in `src/HtmlDownloader/`. | Read `requirement-python-oop` |
 | Read the product history | Use the changelog at the repository root. | `CHANGELOG.md` |
 
@@ -42,7 +42,7 @@ Define the repository layout and the package structure for HtmlDownloader: where
 
 1. **MUST** keep the installable package under `src/HtmlDownloader/`.
 2. The running package **MUST** include `__init__.py` (version export), `__main__.py` (module entry), and `cli.py` (class `Cli` and `def main`).
-3. The package **MUST** also include the modules named by `requirement-python-oop`: `tui.py`, `menu_painter.py`, `menu_model.py`, `menu_session.py`, `menu_language.py`, `system_log.py`, `self_management.py`, `check_system.py`, `about_page.py`, `page_download.py`, `page_open.py`, and `page_serve.py`. `join.py` is not part of that set. `cli.py` holds class `Cli` and `def main`, and it does not hold the other classes’ methods.
+3. The package **MUST** also include the modules named by `requirement-python-oop`: `tui.py`, `menu_painter.py`, `menu_model.py`, `menu_session.py`, `menu_language.py`, `system_log.py`, `self_management.py`, `check_system.py`, `about_page.py`, `page_download.py`, `site_crawl.py`, `page_open.py`, and `page_serve.py`. `cli.py` holds class `Cli` and `def main`, and it does not hold the other classes’ methods.
 4. **MUST NOT** scatter a second installable package name that contradicts the packaging SSOT.
 
 ### 2.2 Project root layout
@@ -51,7 +51,7 @@ Define the repository layout and the package structure for HtmlDownloader: where
 6. **MUST** keep product user docs at root `README.md`. Sections, badges, and pictures in that document are `requirement-python-readme`.
 7. **MUST** keep the product changelog at root `CHANGELOG.md`.
 8. **MUST** keep specialized product law under `docs/requirements/` with the `requirement-` prefix and the registry `index.md`.
-9. **MUST NOT** list a deleted design note as a present file. `docs/CHANGELOG.md`, `docs/HtmlDownloader-spec.md`, and `docs/folder-structure.md` are not in the tree.
+9. **MUST NOT** list a deleted design note as a present file. `docs/CHANGELOG.md`, `docs/HtmlCrawler-spec.md`, and `docs/folder-structure.md` are not in the tree.
 
 ### 2.3 Generated / non-source
 
@@ -70,14 +70,15 @@ Define the repository layout and the package structure for HtmlDownloader: where
 | Path | Role |
 |------|------|
 | `src/HtmlDownloader/` | Installable package |
-| `src/HtmlDownloader/__init__.py` | `__version__` (`1.0.0`) |
+| `src/HtmlDownloader/__init__.py` | `__version__` (`1.0.1`) |
 | `src/HtmlDownloader/__main__.py` | Module entry. Imports `main` from `cli` |
 | `src/HtmlDownloader/cli.py` | Class `Cli` and `def main` |
+| `src/HtmlDownloader/site_crawl.py` | Class `SiteCrawl` |
 | `pyproject.toml` | Packaging SSOT |
 | `build.sh` | Maintainer build helper |
 | `docs/requirements/` | Product law |
 | `CHANGELOG.md` | Product changelog at the repository root |
-| `tests/` | Proof. Suites include `test_about.py`, `test_tui.py`, `test_language.py`, `test_docs.py`, `test_download.py`, and `test_serve.py` |
+| `tests/` | Proof. Suites include `test_about.py`, `test_tui.py`, `test_language.py`, `test_docs.py`, `test_download.py`, `test_crawl.py`, and `test_serve.py` |
 | `README.md` | User documentation |
 
 The class modules named in rule 3 are on disk.
@@ -90,7 +91,7 @@ The class modules named in rule 3 are on disk.
 
 ## Under command line for normal user only
 
-On Termux, Git Bash, Windows cmd, or the same class, the package is the normal user’s `html-downloader`. **This requirement:** do not use administrator privilege, `sudo`, `apt`, or a dedicated system user to lay out the package or to start it. Do not pipe a downloaded script into a shell. Type 1 and Type 2 are unused on Termux, Git Bash, and Windows cmd. Git Bash and Windows cmd do not call Termux `pkg`.
+On Termux, Git Bash, Windows cmd, or the same class, the package is the normal user’s `html-crawler`. **This requirement:** do not use administrator privilege, `sudo`, `apt`, or a dedicated system user to lay out the package or to start it. Do not pipe a downloaded script into a shell. Type 1 and Type 2 are unused on Termux, Git Bash, and Windows cmd. Git Bash and Windows cmd do not call Termux `pkg`.
 
 ## 3. Design Principles (CIAO / CIAO-Lite)
 
@@ -108,7 +109,7 @@ On Termux, Git Bash, Windows cmd, or the same class, the package is the normal u
 3. Commit secrets under `src/` or `docs/requirements/`.
 4. Cite a template or a skill from product source as product law.
 5. Treat a design note as a second law SSOT over an Active requirement.
-6. List `docs/CHANGELOG.md`, `docs/HtmlDownloader-spec.md`, or `docs/folder-structure.md` as present.
+6. List `docs/CHANGELOG.md`, `docs/HtmlCrawler-spec.md`, or `docs/folder-structure.md` as present.
 7. Keep `cli.py` as the permanent home of every other class.
 
 **Violating this rule is a critical structure regression.**
@@ -121,7 +122,7 @@ On Termux, Git Bash, Windows cmd, or the same class, the package is the normal u
 | AC-2 | Root `pyproject.toml` is present |
 | AC-3 | Requirements live under `docs/requirements/` with an index |
 | AC-4 | Generated `build/` and `dist/` are not the source SSOT |
-| AC-5 | The modules in rule 3 are on disk. `join.py` is absent |
+| AC-5 | The modules in rule 3 are on disk |
 | AC-6 | The product changelog path is root `CHANGELOG.md` |
 
 ## 6. Related requirements (peer keys only)
@@ -149,14 +150,16 @@ On Termux, Git Bash, Windows cmd, or the same class, the package is the normal u
 
 | Date | Status | Note |
 |------|--------|------|
-| 2026-08-09 | Active 1.0.0 | Initial project structure law for HtmlDownloader |
+| 2026-08-09 | Active 1.0.0 | Initial project structure law for HtmlCrawler |
 | 2026-10-04 | Active 1.1.0 | Running tree is three modules. Target modules are the OOP map. Deleted design-note paths are not listed as present. Changelog is root `CHANGELOG.md` |
 | 2026-10-04 | Active 1.1.1 | Sections, badges, and pictures in root `README.md` are `requirement-python-readme` |
 | 2026-10-04 | Active 1.1.2 | Allowed end state names `check_system.py`. `__version__` is **1.0.5** |
 | 2026-10-16 | Active 1.2.0 | The class modules are on disk, including page download, open, and serve. Version **1.0.0** |
+| 2026-10-28 | Active 1.2.1 | An absence rule for a module this product does not ship was removed |
+| 2026-10-28 | Active 1.2.2 | `site_crawl.py` is on disk. Version **1.0.1** |
 
 ---
 
-**Last Updated**: 2026-10-16
+**Last Updated**: 2026-10-28
 **Owner**: project maintainers
 **Alignment**: Registry `docs/requirements/index.md`; **CIAO** (https://github.com/cloudgen/ciao); CIAO-Lite (https://github.com/cloudgen/ciao-lite).
